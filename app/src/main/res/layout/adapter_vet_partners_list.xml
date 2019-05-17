@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cvVetPartnersList"
+    android:layout_height="120dp"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:padding="5dp"
+    android:background="@color/background"
+    android:layout_marginBottom="5dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
+    card_view:cardConerRadius="2dp"
+    card_view:cardElevation="6dp"
+    android:foreground="?attr/selectableItemBackground"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/background"
+        >
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:card_view="http://schemas.android.com/tools"
+            android:id="@+id/cvVetListImage"
+            android:layout_height="100dp"
+            android:layout_width="100dp"
+            android:clickable="true"
+            android:background="@color/cardview_light_background"
+            app:cardElevation="3dp"
+            card_view:cardConerRadius="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp"
+            card_view:cardElevation="6dp" >
+                <ImageView
+                    android:id="@+id/ivProfileVet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_paw_24"
+                    android:layout_alignParentLeft="true"
+                     />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvNameVet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/cvVetListImage"
+            android:layout_marginStart="17dp"
+            android:layout_toEndOf="@+id/cvVetListImage"
+            android:text="Professional Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginLeft="17dp"
+            android:layout_toRightOf="@+id/cvVetListImage" />
+
+       <!--
+        <TextView
+            android:id="@+id/tvCliHistoricAreaPro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Área do Profissional"
+            android:layout_below="@+id/tvNameVet"
+            android:layout_alignStart="@+id/tvNameVet"
+            android:layout_alignLeft="@+id/tvNameVet" />
+        -->
+        <LinearLayout
+            android:id="@+id/llPriceService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvNameVet"
+            android:layout_below="@+id/tvNameVet"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_alignLeft="@+id/tvNameVet">
+
+            <ImageView
+                android:id="@+id/ivPriceMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/primaryDarkColor"
+                app:srcCompat="@drawable/ic_email_check_outline" />
+            <TextView
+                android:id="@+id/tvEmailVet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textColor="@color/primaryDarkColor"
+                android:textStyle="bold"
+                android:text="300,00" />
+        </LinearLayout>
+
+        <!--
+
+        <ImageView
+            android:id="@+id/ivFavoritePro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/llPriceService"
+            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/ic_paw_24"
+            android:tint="@android:color/holo_red_light"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp" />
+            -->
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="client.petmooby.com.br.petmooby.actvity.VeterinaryPartnerDetailActivity"
+    tools:showIn="@layout/activity_veterinary_partner_detail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@color/background"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivVetDetailProfile"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_paw_24" />
+        <TextView
+            android:id="@+id/tvVetDetailName"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Fulano de tal"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/tvVetDetailAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvVetDetailContactLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Contact"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/primaryDarkColor"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivVetDetailEmail"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:tint="@color/primaryDarkColor"
+            app:srcCompat="@drawable/ic_email_check_outline"
+            />
+        <TextView
+            android:id="@+id/tvVetDetailEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ivVetDetailEmail"
+            android:text="exemplo@email.com"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/text_size_larger"
+            />
+        <ImageView
+            android:id="@+id/ivVetDetailPhone"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            app:srcCompat="@drawable/ic_phone_classic"
+            android:tint="@color/primaryDarkColor"
+            android:layout_below="@+id/tvVetDetailEmail"
+            android:layout_marginTop="@dimen/icon_margin_top"
+            />
+        <TextView
+            android:id="@+id/tvVetDetailPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ivVetDetailPhone"
+            android:layout_below="@+id/tvVetDetailEmail"
+            android:text="exemplo@email.com"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/text_size_larger"
+            android:layout_marginTop="@dimen/icon_margin_top"
+            />
+
+        <ImageView
+            android:id="@+id/ivVetDetailClinic"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:tint="@color/primaryDarkColor"
+            app:srcCompat="@drawable/ic_hospital"
+            android:layout_below="@+id/tvVetDetailPhone"
+            android:layout_marginTop="@dimen/icon_margin_top"
+            />
+
+        <TextView
+            android:id="@+id/tvVetDetailClinic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvVetDetailPhone"
+            android:layout_alignTop="@+id/ivVetDetailClinic"
+            android:textSize="@dimen/text_size_larger"
+            android:text="exemplo@email.com" />
+
+        <ImageView
+            android:id="@+id/ivVetDetailAddress"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            app:srcCompat="@drawable/ic_map_marker_radius"
+            android:tint="@color/primaryDarkColor"
+            android:layout_below="@+id/tvVetDetailClinic"
+            android:layout_marginTop="@dimen/icon_margin_top"
+            />
+
+        <TextView
+            android:id="@+id/tvVetDetailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvVetDetailClinic"
+            android:layout_alignTop="@+id/ivVetDetailAddress"
+            android:textSize="@dimen/text_size_larger"
+            android:text="exemplo@email.com" />
+
+    </RelativeLayout>
+
+</LinearLayout>

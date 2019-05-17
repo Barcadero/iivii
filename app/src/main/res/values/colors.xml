@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primaryColor">#870d4e</color>
+    <color name="primaryLightColor">#bb467a</color>
+    <color name="primaryDarkColor">#550026</color>
+    <color name="secondaryColor">#ff80ab</color>
+    <color name="secondaryLightColor">#ffb2dd</color>
+    <color name="secondaryDarkColor">#c94f7c</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <!--
+    <color name="colorPrimary">#870d4e</color>
+    <color name="primaryLightColor">#bb467a</color>
+    <color name="colorPrimaryDark">#560027</color>
+    <color name="primaryDarkColor">#550026</color>
+    <color name="secondaryColor">#ff80ab</color>
+    <color name="secondaryLightColor">#ffb2dd</color>
+    <color name="secondaryDarkColor">#c94f7c</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorText">#000</color>
+    <color name="white">#FFF</color>
+    <color name="viewLineColor">#000</color>
+    <color name="email">#303F9F</color>
+    -->
+    <color name="white">#FFF</color>
+    <color name="background">#c94f7c</color>
+    <color name="colorAccent">#550026</color>
+    <color name="viewMenuSpace">#bdc1c9</color>
+    <color name="secondaryLightBackColor">#fff8e1</color>
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "965333887826",
+    "firebase_url": "https://petmooby-98e95.firebaseio.com",
+    "project_id": "petmooby-98e95",
+    "storage_bucket": "petmooby-98e95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965333887826:android:29a0be740012ae95",
+        "android_client_info": {
+          "package_name": "client.petmooby.com.br.petmooby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965333887826-slkkn875teai8bv6hvu70revu5ka4i1g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "client.petmooby.com.br.petmooby",
+            "certificate_hash": "e731c78170ee3f86c30d0427e181c47c4d9418a5"
+          }
+        },
+        {
+          "client_id": "965333887826-lunla4k7t0omi25b4n6612c410i3popa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeksT7dJIlv3vUvLo8w1KgzvJDbge5ygg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965333887826-lunla4k7t0omi25b4n6612c410i3popa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "965333887826-rgbc60m9kk0a1sgrv8blfijll7aunj4o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Petmooby.PetApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
