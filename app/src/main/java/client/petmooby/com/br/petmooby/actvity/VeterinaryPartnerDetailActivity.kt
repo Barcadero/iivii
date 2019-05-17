@@ -20,9 +20,6 @@ class VeterinaryPartnerDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_veterinary_partner_detail)
         setSupportActionBar(toolbar)
 
-
-
-
         retrieveVetFromBundle()
 
 
