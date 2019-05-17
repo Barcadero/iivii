@@ -38,4 +38,12 @@
     <string name="About">About</string>
     <string name="Options">Options</string>
     <string name="helpUs">Help us improve our App by sending your opnion or contct us for a partnership. Thank you for enjoin!</string>
+    <string name="Home">Home</string>
+    <string name="Menu">Menu</string>
+    <string name="title_menu">Menu</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_tip">Tip</string>
+    <string name="Calendar">Calendar</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Tips">Tips</string>
 </resources>

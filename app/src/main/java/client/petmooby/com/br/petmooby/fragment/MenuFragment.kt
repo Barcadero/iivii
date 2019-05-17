@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import client.petmooby.com.br.petmooby.LoginActivity
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.VeterinaryPartnersListActivity
+import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.toast
 import com.facebook.AccessTokenTracker
 import com.facebook.login.LoginManager
@@ -47,6 +48,7 @@ class MenuFragment : Fragment() {
         btnMenuLogout.setOnClickListener{logout()}
         btnMenuVeterinaryPartners.setOnClickListener { startActivity(Intent(activity,VeterinaryPartnersListActivity::class.java)) }
         tokenTrace.startTracking()
+        setupToolbar(R.id.toolbar,getString(R.string.Menu))
     }
 
     private fun logout(){

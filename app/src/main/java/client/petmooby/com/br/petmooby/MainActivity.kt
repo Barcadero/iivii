@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
-import client.petmooby.com.br.petmooby.fragment.HomeFragment
-import client.petmooby.com.br.petmooby.fragment.MenuFragment
+import client.petmooby.com.br.petmooby.fragment.*
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.util.Preference
@@ -46,12 +45,16 @@ class MainActivity : AppCompatActivity() {
                 switchFragment(HomeFragment())
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                //message.setText(R.string.title_dashboard)
+            R.id.navigation_tip -> {
+                switchFragment(TipFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                //message.setText(R.string.title_notifications)
+                switchFragment(NotificationFragment())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_calendar->{
+                switchFragment(CalendarFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_menu ->{

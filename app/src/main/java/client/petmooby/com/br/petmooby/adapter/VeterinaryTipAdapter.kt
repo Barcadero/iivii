@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.model.VeterinaryTip
@@ -23,15 +24,17 @@ class VeterinaryTipAdapter(
         val vet = vets[position]
         holder.tvNameVet.text = vet.name
         holder.tvEmailVet.text = vet.email
-
+        holder.progess.visibility = View.VISIBLE
         Picasso.with(context).load(vet.photo).placeholder(R.drawable.ic_paw_24).fit().into(holder.ivProfileVet,
                 object : com.squareup.picasso.Callback{
                     override fun onSuccess() {
-                        //Stop progress bar
+                        holder.progess.visibility = View.GONE
+                        holder.ivProfileVet.visibility = View.VISIBLE
                     }
 
                     override fun onError() {
-                        //Stop progress bar
+                        holder.progess.visibility = View.GONE
+                        holder.ivProfileVet.visibility = View.VISIBLE
                     }
 
                 })
@@ -53,6 +56,7 @@ class VeterinaryTipAdapter(
         var ivProfileVet    = view.findViewById<ImageView>(R.id.ivProfileVet)
         var tvNameVet       = view.findViewById<TextView>(R.id.tvNameVet)
         var tvEmailVet      = view.findViewById<TextView>(R.id.tvEmailVet)
+        var progess         = view.findViewById<ProgressBar>(R.id.progressVetList)
 
     }
 
