@@ -34,7 +34,7 @@
             android:layout_height="100dp"
             android:layout_width="100dp"
             android:clickable="true"
-            android:background="@color/cardview_light_background"
+            android:background="@color/primaryLightColor"
             app:cardElevation="3dp"
             card_view:cardConerRadius="2dp"
             android:layout_marginTop="8dp"
@@ -46,14 +46,16 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_paw_24"
+                    android:background="@android:color/transparent"
                     android:layout_alignParentLeft="true"
-                    android:visibility="gone"
+                    android:visibility="visible"
+
                      />
             <ProgressBar
                 android:id="@+id/progressVetList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:background="@android:color/transparent"
                 />
         </android.support.v7.widget.CardView>

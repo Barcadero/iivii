@@ -22,10 +22,11 @@ class VeterinaryTipAdapter(
     override fun onBindViewHolder(holder: VetViewHolder, position: Int) {
         val context = holder.itemView.context
         val vet = vets[position]
-        holder.tvNameVet.text = vet.name
-        holder.tvEmailVet.text = vet.email
-        holder.progess.visibility = View.VISIBLE
-        Picasso.with(context).load(vet.photo).placeholder(R.drawable.ic_paw_24).fit().into(holder.ivProfileVet,
+        holder.tvNameVet.text       = vet.name
+        holder.tvEmailVet.text      = vet.email
+        holder.progess.visibility   = View.VISIBLE
+        //holder.ivProfileVet.visibility = View.GONE
+        Picasso.with(context).load(vet.photo).error(R.drawable.ic_paw_24).fit().into(holder.ivProfileVet,
                 object : com.squareup.picasso.Callback{
                     override fun onSuccess() {
                         holder.progess.visibility = View.GONE
