@@ -50,4 +50,6 @@ dependencies {
     //Cicle Images
     //-------------------------------------------------------------------------------
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //For calenda
+    implementation 'sun.bob:mcalendarview:1.0.0'
 }

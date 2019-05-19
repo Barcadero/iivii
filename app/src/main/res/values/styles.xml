@@ -9,10 +9,12 @@
         <!--
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colorText</item>
+
         -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarStyle">@style/AppClientTheme.ActionBarStyle</item>
+
 
 
     </style>
@@ -38,4 +40,10 @@
         <item name="android:layout_marginTop">3dp</item>
     </style>
 
+    <style name="Widget.CalendarView.Custom" parent="android:Widget.CalendarView">
+        <item name="android:focusedMonthDateColor">@color/primaryColor</item>
+        <item name="android:weekNumberColor">@color/secondaryColor</item>
+        <item name="android:weekDayTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:dateTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
 </resources>

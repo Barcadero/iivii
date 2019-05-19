@@ -7,4 +7,5 @@
     <dimen name="icon_height">35dp</dimen>
     <dimen name="icon_margin_top">20dp</dimen>
     <dimen name="text_size_larger">20sp</dimen>
+    <dimen name="marginTopForToolbar">60dp</dimen>
 </resources>
