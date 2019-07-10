@@ -53,4 +53,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //For calendar view
     //implementation 'ru.cleverpumpkin:crunchycalendar:2.0.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }

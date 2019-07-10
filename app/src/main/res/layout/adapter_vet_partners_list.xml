@@ -6,73 +6,59 @@
     android:id="@+id/cvVetPartnersList"
     android:layout_height="120dp"
     android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:layout_width="match_parent"
     android:clickable="true"
     android:padding="5dp"
-    android:background="@color/background"
     android:layout_marginBottom="5dp"
     app:cardElevation="3dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false"
-    card_view:cardConerRadius="2dp"
+    card_view:cardConerRadius="10dp"
     card_view:cardElevation="6dp"
-    android:foreground="?attr/selectableItemBackground"
 
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/background"
+        android:background="@drawable/cardview_corners_top"
+
         >
-
-        <android.support.v7.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:card_view="http://schemas.android.com/tools"
-            android:id="@+id/cvVetListImage"
-            android:layout_height="100dp"
-            android:layout_width="100dp"
-            android:clickable="true"
-            android:background="@color/primaryLightColor"
-            app:cardElevation="3dp"
-            card_view:cardConerRadius="2dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="5dp"
-            card_view:cardElevation="6dp" >
-                <ImageView
-                    android:id="@+id/ivProfileVet"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:layout_alignParentLeft="true"
-                    android:visibility="visible"
-
-                     />
-            <ProgressBar
-                android:id="@+id/progressVetList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:background="@android:color/transparent"
-                />
-        </android.support.v7.widget.CardView>
-
         <TextView
             android:id="@+id/tvNameVet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/cvVetListImage"
-            android:layout_marginStart="17dp"
-            android:layout_toEndOf="@+id/cvVetListImage"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:text="Professional Name"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/primaryTextColor"
-            android:layout_marginLeft="17dp"
-            android:layout_toRightOf="@+id/cvVetListImage" />
+            android:background="@drawable/txt_corners_top_dark"
+            android:paddingLeft="110dp"
+             />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivProfileVet"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            app:riv_corner_radius="15dip"
+            app:riv_border_width="2dip"
+            app:riv_border_color="@color/primaryColor"
+            app:riv_mutate_background="true"
+            app:riv_oval="false"
+            android:layout_marginLeft="5dp"
+            />
+        <ProgressBar
+            android:id="@+id/progressVetList"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            />
 
        <!--
         <TextView
@@ -88,11 +74,11 @@
             android:id="@+id/llPriceService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tvNameVet"
             android:layout_below="@+id/tvNameVet"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_alignLeft="@+id/tvNameVet">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/ivProfileVet"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/ivPriceMoney"
@@ -100,14 +86,15 @@
                 android:layout_height="wrap_content"
                 android:tint="@color/primaryDarkColor"
                 app:srcCompat="@drawable/ic_email_check_outline" />
+
             <TextView
                 android:id="@+id/tvEmailVet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
+                android:text="some text"
                 android:textColor="@color/primaryDarkColor"
-                android:textStyle="bold"
-                android:text="300,00" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!--

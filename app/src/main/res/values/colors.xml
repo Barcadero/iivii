@@ -34,4 +34,5 @@
     <color name="purple">#B175FF</color>
     <color name="colorBtnMainMenuBackground">#B175FF</color>
     <color name="colorBackground">#fff8e1</color>
+    <color name="cardViewBackground">#efbbff</color>
 </resources>
