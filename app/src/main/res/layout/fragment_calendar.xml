@@ -4,17 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.fragment.CalendarFragment">
-
-    <sun.bob.mcalendarview.views.ExpCalendarView
-        style="@style/Widget.CalendarView.Custom"
-        android:id="@+id/calendarView"
+    <!--
+    <ru.cleverpumpkin.calendar.CalendarView
+        android:id="@+id/calendar_view"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        tools:context="client.petmooby.com.br.petmooby.fragment.CalendarFragment"
-
+        android:layout_height="match_parent" />
+        -->
+    <Button
+        android:id="@+id/btnSeeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See saved dates"
         />
-
-
 
 
     <android.support.v7.widget.RecyclerView

@@ -3,27 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/viewMenuSpace"
+
+    android:layout_margin="5dp"
     tools:context="client.petmooby.com.br.petmooby.fragment.MenuFragment">
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:background="@color/viewMenuSpace"
+        android:background="@color/colorBackground"
         />
     <android.support.v7.widget.AppCompatButton
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuAppName"
         android:text="@string/app_name"
-        android:drawableLeft="@drawable/ic_paw_24"
+        android:drawableLeft="@drawable/logo_redondo_30"
+        android:background="@drawable/btn_corners"
+
        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/viewMenuSpace"
+
         android:text="@string/Options"
         android:textColor="@color/primaryDarkColor"
-
+        android:layout_marginTop="8dp"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textAllCaps="true"
@@ -33,14 +36,15 @@
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuVeterinaryPartners"
         android:text="@string/VeterinaryPartners"
-        android:drawableLeft="@drawable/ic_paw_24"
-        android:drawableRight="@drawable/ic_chevron_right"
+        android:drawableLeft="@drawable/icons8_doctor_30"
+        android:drawableRight="@drawable/ic_chevron_right_white"
+        android:background="@drawable/btn_corners"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/viewMenuSpace"
+        android:layout_marginTop="8dp"
         android:text="@string/About"
         android:textColor="@color/primaryDarkColor"
 
@@ -52,42 +56,44 @@
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuRateApp"
         android:text="@string/RateApp"
-        android:drawableLeft="@drawable/ic_paw_24"
-        android:drawableRight="@drawable/ic_chevron_right"
+        android:drawableLeft="@drawable/icons8_start_30"
+        android:drawableRight="@drawable/ic_chevron_right_white"
+        android:background="@drawable/btn_corners_top"
        />
 
     <android.support.v7.widget.AppCompatButton
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuTermsOfUse"
         android:text="@string/TermsOfUse"
-        android:drawableRight="@drawable/ic_chevron_right"
-        android:drawableLeft="@drawable/ic_paw_24"
+        android:drawableRight="@drawable/ic_chevron_right_white"
+        android:drawableLeft="@drawable/icons8_terms_use_30"
          />
 
     <android.support.v7.widget.AppCompatButton
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuContactUs"
         android:text="@string/ContactUs"
-        android:drawableRight="@drawable/ic_chevron_right"
-        android:drawableLeft="@drawable/ic_paw_24"
+        android:drawableRight="@drawable/ic_chevron_right_white"
+        android:drawableLeft="@drawable/icons8_composing_mail_30"
+        android:background="@drawable/btn_corners_bottom"
          />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/viewMenuSpace"
+        android:background="@drawable/btn_corners_gray"
         android:text="@string/helpUs"
         android:textColor="@color/primaryDarkColor"
-
         android:textSize="16sp"
         android:textStyle="bold"
         android:textAllCaps="false"
+
         />
     <android.support.v7.widget.AppCompatButton
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuLogout"
         android:text="@string/Logout"
-        android:drawableLeft="@drawable/ic_paw_24"
-
+        android:drawableLeft="@drawable/icons8_logout_30"
+        android:background="@drawable/btn_corners"
        />
 
 

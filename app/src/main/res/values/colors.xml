@@ -29,6 +29,9 @@
     <color name="white">#FFF</color>
     <color name="background">#c94f7c</color>
     <color name="colorAccent">#550026</color>
-    <color name="viewMenuSpace">#bdc1c9</color>
+    <color name="viewMenuSpace">#EFEBE2</color>
     <color name="secondaryLightBackColor">#fff8e1</color>
+    <color name="purple">#B175FF</color>
+    <color name="colorBtnMainMenuBackground">#B175FF</color>
+    <color name="colorBackground">#fff8e1</color>
 </resources>
