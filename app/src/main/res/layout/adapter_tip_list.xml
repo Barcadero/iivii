@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cvVetPartnersList"
+    android:layout_height="400dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:padding="5dp"
+    android:layout_marginBottom="5dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
+    card_view:cardConerRadius="10dp"
+    card_view:cardElevation="6dp"
+
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/cardViewBackground"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAdapterTip"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/primaryDarkColor"
+            android:layout_marginTop="28dp" />
+
+        <TextView
+            android:id="@+id/txtVetNameAdapterTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imgAdapterTip"
+            android:layout_marginTop="35dp"
+            android:gravity="center"
+            android:text="Doctor name" />
+
+        <TextView
+            android:id="@+id/txtTitleAdapterTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/txtVetNameAdapterTip"
+            android:layout_marginTop="19dp"
+            android:textStyle="bold"
+            android:text="Article Title"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txtTextAdapterTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/txtTitleAdapterTip"
+            android:layout_marginTop="23dp"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

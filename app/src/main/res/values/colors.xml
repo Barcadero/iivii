@@ -34,7 +34,7 @@
     <color name="purple">#944FCC</color>
     <color name="colorBtnMainMenuBackground">#944FCC</color>
     <color name="colorBackground">#fff8e1</color>
-    <color name="cardViewBackground">#efbbff</color>
+    <color name="cardViewBackground">#EFBBFF</color>
     <color name="selectedItemNav">#FFF</color>
     <color name="unselectedItemNav">#B9B9B9</color>
 </resources>
