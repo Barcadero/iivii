@@ -74,7 +74,7 @@
         android:id="@+id/btnMenuContactUs"
         android:text="@string/ContactUs"
         android:drawableRight="@drawable/ic_chevron_right_white"
-        android:drawableLeft="@drawable/icons8_composing_mail_30"
+        android:drawableLeft="@drawable/icons8_nova_mensagem_30"
         android:background="@drawable/btn_corners_bottom"
          />
     <TextView

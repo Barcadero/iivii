@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="client.petmooby.com.br.petmooby.actvity.VeterinaryPartnerDetailActivity"
     tools:showIn="@layout/activity_veterinary_partner_detail">
@@ -13,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:background="@color/background"
+        android:background="@color/purple"
         >
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivVetDetailProfile"
@@ -22,14 +23,17 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_centerVertical="true"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_paw_24" />
+            android:visibility="visible"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/primaryDarkColor"
+            />
         <ProgressBar
             android:id="@+id/progressVetList"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/tvVetDetailName"
@@ -48,7 +52,9 @@
         android:layout_marginTop="8dp"
         android:id="@+id/tvVetDetailAbout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        />
 
     <TextView
         android:id="@+id/tvVetDetailContactLabel"
@@ -59,11 +65,13 @@
         android:textColor="@color/primaryDarkColor"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginLeft="5dp"
         />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/primaryDarkColor"
+        android:layout_margin="5dp"
         />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -73,8 +81,7 @@
             android:id="@+id/ivVetDetailEmail"
             android:layout_width="@dimen/icon_width"
             android:layout_height="@dimen/icon_height"
-            android:tint="@color/primaryDarkColor"
-            app:srcCompat="@drawable/ic_email_check_outline"
+            app:srcCompat="@drawable/icons8_nova_mensagem_30"
             />
         <TextView
             android:id="@+id/tvVetDetailEmail"
@@ -90,8 +97,7 @@
             android:id="@+id/ivVetDetailPhone"
             android:layout_width="@dimen/icon_width"
             android:layout_height="@dimen/icon_height"
-            app:srcCompat="@drawable/ic_phone_classic"
-            android:tint="@color/primaryDarkColor"
+            app:srcCompat="@drawable/icons8_phone_30"
             android:layout_below="@+id/tvVetDetailEmail"
             android:layout_marginTop="@dimen/icon_margin_top"
             />
@@ -111,8 +117,8 @@
             android:id="@+id/ivVetDetailClinic"
             android:layout_width="@dimen/icon_width"
             android:layout_height="@dimen/icon_height"
-            android:tint="@color/primaryDarkColor"
-            app:srcCompat="@drawable/ic_hospital"
+
+            app:srcCompat="@drawable/icons8_hospital_3_30"
             android:layout_below="@+id/tvVetDetailPhone"
             android:layout_marginTop="@dimen/icon_margin_top"
             />
@@ -130,8 +136,8 @@
             android:id="@+id/ivVetDetailAddress"
             android:layout_width="@dimen/icon_width"
             android:layout_height="@dimen/icon_height"
-            app:srcCompat="@drawable/ic_map_marker_radius"
-            android:tint="@color/primaryDarkColor"
+            app:srcCompat="@drawable/icons8_location_marker_30"
+
             android:layout_below="@+id/tvVetDetailClinic"
             android:layout_marginTop="@dimen/icon_margin_top"
             />
