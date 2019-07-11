@@ -46,4 +46,7 @@
     <string name="Calendar">Calendar</string>
     <string name="Notifications">Notifications</string>
     <string name="Tips">Tips</string>
+    <string name="emailContatSubject">Contact made by petmoob Android App</string>
+    <string name="emailBody">Olá</string>
+    <string name="emailContactTitle">Contact e-mail</string>
 </resources>

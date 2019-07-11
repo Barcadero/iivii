@@ -36,8 +36,6 @@ class VeterinaryPartnerDetailActivity : AppCompatActivity() {
         tvVetDetailEmail.text   = vetTip.email
         tvVetDetailPhone.text   = if(vetTip.contact == null)"" else vetTip.contact
         tvVetDetailName.text    = vetTip.name
-        progressVetList.visibility = VISIBLE
-        ivVetDetailProfile.visibility = GONE
         PicassoUtil.build(vetTip.photo!!, ivVetDetailProfile,context = this)
         toolbar.findViewById<TextView>(R.id.toolbarTitle).text = vetTip.name
         setupToolbar(R.id.toolbar,"")

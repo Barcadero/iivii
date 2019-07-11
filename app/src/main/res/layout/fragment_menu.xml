@@ -7,11 +7,7 @@
     android:layout_margin="5dp"
     tools:context="client.petmooby.com.br.petmooby.fragment.MenuFragment">
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:background="@color/colorBackground"
-        />
+
     <android.support.v7.widget.AppCompatButton
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuAppName"
@@ -20,6 +16,12 @@
         android:background="@drawable/btn_corners"
 
        />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/colorBackground"
+        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

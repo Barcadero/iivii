@@ -54,4 +54,6 @@ dependencies {
     //For calendar view
     //implementation 'ru.cleverpumpkin:crunchycalendar:2.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    //For the rate app
+    implementation 'com.github.hotchemi:android-rate:1.0.1'
 }

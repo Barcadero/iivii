@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.fragment
 
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,14 @@ import android.view.ViewGroup
 import client.petmooby.com.br.petmooby.LoginActivity
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.VeterinaryPartnersListActivity
+import client.petmooby.com.br.petmooby.extensions.callEmailHost
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.toast
 import com.facebook.AccessTokenTracker
 import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.fragment_menu.*
 import com.facebook.AccessToken
+import hotchemi.android.rate.AppRate
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
@@ -47,6 +50,18 @@ class MenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         btnMenuLogout.setOnClickListener{logout()}
         btnMenuVeterinaryPartners.setOnClickListener { startActivity(Intent(activity,VeterinaryPartnersListActivity::class.java)) }
+        btnMenuAppName.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://petmooby.com.br"))
+            startActivity(browserIntent)
+        }
+        btnMenuRateApp.setOnClickListener { AppRate.with(activity).showRateDialog(activity) }
+        btnMenuTermsOfUse.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://petmooby.com.br/pages/terms.html"))
+            startActivity(browserIntent)
+        }
+        btnMenuContactUs.setOnClickListener {
+            callEmailHost("contact.petmooby@gmail.com",getString(R.string.emailContatSubject),getString(R.string.emailBody),getString(R.string.emailContactTitle))
+        }
         tokenTrace.startTracking()
         setupToolbar(R.id.toolbar,getString(R.string.Menu))
     }

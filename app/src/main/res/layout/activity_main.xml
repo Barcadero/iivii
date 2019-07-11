@@ -48,6 +48,8 @@
         android:elevation="10dp"
         android:clickable="true"
         android:background="@color/purple"
+        app:itemIconTint="@drawable/selector_item_nav"
+        app:itemTextColor="@drawable/selector_item_nav"
         app:menu="@menu/navigation" />
 
 </RelativeLayout>
