@@ -36,7 +36,7 @@
             android:visibility="visible"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/primaryDarkColor"
-            android:layout_marginTop="28dp" />
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:id="@+id/txtVetNameAdapterTip"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/imgAdapterTip"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="Doctor name" />
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/txtTitleAdapterTip"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="20dp"
             android:padding="8dp" />
 
     </RelativeLayout>

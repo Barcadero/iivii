@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_tip.*
+import android.widget.Toast
+import com.google.firebase.firestore.Query
 
 
 /**
@@ -47,12 +49,15 @@ class TipFragment : Fragment() {
     private fun initRCListOfTips() {
         var linearLayout = LinearLayoutManager(activity)
         rcListOfTips.layoutManager = linearLayout
-        endlessListener = object : EndlessRecyclerViewScrollListener(linearLayout) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                toast("Infinity scroll load more")
+
+        rcListOfTips!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(activity, getString(R.string.end), Toast.LENGTH_SHORT).show()
+                }
             }
-        }
-        rcListOfTips!!.addOnScrollListener(endlessListener!!)
+        })
     }
 
     private fun loadRCTipView(tips : LastTip){
@@ -62,6 +67,7 @@ class TipFragment : Fragment() {
     fun getTipList(){
         var dialog = showLoadingDialog()
         docRefVet.collection(CollectionsName.LAST_TIP)
+                .orderBy("lastTips.date")
                 .get()
                 .addOnCompleteListener {
                     task -> successQueryReturn(dialog,task)

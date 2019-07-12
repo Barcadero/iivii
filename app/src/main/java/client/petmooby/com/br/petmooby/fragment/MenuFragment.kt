@@ -13,12 +13,11 @@ import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.VeterinaryPartnersListActivity
 import client.petmooby.com.br.petmooby.extensions.callEmailHost
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
-import client.petmooby.com.br.petmooby.extensions.toast
+import com.facebook.AccessToken
 import com.facebook.AccessTokenTracker
 import com.facebook.login.LoginManager
-import kotlinx.android.synthetic.main.fragment_menu.*
-import com.facebook.AccessToken
 import hotchemi.android.rate.AppRate
+import kotlinx.android.synthetic.main.menu_fragment_content.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
