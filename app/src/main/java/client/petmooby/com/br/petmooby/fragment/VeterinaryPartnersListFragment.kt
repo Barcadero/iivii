@@ -59,10 +59,10 @@ class VeterinaryPartnersListFragment : Fragment() {
     private fun successQueryReturn(dialog: ProgressDialog, task: Task<QuerySnapshot>) {
         dialog.dismiss()
         if(task.isSuccessful){
-            if(task.result.isEmpty){
+            if(task.result?.isEmpty!!){
                 toast("No result found!")
             }else {
-                vetList = task.result.toObjects(VeterinaryTip::class.java)
+                vetList = task.result?.toObjects(VeterinaryTip::class.java)
                 recycleView!!.adapter = VeterinaryTipAdapter(vetList!!,{veterinaryTip: VeterinaryTip -> onClick(veterinaryTip) })
 
             }

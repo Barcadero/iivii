@@ -7,4 +7,6 @@ object CollectionsName {
     val USER        = "user"
     val VET_TIP     = "veterinary_tip"
     val LAST_TIP    = "last_tip"
+    val TIP         = "tip"
+    val ANIMAL      = "animal"
 }

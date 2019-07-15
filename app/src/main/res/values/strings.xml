@@ -50,4 +50,9 @@
     <string name="emailBody">Olá</string>
     <string name="emailContactTitle">Contact e-mail</string>
     <string name="end">End</string>
+    <string name="noModeResults">No more results!</string>
+    <string name="noPetsRegisteredYet">You have not registered any pets!</string>
+    <string name="savingUser">Saving user...</string>
+    <string name="checkingUser">Checking user...</string>
+    <string name="gettingMyPets">Getting your pets ...</string>
 </resources>

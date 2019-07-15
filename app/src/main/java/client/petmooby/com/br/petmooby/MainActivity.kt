@@ -11,9 +11,11 @@ import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.fragment.*
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
+import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.AccessToken
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,8 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        //NOTE: Set home fragment as the main content
-        switchFragment(HomeFragment())
+
         //For facebook
         checkIfUserExistsAndSave()
 
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveCurrenteUser(){
+        var dialog = showLoadingDialog(getString(R.string.savingUser))
         var accessToken = AccessToken.getCurrentAccessToken()
         var isLoggedIn = accessToken != null && !accessToken.isExpired
         if(isLoggedIn){
@@ -73,16 +75,18 @@ class MainActivity : AppCompatActivity() {
             user.name           = Preference.get<String>(this,Preference.USER_NAME)
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
             user.userIdFB       = Preference.get(this,Preference.USER_ID)
-            docRefUser.add(user).addOnSuccessListener {
-                toast("User saved")
-            }.addOnFailureListener {
-                exception -> toast("Erro ${exception.message}")
-            }
+            docRefUser.add(user)
+                    .addOnSuccessListener {
+                        documentReference -> FireStoreReference.docRefUser = documentReference;switchFragment(HomeFragment());dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        exception ->  dialog.dismiss();toast("Erro ${exception.message}")
+                    }
         }
     }
 
     fun checkIfUserExistsAndSave(){
-        var dialog = showLoadingDialog()
+        var dialog = showLoadingDialog(getString(R.string.checkingUser))
         var userId = Preference.get<String>(this,Preference.USER_ID)
         docRefUser
                 .whereEqualTo(User.USER_ID_FACEBOOK,userId)
@@ -100,12 +104,12 @@ class MainActivity : AppCompatActivity() {
         dialog.dismiss()
         //var users = document.toObjects(User::class.java)
         if(task.isSuccessful){
-            if(task.result.isEmpty){
+            if(task.result?.isEmpty!!){
                 saveCurrenteUser()
             }else {
-                task.result
-                        .map { it.toObject(User::class.java) }
-                        .forEach { Log.d("FACE","Olá ${it.name}") }
+                FireStoreReference.docRefUser = task?.result?.documents!![0].reference
+                //NOTE: Set home fragment as the main content
+                switchFragment(HomeFragment())
             }
         }
 
