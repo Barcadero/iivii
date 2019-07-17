@@ -1,15 +1,18 @@
 package client.petmooby.com.br.petmooby.fragment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import client.petmooby.com.br.petmooby.R
+import client.petmooby.com.br.petmooby.actvity.AddNewPetActivity
 import client.petmooby.com.br.petmooby.adapter.AnimalAdapter
 import client.petmooby.com.br.petmooby.extensions.*
 import client.petmooby.com.br.petmooby.model.Animal
@@ -23,9 +26,12 @@ import kotlinx.android.synthetic.main.fragment_home.*
 /**
  * A simple [Fragment] subclass.
  */
+const val CODE_RESULT_FOR_ADD_PET = 122
 class HomeFragment : Fragment() {
 
+
     var rcMyAnimalsList:RecyclerView?=null
+
 
     private var docRefVet = FirebaseFirestore.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +45,18 @@ class HomeFragment : Fragment() {
         rcMyAnimalsList = defaultRecycleView(activity!!,R.id.rcMyAnimalsList)
         getMyAnimals()
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.menuAdd -> {
+            startActivityForResult(Intent(activity,AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun getMyAnimals(){

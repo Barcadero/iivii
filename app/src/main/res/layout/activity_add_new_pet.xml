@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="client.petmooby.com.br.petmooby.actvity.AddNewPetActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivProfileMyPet"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/primaryDarkColor"
+                android:layout_marginLeft="5dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/viewMenuSpace" />
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/txtAddPetName"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/icons8_identidade_de_cachorro_30" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/txtAddPetName"
+                    android:layout_toRightOf="@+id/txtAddPetName">
+
+                    <EditText
+                        android:id="@+id/tvEmailEditPatient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:hint="@string/name"
+                        android:inputType="textEmailAddress" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivNameEdit"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/icons8_niver_60_2" />
+
+                <EditText
+                    android:id="@+id/etNameEditPatient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/ivNameEdit"
+                    android:layout_toRightOf="@+id/ivNameEdit"
+                    android:hint="@string/birthday"
+                    android:inputType="textPersonName" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivNewPetGender"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/icons8_gender_30" />
+
+                <EditText
+                    android:id="@+id/etNewPetGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/ivNewPetGender"
+                    android:layout_toRightOf="@+id/ivNewPetGender"
+                    android:hint="@string/gender"
+                    android:inputType="textPersonName" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivNewPetKindAnimal"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/icons8_pegada_de_urso_60" />
+
+                <EditText
+                    android:id="@+id/etNewPetKindAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/ivNewPetKindAnimal"
+                    android:layout_toRightOf="@+id/ivNewPetKindAnimal"
+                    android:hint="@string/animal"
+                    android:inputType="textPersonName" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivNewPetBreed"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/icons8_perfil_de_gato_30" />
+
+                <EditText
+                    android:id="@+id/etNewPetBreed"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/ivNewPetBreed"
+                    android:layout_toRightOf="@+id/ivNewPetBreed"
+                    android:hint="@string/breed"
+                    android:inputType="textPersonName" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtAddPetAdviceBreed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/addNewPetBreedAdvice"
+                android:padding="15dp"
+                android:textSize="14sp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/purple"
+                    />
+
+                <android.support.v7.widget.AppCompatButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/btnAddVaccine"
+                    style="@style/btnStyle"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/vaccine"
+                    android:textAllCaps="true"
+                    android:drawableLeft="@drawable/layer_vaccine_animal"
+
+                    />
+
+                <android.support.v7.widget.AppCompatButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/btnAddMedicinalTreatment"
+                    style="@style/btnStyle"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/medicinalTreatment"
+                    android:textAllCaps="true"
+                    android:drawableLeft="@drawable/layer_medicinal_treatment"
+
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

@@ -59,9 +59,19 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarStyle">@style/AppClientTheme.ActionBarStyle</item>
+    </style>
 
-
-
+    <style name="btnStyle" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_height">@dimen/btnHeight</item>
+        <item name="android:layout_width">@dimen/btnWidth</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/btn_active</item>
     </style>
 
 </resources>

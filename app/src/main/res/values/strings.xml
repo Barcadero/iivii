@@ -55,4 +55,14 @@
     <string name="savingUser">Saving user...</string>
     <string name="checkingUser">Checking user...</string>
     <string name="gettingMyPets">Getting your pets ...</string>
+    <string name="addNew">New</string>
+    <string name="addNewPetBreedAdvice">You don\'t need to enter this field if your little friend doesn\'t hava a defined breed or you don\'t know</string>
+    <string name="health">Health</string>
+    <string name="name">Name</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender</string>
+    <string name="animal">Animal</string>
+    <string name="breed">Breed</string>
+    <string name="vaccine">Vaccine</string>
+    <string name="medicinalTreatment">Medicinal Treatment</string>
 </resources>
