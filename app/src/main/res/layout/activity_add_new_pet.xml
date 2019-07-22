@@ -6,8 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.actvity.AddNewPetActivity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarNewPet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:theme="@style/toolbarTheme"
+            />
 
-
+    </android.support.design.widget.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,11 +33,10 @@
                 android:id="@+id/ivProfileMyPet"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
                 app:civ_border_width="2dp"
+                android:layout_gravity="center"
                 app:civ_border_color="@color/primaryDarkColor"
-                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
                 />
 
             <View
@@ -34,7 +45,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/viewMenuSpace" />
+                android:background="@color/secondaryDarkColor" />
 
 
 
@@ -63,13 +74,13 @@
                     android:layout_toRightOf="@+id/txtAddPetName">
 
                     <EditText
-                        android:id="@+id/tvEmailEditPatient"
+                        android:id="@+id/edtNewPetName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="false"
-                        android:focusable="false"
+                        android:focusable="true"
                         android:hint="@string/name"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textPersonName" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -95,14 +106,22 @@
                     android:src="@drawable/icons8_niver_60_2" />
 
                 <EditText
-                    android:id="@+id/etNameEditPatient"
+                    android:id="@+id/edtNewPetBirthday"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/ivNameEdit"
                     android:layout_toRightOf="@+id/ivNameEdit"
                     android:hint="@string/birthday"
-                    android:inputType="textPersonName" />
+                    android:inputType="number" />
 
+                <ImageButton
+                    android:id="@+id/btnNewPetCalender"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@+id/ivNameEdit"
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icons8_calendar_30" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -123,14 +142,15 @@
                     android:layout_marginTop="10dp"
                     android:src="@drawable/icons8_gender_30" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/etNewPetGender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/ivNewPetGender"
                     android:layout_toRightOf="@+id/ivNewPetGender"
-                    android:hint="@string/gender"
-                    android:inputType="textPersonName" />
+                    android:entries="@array/array_gender"
+
+                     />
 
             </RelativeLayout>
 
@@ -199,7 +219,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/addNewPetBreedAdvice"
                 android:padding="15dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
+                android:textColor="@color/primaryColor"
                 />
 
             <LinearLayout
@@ -212,6 +233,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/health"
+                    android:textSize="16sp"
+                    android:textColor="@color/primaryColor"
                     />
                 <View
                     android:layout_width="match_parent"
@@ -240,6 +263,7 @@
                     android:drawableLeft="@drawable/layer_medicinal_treatment"
 
                     />
+
             </LinearLayout>
 
         </LinearLayout>

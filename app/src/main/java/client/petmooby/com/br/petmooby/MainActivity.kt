@@ -50,10 +50,10 @@ class MainActivity : AppCompatActivity() {
                 switchFragment(TipFragment())
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
-                switchFragment(NotificationFragment())
-                return@OnNavigationItemSelectedListener true
-            }
+            //R.id.navigation_notifications -> {
+            //    switchFragment(NotificationFragment())
+            //    return@OnNavigationItemSelectedListener true
+            //}
             R.id.navigation_calendar->{
                 switchFragment(CalendarFragment())
                 return@OnNavigationItemSelectedListener true

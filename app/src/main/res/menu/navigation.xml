@@ -15,11 +15,12 @@
         android:id="@+id/navigation_tip"
         android:icon="@drawable/ic_alert_circle"
         android:title="@string/title_tip" />
-
+<!--
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_notifications" />
+-->
     <item
         android:id="@+id/navigation_menu"
         android:icon="@drawable/ic_menu"

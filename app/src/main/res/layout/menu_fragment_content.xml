@@ -12,11 +12,7 @@
         android:background="@drawable/btn_corners"
 
         />
-    <View
-    android:layout_width="wrap_content"
-    android:layout_height="40dp"
-    android:background="@color/colorBackground"
-        />
+
 
     <TextView
     android:layout_width="match_parent"
@@ -24,7 +20,7 @@
 
     android:text="@string/Options"
     android:textColor="@color/primaryDarkColor"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="48dp"
     android:textSize="16sp"
     android:textStyle="bold"
     android:textAllCaps="true"
