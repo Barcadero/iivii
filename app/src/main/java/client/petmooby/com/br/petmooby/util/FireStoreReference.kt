@@ -8,7 +8,14 @@ import com.google.firebase.firestore.DocumentReference
 class FireStoreReference {
     companion object {
         var docRefUser  : DocumentReference?=null
-        var docRefMyPets: List<DocumentReference>?=null
+        var docRefMyPets: MutableList<DocumentReference>?=null
+
+        fun saveAnimalReference(documentReference: DocumentReference){
+            if(docRefMyPets == null){
+                docRefMyPets = mutableListOf()
+            }
+            docRefMyPets!!.add(documentReference)
+        }
     }
 
 }

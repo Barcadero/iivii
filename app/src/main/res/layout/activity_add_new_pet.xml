@@ -37,6 +37,7 @@
                 android:layout_gravity="center"
                 app:civ_border_color="@color/primaryDarkColor"
                 android:layout_marginTop="20dp"
+                android:src="@drawable/icons8_identidade_de_cachorro_60"
                 />
 
             <View
@@ -57,7 +58,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/txtAddPetName"
+                    android:id="@+id/imgAddPetName"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginEnd="16dp"
@@ -70,8 +71,8 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/txtAddPetName"
-                    android:layout_toRightOf="@+id/txtAddPetName">
+                    android:layout_toEndOf="@+id/imgAddPetName"
+                    android:layout_toRightOf="@+id/imgAddPetName">
 
                     <EditText
                         android:id="@+id/edtNewPetName"
@@ -143,7 +144,7 @@
                     android:src="@drawable/icons8_gender_30" />
 
                 <Spinner
-                    android:id="@+id/etNewPetGender"
+                    android:id="@+id/spNewPetGender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/ivNewPetGender"
@@ -173,13 +174,13 @@
                     android:layout_marginTop="10dp"
                     android:src="@drawable/icons8_pegada_de_urso_60" />
 
-                <EditText
-                    android:id="@+id/etNewPetKindAnimal"
+                <Spinner
+                    android:id="@+id/spNewPetKindAnimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/ivNewPetKindAnimal"
                     android:layout_toRightOf="@+id/ivNewPetKindAnimal"
-                    android:hint="@string/animal"
+                    android:entries="@array/array_animal_type"
                     android:inputType="textPersonName" />
 
             </RelativeLayout>
@@ -202,13 +203,13 @@
                     android:layout_marginTop="10dp"
                     android:src="@drawable/icons8_perfil_de_gato_30" />
 
-                <EditText
-                    android:id="@+id/etNewPetBreed"
+                <Spinner
+                    android:id="@+id/spNewPetBreed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/ivNewPetBreed"
                     android:layout_toRightOf="@+id/ivNewPetBreed"
-                    android:hint="@string/breed"
+
                     android:inputType="textPersonName" />
 
             </RelativeLayout>
