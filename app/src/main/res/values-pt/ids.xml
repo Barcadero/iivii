@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="noModeResults" type="id">No more results</item>
     <item name="animalBreedIsMissing" type="id">Please, select the animal breed</item>
     <item name="bithDayIsMissing" type="id">Please, select or digite a Birthday</item>
     <item name="animalTypeIsMissing" type="id">Please, tell us what kind of animal do you have.

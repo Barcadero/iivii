@@ -22,7 +22,9 @@ class AnimalAdapter (
         val context = holder.itemView.context
         holder.txtPetName.text  = animal.name
         holder.txtKind.text     = animal.breed
-        PicassoUtil.build(animal.photo!!,holder.ivProfile,context = context)
+        if(animal.photo != null) {
+            PicassoUtil.build(animal.photo!!, holder.ivProfile, context = context)
+        }
         holder.itemView.setOnClickListener {onClick(animal)}
     }
 

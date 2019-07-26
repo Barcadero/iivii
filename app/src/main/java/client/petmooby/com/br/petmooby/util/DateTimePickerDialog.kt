@@ -24,22 +24,21 @@ class DateTimePickerDialog  {
             tpd.show()
         }
 
-        fun showDatePicker(context:Context, component: View) :Date?{
-            var dateResult:Date?=null
+        fun showDatePicker(context:Context, component: View, datePar: Date) {
             val c       = Calendar.getInstance()
             val year    = c.get(Calendar.YEAR)
             val month   = c.get(Calendar.MONTH)
             val day     = c.get(Calendar.DAY_OF_MONTH)
             val date    = DatePickerDialog(context,DatePickerDialog.OnDateSetListener(function = { view, year, month,day ->
-                dateResult = DateTimeUtil.getDate(year,month,day)
+                datePar.date = DateTimeUtil.getDate(year,month,day).date
                 when(component){
                     is TextView ->{
-                        component.text = DateTimeUtil.formatDateTime(dateResult,"dd/MM/yyyy")
+                        component.text = DateTimeUtil.formatDateTime(datePar,"dd/MM/yyyy")
                     }
                 }
             }),year,month,day)
             date.show()
-            return dateResult
+
         }
     }
 

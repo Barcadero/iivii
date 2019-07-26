@@ -15,6 +15,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarStyle">@style/AppClientTheme.ActionBarStyle</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
     <style name="AppClientTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -54,6 +55,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarStyle">@style/AppClientTheme.ActionBarStyle</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
     <style name="btnStyle" parent="@android:style/Widget.Button">

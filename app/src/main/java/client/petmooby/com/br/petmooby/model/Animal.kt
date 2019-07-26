@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.model
 
 import client.petmooby.com.br.petmooby.model.enums.*
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Exclude
 import java.io.Serializable
 import java.util.*
 
@@ -10,6 +11,8 @@ import java.util.*
  */
 class Animal : Serializable{
 
+    @Exclude
+    var id            :String?=null
     var breed         :String?=null
     var dateOfBirthday:Date?=null
     var gender        :String?=null

@@ -43,6 +43,7 @@
             app:civ_border_width="2dp"
             app:civ_border_color="@color/primaryDarkColor"
             android:layout_marginLeft="5dp"
+            android:src="@drawable/icons8_identidade_de_cachorro_90"
             />
         <ProgressBar
             android:id="@+id/progressMyAnimal"
