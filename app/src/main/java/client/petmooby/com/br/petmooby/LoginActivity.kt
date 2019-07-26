@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
             LoginManager.getInstance().registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
                     var profile = Profile.getCurrentProfile()
-                    var name = "${profile.firstName}  ${profile.lastName}"
+                    var name = "${profile?.firstName}  ${profile?.lastName}"
                     var accessToken = loginResult.accessToken
                     var userIdFB = profile.id
                     Preference.set(this@LoginActivity, Preference.USER_NAME,name)

@@ -1,8 +1,9 @@
 package client.petmooby.com.br.petmooby.actvity
 
 import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -23,14 +24,22 @@ import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.LayoutResourceUtil
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.mvc.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
+import java.io.File
 import java.util.*
+import android.R.attr.data
+import android.graphics.Bitmap
+
+
 
 class AddNewPetActivity : AppCompatActivity() {
 
     var bithDate = Date()
     var animalRef = FirebaseFirestore.getInstance().collection(CollectionsName.ANIMAL)
     var enumSelectedBreed: EnumBreedBase?=null
+    var storage = FirebaseStorage.getInstance().reference
     //var currentAnimalRef: DocumentReference?=null
     var animal :Animal?=null
     var isForUpdate = false
@@ -43,6 +52,9 @@ class AddNewPetActivity : AppCompatActivity() {
         edtNewPetBirthday.addTextChangedListener(DateMaskTextWatcher(edtNewPetBirthday))
         setupToolbar(R.id.toolbarNewPet, R.string.addPet)
         initSpinners()
+        ivProfileMyPet.setOnClickListener {
+            ImagePicker.pickImage(this, "Select your image:")
+        }
 
     }
 
@@ -182,6 +194,7 @@ class AddNewPetActivity : AppCompatActivity() {
         animal?.id = documentReference.id
         isForUpdate = true
         FireStoreReference.saveAnimalReference(documentReference)
+        uploadImage(animal?.photo!!)
     }
 
     fun validateFields(animal: Animal): Boolean{
@@ -202,6 +215,32 @@ class AddNewPetActivity : AppCompatActivity() {
                 showAlert(R.id.animalGenderIsMissing)
                 false
             } else true
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+//            var image = ImagePicker.getFirstImageOrNull(data)
+//            animal?.photo = image.path
+//        }
+        //val bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
+        val i = ImagePicker.getImagePathFromResult(this,requestCode,resultCode,data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun uploadImage(path:String){
+        var file = Uri.fromFile(File(path))
+        val riversRef = storage.child("images/${file.lastPathSegment}")
+        var uploadTask = riversRef.putFile(file)
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+            exception -> showAlert(R.string.errorOnUploadingImage)
+        }.addOnSuccessListener {
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+            taskSnapshot -> animal?.photo = taskSnapshot.storage.downloadUrl.toString()
         }
     }
 }

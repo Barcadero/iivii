@@ -6,4 +6,5 @@
     <string name="dog">Dog</string>
     <string name="cat">Cat</string>
     <string name="bird">Bird</string>
+    <string name="errorOnUploadingImage">Erro on uploaad image.</string>
 </resources>
