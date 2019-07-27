@@ -1,9 +1,15 @@
 package client.petmooby.com.br.petmooby.util;
 
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import client.petmooby.com.br.petmooby.R;
+import client.petmooby.com.br.petmooby.application.Application;
 
 
 public class DateTimeUtil {
@@ -22,6 +28,17 @@ public class DateTimeUtil {
 	}
 	
 	public static String formatDateTime(Date date, String formatOut) {
+		return new SimpleDateFormat(formatOut).format(date);
+	}
+
+	public static String formatDateTime(Date date, @StringRes int resId) {
+		String formatOut = Application.Companion.getInstance().getString(resId);
+		return new SimpleDateFormat(formatOut).format(date);
+	}
+
+	public static String formatDateTime(Date date) {
+		if(date == null)return "";
+		String formatOut = Application.Companion.getInstance().getString(R.string.formatDate);
 		return new SimpleDateFormat(formatOut).format(date);
 	}
 

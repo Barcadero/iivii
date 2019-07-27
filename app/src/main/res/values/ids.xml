@@ -6,4 +6,5 @@
     <item name="animalTypeIsMissing" type="id">Please, tell us what kind of animal do you have.
     </item>
     <item name="animalGenderIsMissing" type="id">Animal gender was not set.</item>
+    <item name="pleaseTakeAPictureOfYourAnimal" type="id">Please take a picture of your pet</item>
 </resources>

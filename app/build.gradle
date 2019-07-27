@@ -70,4 +70,6 @@ dependencies {
     //implementation 'com.github.esafirm.android-image-picker:imagepicker:1.13.1'
     implementation 'com.github.Mariovc:ImagePicker:1.2.2'
     implementation 'com.github.bumptech.glide:glide:4.5.0'
+    //To compress image file
+    implementation 'id.zelory:compressor:2.1.0'
 }

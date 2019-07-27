@@ -7,4 +7,8 @@
     <string name="cat">Cat</string>
     <string name="bird">Bird</string>
     <string name="errorOnUploadingImage">Erro on uploaad image.</string>
+    <string name="selectAPicture">Select your image:</string>
+    <string name="cantGetFileImage">Can\'t get image file.Sorry!</string>
+    <string name="formatDate">dd/MM/yyyy</string>
+    <string name="savingImage">Saving Image ...</string>
 </resources>

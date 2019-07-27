@@ -15,6 +15,7 @@ import client.petmooby.com.br.petmooby.extensions.*
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.util.FireStoreReference
+import client.petmooby.com.br.petmooby.util.Parameters
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -86,7 +87,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun animalDetail(animal: Animal){
-        toast("Animal ${animal.name}")
+        animal.userPath = animal.user?.path
+        var intent = Intent(activity,AddNewPetActivity::class.java)
+        intent.putExtra(Parameters.IS_FOR_UPDATE,true)
+        intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+        startActivity(intent)
+
     }
 
 }

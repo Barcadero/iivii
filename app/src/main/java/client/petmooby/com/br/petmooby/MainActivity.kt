@@ -12,6 +12,7 @@ import client.petmooby.com.br.petmooby.fragment.*
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.util.FireStoreReference
+import client.petmooby.com.br.petmooby.util.PermissionUtil
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.AccessToken
 import com.google.android.gms.tasks.Task
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         //For facebook
         checkIfUserExistsAndSave()
+        if(!PermissionUtil.checkPersmission(this))PermissionUtil.requestPermission(this)
 
     }
 
