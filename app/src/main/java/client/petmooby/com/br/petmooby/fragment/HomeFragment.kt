@@ -80,8 +80,18 @@ class HomeFragment : Fragment() {
         if(querySnapshot.isEmpty){
             llHomeNoPetYet.visibility = VISIBLE
         }else{
-            var myList = querySnapshot.toObjects(Animal::class.java)
 
+            var myList = mutableListOf<Animal>()
+            querySnapshot.documents.forEach{
+                var animal = it.toObject(Animal::class.java)
+                if(animal?.id == null){
+                    animal?.id = it.id
+
+                }
+                myList.add(animal!!)
+            }
+
+            //var myList = querySnapshot.toObjects(Animal::class.java)
             rcMyAnimalsList?.adapter = AnimalAdapter(myList,{animal -> animalDetail(animal) })
         }
     }

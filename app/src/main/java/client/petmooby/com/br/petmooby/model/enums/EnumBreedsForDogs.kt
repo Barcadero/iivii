@@ -16,7 +16,7 @@ enum class EnumBreedsForDogs(@StringRes resId:Int, value:String) :EnumBreedBase 
         BASENJI                         (R.string.Basenji                        ,"Basenji"                        ),
         BASSET_HOUND                    (R.string.Basset_Hound                   ,"Basset Hound"                   ),
         BEAGLE                          (R.string.Beagle                         ,"Beagle"                         ),
-        BERNESE_MOUNTAIN_DOG            (R.string.Bernese_Mountain_Dog           ,"Bernese Mountain_Dog"           ),
+        BERNESE_MOUNTAIN_DOG            (R.string.Bernese_Mountain_Dog           ,"Bernese Mountain Dog"           ),
         BICHON_FRISE                    (R.string.Bichon_Frise                   ,"Bichon Frise"                   ),
         BLOODHOUND                      (R.string.Bloodhound                     ,"Bloodhound"                     ),
         BORDER_COLLIE                   (R.string.Border_Collie                  ,"Border Collie"                  ),
@@ -95,10 +95,11 @@ enum class EnumBreedsForDogs(@StringRes resId:Int, value:String) :EnumBreedBase 
     }
 
     fun getByValue(value:String): EnumBreedsForDogs{
-            return EnumBreedsForDogs.values()
+            val breed = EnumBreedsForDogs.values()
                     .firstOrNull()
                     ?.let { if(it.value == value) it else EnumBreedsForDogs.OTHER }
                     ?: EnumBreedsForDogs.OTHER
+            return breed
     }
     override fun getValue(position: Int): String {
         return EnumBreedsForDogs.values()[position].value

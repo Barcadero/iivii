@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -40,6 +41,7 @@ import com.squareup.picasso.Picasso
 import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -56,9 +58,11 @@ class AddNewPetActivity : AppCompatActivity() {
     var animalRef = mRef.collection(CollectionsName.ANIMAL)
     var enumSelectedBreed: EnumBreedBase?=null
     var storage = FirebaseStorage.getInstance().reference
-    private var mCurrentPhotoPath: String? = null
+    //private var mCurrentPhotoPath: String? = null
+    private var mCurrentPhotoBitmap: Bitmap?=null
     var animal :Animal?=null
     var isForUpdate = false
+    var fromOtherScreen = false
     private val camera      = CameraUtil()
     private val photoName   = "photoProfile.jpg"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,14 +96,7 @@ class AddNewPetActivity : AppCompatActivity() {
             spNewPetGender.setSelection(EnumGender.valueOf(animal?.gender!!).ordinal)
             if(animal?.type != null) {
                 spNewPetKindAnimal.setSelection(EnumTypeAnimal.valueOf(animal?.type?.name!!).ordinal)
-
-                spNewPetBreed.setSelection(when {
-                    animal?.type == EnumTypeAnimal.DOG ->   EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
-                    animal?.type == EnumTypeAnimal.BIRD ->  EnumBreedsForBirds.OTHER.getByValue(animal?.breed!!).ordinal
-                    animal?.type == EnumTypeAnimal.CAT ->   EnumBreedsForCats.OTHER.getByValue(animal?.breed!!).ordinal
-                    animal?.type == EnumTypeAnimal.OTHER -> EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
-                    else -> 0
-                })
+                fromOtherScreen = true
             }
             if(animal?.photo != null) {
                 loadProfilePicture()
@@ -151,19 +148,22 @@ class AddNewPetActivity : AppCompatActivity() {
                         //DOGS
                         spNewPetBreed.isEnabled = true
                         var adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
-                        adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
+                        fromOtherScreenSelection()
+                        adapterValue.sort(EnumBreedComparator())
 
                     }
                     2 -> {
                         //CATS
                         spNewPetBreed.isEnabled = true
                         spNewPetBreed.adapter = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
+                        fromOtherScreenSelection()
                     }
                     3 -> {
                         //BIRDS
                         spNewPetBreed.isEnabled = true
-                        spNewPetBreed.adapter = ArrayAdapter<EnumBreedsForBirds>(view?.context, android.R.layout.simple_spinner_item, EnumBreedsForBirds.values())
+                        spNewPetBreed.adapter = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
+                        fromOtherScreenSelection()
                     }
                 }
             }
@@ -182,7 +182,14 @@ class AddNewPetActivity : AppCompatActivity() {
                     }
                     1 -> {
                         //DOGS
-                        enumSelectedBreed = EnumBreedsForDogs.values()[position]
+                        //enumSelectedBreed = EnumBreedsForDogs.values()[position]
+                        //enumSelectedBreed = selectedI
+                        Log.d("ADD_NEW_PET",enumSelectedBreed.toString())
+                        Log.d("ID",id.toString())
+                        Log.d("SELECTED ID",parent?.selectedItemId!!.toString())
+                        enumSelectedBreed =  spNewPetBreed.selectedItem as EnumBreedsForDogs
+                        Log.d("SELECTED ID",enumSelectedBreed.toString())
+
 
                     }
                     2 -> {
@@ -200,6 +207,19 @@ class AddNewPetActivity : AppCompatActivity() {
         }
         spNewPetGender.adapter      = ArrayAdapter<EnumGender>(this,LayoutResourceUtil.getSpinnerDropDown(),EnumGender.values())
         spNewPetKindAnimal.adapter  = ArrayAdapter<EnumTypeAnimal>(this,LayoutResourceUtil.getSpinnerDropDown(),EnumTypeAnimal.values())
+    }
+
+    private fun fromOtherScreenSelection() {
+        if (fromOtherScreen) {
+            spNewPetBreed.setSelection(when {
+                animal?.type == EnumTypeAnimal.DOG -> BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!)?.ordinal!!
+                animal?.type == EnumTypeAnimal.BIRD -> EnumBreedsForBirds.OTHER.getByValue(animal?.breed!!).ordinal
+                animal?.type == EnumTypeAnimal.CAT -> EnumBreedsForCats.OTHER.getByValue(animal?.breed!!).ordinal
+                animal?.type == EnumTypeAnimal.OTHER -> EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
+                else -> 0
+            })
+            fromOtherScreen = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -292,7 +312,8 @@ class AddNewPetActivity : AppCompatActivity() {
             }else if(user == null) {
                 showAlert(R.id.animalGenderIsMissing)
                 false
-            }else if(mCurrentPhotoPath.isNullOrEmpty() && !isForUpdate){
+            //}else if(mCurrentPhotoPath.isNullOrEmpty() && !isForUpdate){
+            }else if(mCurrentPhotoBitmap == null && !isForUpdate){
                 showAlert(R.id.pleaseTakeAPictureOfYourAnimal)
                 false
             } else true
@@ -308,11 +329,16 @@ class AddNewPetActivity : AppCompatActivity() {
     }
 
     private fun uploadImageAndSaveOrUpdatePet(){
-        if(mCurrentPhotoPath == null) return
+        //if(mCurrentPhotoPath == null) return
+        if(mCurrentPhotoBitmap == null) return
         val dialog      = showLoadingDialog(message = getString(R.string.savingImage))
-        var file        = Uri.fromFile(File(mCurrentPhotoPath))
+        //var file        = Uri.fromFile(File(mCurrentPhotoPath))
         val ref   = storage.child("animal/${animal?.id}.jpg")
-        var uploadTask  = ref.putFile(file)
+        val baos = ByteArrayOutputStream()
+        mCurrentPhotoBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+//        var uploadTask  = ref.putFile(file)
+        var uploadTask  = ref.putBytes(data)
         val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
@@ -360,7 +386,8 @@ class AddNewPetActivity : AppCompatActivity() {
             if(bitmap != null) {
                 bitmap = ImageUtil.rotate(bitmap,matrix)
                 ivProfileMyPet.setImageBitmap(bitmap)
-                mCurrentPhotoPath = imagePathFromResult
+                mCurrentPhotoBitmap = bitmap
+                //mCurrentPhotoPath = imagePathFromResult
             }
         }
     }
@@ -379,7 +406,7 @@ class AddNewPetActivity : AppCompatActivity() {
         }
         if (!f.exists()) {
             Toast.makeText(this,
-                    "Error while capturing image", Toast.LENGTH_LONG)
+                    getString(R.string.errorWhileCapturingImage), Toast.LENGTH_LONG)
                     .show()
             return
 
@@ -391,8 +418,10 @@ class AddNewPetActivity : AppCompatActivity() {
         try{
             var bitmap = compress(f,bitmapOrigin)
             ivProfileMyPet.setImageBitmap(bitmap)
-            mCurrentPhotoPath =  f.absolutePath
+            mCurrentPhotoBitmap = bitmap
+            //mCurrentPhotoPath =  f.absolutePath
             //postImageProfile(bitmap!!)
+
         } catch (e:Exception ) {
             e.printStackTrace()
         }
