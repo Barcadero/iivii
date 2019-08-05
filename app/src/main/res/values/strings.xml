@@ -79,6 +79,12 @@
     <string name="formatDate">dd/MM/yyyy</string>
     <string name="savingImage">Saving Image ...</string>
     <string name="errorWhileCapturingImage">Error while capturing image</string>
+    <string name="youCanOnlyHaveSomeAnimals">You can have just 8 pets.</string>
+    <string name="exclude">Exclude</string>
+    <string name="removedPet">The pet was removed.</string>
+    <string name="removingPet">Removing pet</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>

@@ -71,4 +71,8 @@
         <item name="android:background">@drawable/btn_active</item>
     </style>
 
+    <style name="btnDanger" parent="btnStyle">
+        <item name="android:background">@drawable/btn_danger_background</item>
+    </style>
+
 </resources>

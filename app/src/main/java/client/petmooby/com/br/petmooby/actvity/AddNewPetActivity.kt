@@ -40,6 +40,7 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -82,6 +83,10 @@ class AddNewPetActivity : AppCompatActivity() {
         btnNewPetCapture.setOnClickListener{
             startsCameraActivityForResult()
         }
+
+        btnExcludeNewPet.setOnClickListener {
+            remove()
+        }
         getAnimalSentByOtherView()
     }
 
@@ -95,6 +100,7 @@ class AddNewPetActivity : AppCompatActivity() {
             spNewPetGender.setSelection(EnumGender.valueOf(animal?.gender!!).ordinal)
             if(animal?.type != null) {
                 spNewPetKindAnimal.setSelection(EnumTypeAnimal.valueOf(animal?.type?.name!!).ordinal)
+                spNewPetKindAnimal.isEnabled = false
                 fromOtherScreen = true
             }
             if(animal?.photo != null) {
@@ -146,11 +152,11 @@ class AddNewPetActivity : AppCompatActivity() {
                     1 -> {
                         //DOGS
                         spNewPetBreed.isEnabled = true
-                        var adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(animal?.breed != null){
-                            var position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!))
+                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!))
                             spNewPetBreed.setSelection(position)
                         }
 
@@ -158,22 +164,22 @@ class AddNewPetActivity : AppCompatActivity() {
                     2 -> {
                         //CATS
                         spNewPetBreed.isEnabled = true
-                        var adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(animal?.breed != null){
-                            var position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForCats(animal?.breed!!))
+                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForCats(animal?.breed!!))
                             spNewPetBreed.setSelection(position)
                         }
                     }
                     3 -> {
                         //Birds
                         spNewPetBreed.isEnabled = true
-                        var adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(animal?.breed != null){
-                            var position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForBirds(animal?.breed!!))
+                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForBirds(animal?.breed!!))
                             spNewPetBreed.setSelection(position)
                         }
                     }
@@ -220,18 +226,18 @@ class AddNewPetActivity : AppCompatActivity() {
         spNewPetKindAnimal.adapter  = ArrayAdapter<EnumTypeAnimal>(this,LayoutResourceUtil.getSpinnerDropDown(),EnumTypeAnimal.values())
     }
 
-    private fun fromOtherScreenSelection() {
-        if (fromOtherScreen) {
-            val position = when {
-                animal?.type == EnumTypeAnimal.DOG -> BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!)?.ordinal!!
-                animal?.type == EnumTypeAnimal.BIRD -> EnumBreedsForBirds.OTHER.getByValue(animal?.breed!!).ordinal
-                animal?.type == EnumTypeAnimal.CAT -> EnumBreedsForCats.OTHER.getByValue(animal?.breed!!).ordinal
-                animal?.type == EnumTypeAnimal.OTHER -> EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
-                else -> 0}
-
-            fromOtherScreen = false
-        }
-    }
+//    private fun fromOtherScreenSelection() {
+//        if (fromOtherScreen) {
+//            val position = when {
+//                animal?.type == EnumTypeAnimal.DOG -> BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!)?.ordinal!!
+//                animal?.type == EnumTypeAnimal.BIRD -> EnumBreedsForBirds.OTHER.getByValue(animal?.breed!!).ordinal
+//                animal?.type == EnumTypeAnimal.CAT -> EnumBreedsForCats.OTHER.getByValue(animal?.breed!!).ordinal
+//                animal?.type == EnumTypeAnimal.OTHER -> EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
+//                else -> 0}
+//
+//            fromOtherScreen = false
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.save_menu,menu)
@@ -294,6 +300,7 @@ class AddNewPetActivity : AppCompatActivity() {
                     if(uploadImage) {
                         uploadImageAndSaveOrUpdatePet()
                     }
+                    returnThePetForShowOnList()
                 }.addOnFailureListener {
                     exception -> dialog.dismiss()
                 }
@@ -302,11 +309,23 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun successSaved(documentReference: DocumentReference){
         animal?.id = documentReference.id
         isForUpdate = true
+        VariablesUtil.gbAnimals?.add(animal!!)
         FireStoreReference.saveAnimalReference(documentReference)
-        uploadImageAndSaveOrUpdatePet()
+        if(mCurrentPhotoBitmap != null) {
+            uploadImageAndSaveOrUpdatePet()
+        }else{
+            returnThePetForShowOnList()
+        }
     }
 
-    fun validateFields(animal: Animal): Boolean{
+    private fun returnThePetForShowOnList() {
+        var intent = Intent()
+        intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    private fun validateFields(animal: Animal): Boolean{
         with(animal) {
             return if (breed.isNullOrEmpty()) {
                 showAlert(R.id.animalBreedIsMissing)
@@ -324,9 +343,9 @@ class AddNewPetActivity : AppCompatActivity() {
                 showAlert(R.id.animalGenderIsMissing)
                 false
             //}else if(mCurrentPhotoPath.isNullOrEmpty() && !isForUpdate){
-            }else if(mCurrentPhotoBitmap == null && !isForUpdate){
-                showAlert(R.id.pleaseTakeAPictureOfYourAnimal)
-                false
+//            }else if(mCurrentPhotoBitmap == null && !isForUpdate){
+//                showAlert(R.id.pleaseTakeAPictureOfYourAnimal)
+//                false
             } else true
         }
     }
@@ -475,6 +494,27 @@ class AddNewPetActivity : AppCompatActivity() {
         var set = (width * (scale / 100))
         var led = BigDecimal(set).setScale(1, BigDecimal.ROUND_HALF_UP).toInt()
         return led
+    }
+
+    private fun remove(){
+        alert(R.string.areYouSure,R.string.removingPet){
+            positiveButton(R.string.yes,{
+                animalRef.document(animal?.id!!)
+                        .delete()
+                        .addOnFailureListener {  }
+                        .addOnSuccessListener {
+                            var intent = Intent()
+                            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+                            setResult(ResultCodes.RESULT_FOR_DELETE,intent)
+                            finish()
+                        }
+            })
+
+            negativeButton(R.string.no,{
+                it.dismiss()
+            })
+        }.show()
+
     }
 
 

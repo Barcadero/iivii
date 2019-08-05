@@ -1,6 +1,8 @@
 package client.petmooby.com.br.petmooby.fragment
 
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,6 +18,8 @@ import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.Parameters
+import client.petmooby.com.br.petmooby.util.ResultCodes
+import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -53,7 +57,9 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menuAdd -> {
-            startActivityForResult(Intent(activity,AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
+            if(VariablesUtil.gbAnimals?.size!! > 7){
+                showAlert(R.string.youCanOnlyHaveSomeAnimals)
+            }else startActivityForResult(Intent(activity,AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
             true
         }
         else -> {
@@ -64,36 +70,41 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMyAnimals(){
-        var dialog = showLoadingDialog(getString(R.string.gettingMyPets))
-        docRefVet.collection(CollectionsName.ANIMAL)
-                .whereEqualTo("user",FireStoreReference.docRefUser)
-                .get()
-                .addOnSuccessListener {
-                    querySnapshot -> loadAnimalRCView(querySnapshot)
-                    dialog.dismiss()
-                }.addOnFailureListener {
-                    exception -> onFailedQueryReturn(dialog,exception.message!!)
-                }
+        if(VariablesUtil.gbAnimals  != null && VariablesUtil.gbAnimals?.size!! > 0){
+            updateAdapter()
+        }else {
+            var dialog = showLoadingDialog(getString(R.string.gettingMyPets))
+            docRefVet.collection(CollectionsName.ANIMAL)
+                    .whereEqualTo("user", FireStoreReference.docRefUser)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        loadAnimalRCView(querySnapshot)
+                        dialog.dismiss()
+                    }.addOnFailureListener { exception ->
+                onFailedQueryReturn(dialog, exception.message!!)
+            }
+        }
     }
 
     private fun loadAnimalRCView(querySnapshot: QuerySnapshot){
         if(querySnapshot.isEmpty){
             llHomeNoPetYet.visibility = VISIBLE
         }else{
-
-            var myList = mutableListOf<Animal>()
+            VariablesUtil.gbAnimals = mutableListOf<Animal>()
             querySnapshot.documents.forEach{
                 var animal = it.toObject(Animal::class.java)
                 if(animal?.id == null){
                     animal?.id = it.id
 
                 }
-                myList.add(animal!!)
+                VariablesUtil.gbAnimals?.add(animal!!)
             }
-
-            //var myList = querySnapshot.toObjects(Animal::class.java)
-            rcMyAnimalsList?.adapter = AnimalAdapter(myList,{animal -> animalDetail(animal) })
+            updateAdapter()
         }
+    }
+
+    private fun updateAdapter() {
+        rcMyAnimalsList?.adapter = AnimalAdapter(VariablesUtil.gbAnimals!!, { animal -> animalDetail(animal) })
     }
 
     private fun animalDetail(animal: Animal){
@@ -101,8 +112,23 @@ class HomeFragment : Fragment() {
         var intent = Intent(activity,AddNewPetActivity::class.java)
         intent.putExtra(Parameters.IS_FOR_UPDATE,true)
         intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
-        startActivity(intent)
+        startActivityForResult(intent,CODE_RESULT_FOR_ADD_PET)
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == CODE_RESULT_FOR_ADD_PET) {
+            if (resultCode == ResultCodes.RESULT_FOR_DELETE) {
+                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+                VariablesUtil.gbAnimals?.remove(animal)
+                updateAdapter()
+            }else if(resultCode == Activity.RESULT_OK){
+                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+                VariablesUtil.gbAnimals?.add(animal!!)
+                updateAdapter()
+            }
+        }
+
+    }
 }

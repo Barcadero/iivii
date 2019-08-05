@@ -310,6 +310,17 @@
 
                     />
 
+                <android.support.v7.widget.AppCompatButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/btnExcludeNewPet"
+                    style="@style/btnDanger"
+                    android:layout_marginTop="45dp"
+                    android:text="@string/exclude"
+                    android:textAllCaps="true"
+                    android:drawableLeft="@drawable/layer_remove"
+
+                    />
+
             </LinearLayout>
 
         </LinearLayout>
