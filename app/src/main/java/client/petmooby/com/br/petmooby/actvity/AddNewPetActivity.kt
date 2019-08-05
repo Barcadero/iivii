@@ -44,7 +44,6 @@ import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
-import java.io.Serializable
 import java.math.BigDecimal
 import java.util.*
 
@@ -148,22 +147,35 @@ class AddNewPetActivity : AppCompatActivity() {
                         //DOGS
                         spNewPetBreed.isEnabled = true
                         var adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
-                        spNewPetBreed.adapter = adapterValue
-                        fromOtherScreenSelection()
                         adapterValue.sort(EnumBreedComparator())
+                        spNewPetBreed.adapter = adapterValue
+                        if(animal?.breed != null){
+                            var position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!))
+                            spNewPetBreed.setSelection(position)
+                        }
 
                     }
                     2 -> {
                         //CATS
                         spNewPetBreed.isEnabled = true
-                        spNewPetBreed.adapter = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
-                        fromOtherScreenSelection()
+                        var adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
+                        adapterValue.sort(EnumBreedComparator())
+                        spNewPetBreed.adapter = adapterValue
+                        if(animal?.breed != null){
+                            var position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForCats(animal?.breed!!))
+                            spNewPetBreed.setSelection(position)
+                        }
                     }
                     3 -> {
-                        //BIRDS
+                        //Birds
                         spNewPetBreed.isEnabled = true
-                        spNewPetBreed.adapter = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
-                        fromOtherScreenSelection()
+                        var adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
+                        adapterValue.sort(EnumBreedComparator())
+                        spNewPetBreed.adapter = adapterValue
+                        if(animal?.breed != null){
+                            var position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForBirds(animal?.breed!!))
+                            spNewPetBreed.setSelection(position)
+                        }
                     }
                 }
             }
@@ -190,7 +202,6 @@ class AddNewPetActivity : AppCompatActivity() {
                         enumSelectedBreed =  spNewPetBreed.selectedItem as EnumBreedsForDogs
                         Log.d("SELECTED ID",enumSelectedBreed.toString())
 
-
                     }
                     2 -> {
                         //CATS
@@ -211,13 +222,13 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun fromOtherScreenSelection() {
         if (fromOtherScreen) {
-            spNewPetBreed.setSelection(when {
+            val position = when {
                 animal?.type == EnumTypeAnimal.DOG -> BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!)?.ordinal!!
                 animal?.type == EnumTypeAnimal.BIRD -> EnumBreedsForBirds.OTHER.getByValue(animal?.breed!!).ordinal
                 animal?.type == EnumTypeAnimal.CAT -> EnumBreedsForCats.OTHER.getByValue(animal?.breed!!).ordinal
                 animal?.type == EnumTypeAnimal.OTHER -> EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
-                else -> 0
-            })
+                else -> 0}
+
             fromOtherScreen = false
         }
     }

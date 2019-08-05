@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import client.petmooby.com.br.petmooby.application.Application
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.toast
 
 /**
  * A login screen that offers login via email/password.
@@ -57,11 +59,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkLoginin() {
-        var accessToken = AccessToken.getCurrentAccessToken()
-        var isLoggedIn = accessToken != null && !accessToken.isExpired
-        if(isLoggedIn){
-            Toast.makeText(this,"Já está logado",Toast.LENGTH_SHORT).show()
+        if(Application.IS_DEBUG){
+            toast("AUTO-LOGIN by debug mode")
+            Preference.set(this@LoginActivity, Preference.USER_NAME,"Rafael Rocha debug")
+            Preference.set(this@LoginActivity,Preference.USER_TOKEN,Preference.getFacebookDebugToken())
+            Preference.set(this@LoginActivity,Preference.USER_ID,Preference.getFacebookDebugUserId())
             startMainActivity()
+        }else {
+            var accessToken = AccessToken.getCurrentAccessToken()
+            var isLoggedIn = accessToken != null && !accessToken.isExpired
+            if (isLoggedIn) {
+                //Toast.makeText(this, "Já está logado", Toast.LENGTH_SHORT).show()
+                startMainActivity()
+            }
         }
     }
 

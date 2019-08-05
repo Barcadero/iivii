@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.application
 
 import android.support.annotation.StringRes
 import android.support.multidex.MultiDexApplication
+import client.petmooby.com.br.petmooby.BuildConfig
 import java.util.*
 
 /**
@@ -16,6 +17,7 @@ class Application : MultiDexApplication() {
 
     companion object {
         private var app : Application?=null
+        val IS_DEBUG =  BuildConfig.DEBUG
         var DEVICE_LANGUAGE = Locale.getDefault().language
         val LANG_PT = "pt"
         val LANG_EN = "en"

@@ -8,7 +8,7 @@ import client.petmooby.com.br.petmooby.model.enums.EnumTypePreferences
 
 
 /**
- * Created by idoctor on 16/05/2019.
+ * Created by Rafael Rocha on 16/05/2019.
  */
 object Preference {
     val USER_NAME   = "user.name"
@@ -59,5 +59,13 @@ object Preference {
             return editor.commit()
         }
         return false
+    }
+
+    fun getFacebookDebugToken() : String{
+        return "EAAdWrDWSnZBoBAAc8EZCkQlh2lhIR5J9W5eeoikUfNT3rclWWbHySgn4HMb00QbrDGcRi4lMWrF8OMgFzemtIu1GSXEfediHv1ZBcHae6td80DladxtO3ZAhuSuFBFbNvhRHWXzjulpJTSt1UpY5DEL9JH34gQJsG2mr5DjnbjN5Biv0GeYrSouMIVn7ZBf9IFW7dltlwGeG8PYg34JFkFFCnrIOU5UUZD"
+    }
+
+    fun getFacebookDebugUserId():String{
+        return "1825747277526491"
     }
 }

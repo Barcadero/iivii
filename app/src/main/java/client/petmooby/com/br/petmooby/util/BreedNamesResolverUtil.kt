@@ -1,8 +1,6 @@
 package client.petmooby.com.br.petmooby.util
-
-import android.content.Context
-import client.petmooby.com.br.petmooby.R
-import client.petmooby.com.br.petmooby.model.enums.EnumBreedBase
+import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForBirds
+import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForCats
 import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForDogs
 
 /**
@@ -22,5 +20,29 @@ class BreedNamesResolverUtil {
             if(breed == null)return EnumBreedsForDogs.OTHER
             return breed
         }
+
+        fun getByValueForCats(value:String): EnumBreedsForCats?{
+            var breed:EnumBreedsForCats?=null
+            EnumBreedsForCats.values().forEach {
+                if(it.value == value){
+                    breed = it
+                }
+            }
+            if(breed == null)return EnumBreedsForCats.OTHER
+            return breed
+        }
+
+        fun getByValueForBirds(value:String): EnumBreedsForBirds?{
+            var breed:EnumBreedsForBirds?=null
+            EnumBreedsForBirds.values().forEach {
+                if(it.value == value){
+                    breed = it
+                }
+            }
+            if(breed == null)return EnumBreedsForBirds.OTHER
+            return breed
+        }
     }
+
+
 }
