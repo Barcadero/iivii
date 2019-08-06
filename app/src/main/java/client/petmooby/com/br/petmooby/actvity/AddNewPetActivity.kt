@@ -226,25 +226,10 @@ class AddNewPetActivity : AppCompatActivity() {
         spNewPetKindAnimal.adapter  = ArrayAdapter<EnumTypeAnimal>(this,LayoutResourceUtil.getSpinnerDropDown(),EnumTypeAnimal.values())
     }
 
-//    private fun fromOtherScreenSelection() {
-//        if (fromOtherScreen) {
-//            val position = when {
-//                animal?.type == EnumTypeAnimal.DOG -> BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!)?.ordinal!!
-//                animal?.type == EnumTypeAnimal.BIRD -> EnumBreedsForBirds.OTHER.getByValue(animal?.breed!!).ordinal
-//                animal?.type == EnumTypeAnimal.CAT -> EnumBreedsForCats.OTHER.getByValue(animal?.breed!!).ordinal
-//                animal?.type == EnumTypeAnimal.OTHER -> EnumBreedsForDogs.OTHER.getByValue(animal?.breed!!).ordinal
-//                else -> 0}
-//
-//            fromOtherScreen = false
-//        }
-//    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.save_menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menuSave -> {
@@ -302,7 +287,7 @@ class AddNewPetActivity : AppCompatActivity() {
                     }
                     returnThePetForShowOnList()
                 }.addOnFailureListener {
-                    exception -> dialog.dismiss()
+                    dialog.dismiss()
                 }
     }
 
@@ -327,26 +312,29 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun validateFields(animal: Animal): Boolean{
         with(animal) {
-            return if (breed.isNullOrEmpty()) {
-                showAlert(R.id.animalBreedIsMissing)
-                false
-            } else if (dateOfBirthday == null) {
-                showAlert(R.id.bithDayIsMissing)
-                false
-            } else if (type == null) {
-                showAlert(R.id.animalTypeIsMissing)
-                false
-            }else if(gender.isNullOrEmpty()) {
-                showAlert(R.id.animalGenderIsMissing)
-                false
-            }else if(user == null) {
-                showAlert(R.id.animalGenderIsMissing)
-                false
-            //}else if(mCurrentPhotoPath.isNullOrEmpty() && !isForUpdate){
-//            }else if(mCurrentPhotoBitmap == null && !isForUpdate){
-//                showAlert(R.id.pleaseTakeAPictureOfYourAnimal)
-//                false
-            } else true
+            return when {
+                breed.isNullOrEmpty() -> {
+                    showAlert(R.id.animalBreedIsMissing)
+                    false
+                }
+                dateOfBirthday == null -> {
+                    showAlert(R.id.bithDayIsMissing)
+                    false
+                }
+                type == null -> {
+                    showAlert(R.id.animalTypeIsMissing)
+                    false
+                }
+                gender.isNullOrEmpty() -> {
+                    showAlert(R.id.animalGenderIsMissing)
+                    false
+                }
+                user == null -> {
+                    showAlert(R.id.animalGenderIsMissing)
+                    false
+                }
+                else -> true
+            }
         }
     }
 
