@@ -10,4 +10,5 @@
     <dimen name="marginTopForToolbar">60dp</dimen>
     <dimen name="btnHeight">55dp</dimen>
     <dimen name="btnWidth">@dimen/match_parent</dimen>
+    <dimen name="txtMedium">16sp</dimen>
 </resources>

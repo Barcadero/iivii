@@ -8,9 +8,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".application.Application"
@@ -64,7 +64,11 @@
             android:name=".actvity.VeterinaryPartnerDetailActivity"
             android:label="@string/title_activity_veterinary_partner_detail"
             android:theme="@style/AppTheme" />
-        <activity android:name=".actvity.AddNewPetActivity"></activity>
+        <activity android:name=".actvity.AddNewPetActivity" />
+        <activity android:name=".actvity.VaccineActivity" />
+        <activity android:name=".actvity.VaccineLitsActivity" />
+        <activity android:name=".actvity.TreatmentListActivity" />
+        <activity android:name=".actvity.TreatmentActivity"></activity>
     </application>
 
 </manifest>

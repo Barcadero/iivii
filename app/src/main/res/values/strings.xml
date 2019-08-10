@@ -85,6 +85,30 @@
     <string name="removingPet">Removing pet</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="vaccines">Vaccines</string>
+    <string name="vaccineReminder">Vaccine Reminder</string>
+    <string name="date">Date</string>
+    <string name="vaccineTextAdvice">Usually the interval between vaccines is annual, but the first application may have a different interval. Talk to your vet. The vaccine alarm will be repeated each year on the same day.</string>
+    <string name="vaccineRecord">Vaccine recorde</string>
+    <string name="veterinaryOrClinic">Veterinary or Clinic</string>
+    <string name="vaccineDateApplication">Vaccine date aplication</string>
+    <string name="price">Price</string>
+    <string name="notes">Notes</string>
+    <string name="applyVaccine">Apply Vaccine</string>
+    <string name="history">History</string>
+    <string name="dalete">delete</string>
+    <string name="delete">delete</string>
+    <string name="treatments">Treatments</string>
+    <string name="treatmentType">Treatment Type</string>
+    <string name="treatmentFrequence">Treatment Fraquence</string>
+    <string name="alarm">Alarm</string>
+    <string name="frequencyAlarmTreatmentText">Frequenci um texto muito grande que depois deve ser posto aqui . Por enquanto vou por só esse exemplo pro espaço não ficar vazio.</string>
+    <string name="periodOfTreatmentAlarm">Perio em que será informado no calendário. O alrme não segue as regras das datas informadas, somente o tempo de intervalo.</string>
+    <string name="saveAnyInfoAboutTreatment">Coloque qualquer informação sobre o tratamento que você deseja guardar.</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>

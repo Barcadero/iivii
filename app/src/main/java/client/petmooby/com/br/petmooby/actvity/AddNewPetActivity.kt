@@ -87,6 +87,9 @@ class AddNewPetActivity : AppCompatActivity() {
         btnExcludeNewPet.setOnClickListener {
             remove()
         }
+        btnAddVaccine.setOnClickListener {
+            startActivity(Intent(this,VaccineLitsActivity::class.java))
+        }
         getAnimalSentByOtherView()
     }
 

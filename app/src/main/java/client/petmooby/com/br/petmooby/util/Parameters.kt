@@ -7,4 +7,7 @@ object Parameters {
 
     val IS_FOR_UPDATE    = "isForUpdate"
     val ANIMAL_PARAMETER = "animal.parameter"
+    val VACCINE_CARD     = "animal.vaccine"
+    val ACTION           = "action"
+    val TREATMENT        = "animal.treatmentCard"
 }

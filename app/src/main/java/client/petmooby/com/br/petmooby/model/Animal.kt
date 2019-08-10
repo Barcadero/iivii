@@ -39,6 +39,7 @@ class Animal() : Parcelable{
     }
 
     class VaccineCards() : Parcelable {
+        var identity:Int?=null
         var historic:List<Historic>?=null
         var nextRemember:Date?=null
         var vaccine_type:String?=null

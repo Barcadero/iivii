@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="client.petmooby.com.br.petmooby.actvity.TreatmentActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/treatmentType"
+                android:textAllCaps="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="8dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/icons8_pills_60"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imageView" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtTreatmentPetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/treatmentType"
+                android:textAllCaps="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="8dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imageView2"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icons8_doctors_bag_60"/>
+
+                <EditText
+                    android:id="@+id/edtTreatmentPetName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imageView2" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/treatmentFrequence"
+                android:textAllCaps="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="8dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ivTreatment3"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icons8_schedule_30"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ivTreatment3" />
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ivTreatment4"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icons8_alarm_clock_60"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ivTreatment4" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alarm"
+                    android:id="@+id/tvTreatmentAlarm"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icons8_schedule_30"/>
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_toEndOf="@+id/tvTreatmentAlarm" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/frequencyAlarmTreatmentText"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/primaryDarkColor"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:textAllCaps="true"
+                android:layout_marginTop="25dp"
+                android:layout_margin="8dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ivTreatment5"
+                    android:src="@drawable/icons8_schedule_30"
+                    android:layout_marginStart="8dp"
+                    />
+
+                <EditText
+                    android:id="@+id/edtTreatmentDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ivTreatment5" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ivTreatment7"
+                    android:src="@drawable/icons8calendar60"
+                    android:layout_marginStart="8dp"
+                    />
+
+                <EditText
+                    android:id="@+id/edtTreatmentDateTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ivTreatment7" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+
+                <ImageView
+                    android:id="@+id/ivTreatment6"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icons8calendar60"
+                    android:layout_marginStart="8dp"/>
+
+                <EditText
+                    android:id="@+id/edtTreatmentDateOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ivTreatment6" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/periodOfTreatmentAlarm"
+                android:layout_margin="10dp"
+                android:textColor="@color/primaryDarkColor"
+                android:textStyle="bold"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+                <ImageView
+                    android:id="@+id/ivTreatmentNotes"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icons8_compose_60"
+                    android:layout_marginLeft="5dp"
+                    />
+                <EditText
+                    android:id="@+id/edtTreatmentNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/notes"
+                    android:layout_toRightOf="@+id/ivTreatmentNotes"
+                    android:minLines="4"
+                    android:maxLines="10"
+                    android:gravity="top|left"
+                    android:scrollbars="vertical"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/saveAnyInfoAboutTreatment"
+                android:textColor="@color/primaryDarkColor"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:layout_margin="8dp"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

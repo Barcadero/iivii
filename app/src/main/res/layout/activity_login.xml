@@ -33,32 +33,85 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_paw_24"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/icon_cat_face"
+                    android:layout_weight="1"
+                    />
 
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/icon_owl_face"
+                    android:layout_weight="1"
+                    />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/icon_dog_face"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="45sp"
+                android:fontFamily="@font/Marker_Felt_Thin"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:layout_marginTop="15dp"
                 />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                style="@style/btnStyle"
+                android:layout_marginTop="20dp"
+                android:text="@string/login"
+                android:textAllCaps="true"
+                />
+
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnLoginFace"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                style="@style/btnStyle"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp" />
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp" />
 
-            <!--
-            <Button
-                android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
-            -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                style="@style/btnStyle"
+                android:layout_marginTop="8dp"
+                android:text="@string/register"
+                android:textAllCaps="true"
+                />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

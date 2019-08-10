@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cvVetPartnersList"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:clickable="true"
+    android:padding="5dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icons8_doctor_30" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView3"
+            app:srcCompat="@drawable/icons8_calendar_30"
+            android:layout_marginTop="8dp"
+            />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView4"
+            app:srcCompat="@drawable/icons8_compose_30"
+            android:layout_marginTop="8dp"
+            />
+
+        <TextView
+            android:id="@+id/edtHistoricNotes"
+            android:layout_width="162dp"
+            android:layout_height="15dp"
+            android:layout_alignBottom="@+id/imageView5"
+            android:layout_marginBottom="6dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/imageView5"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/edtDoctorName"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+
+            android:layout_alignBottom="@+id/imageView4"
+
+            android:layout_alignStart="@+id/edtHistoricNotes"
+            android:ems="10"
+            android:text="Name"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/edtDateHistoric"
+            android:layout_width="160dp"
+            android:layout_height="17dp"
+            android:layout_above="@+id/imageView4"
+            android:layout_alignStart="@+id/edtDoctorName"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnExcludeHistoric"
+            android:layout_width="93dp"
+            android:layout_height="35dp"
+
+            android:layout_alignStart="@+id/imageView6"
+            android:layout_alignTop="@+id/imageView5"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/icons8_remove_30" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/edtDoctorName"
+            android:layout_marginStart="70dp"
+            android:layout_toEndOf="@+id/edtHistoricNotes"
+            app:srcCompat="@drawable/icons8_cash_in_hand_30" />
+
+        <TextView
+            android:id="@+id/edtHistoricPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView6"
+            android:layout_alignEnd="@+id/btnExcludeHistoric"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

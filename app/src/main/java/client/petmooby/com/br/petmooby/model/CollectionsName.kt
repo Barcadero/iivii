@@ -9,4 +9,5 @@ object CollectionsName {
     val LAST_TIP    = "last_tip"
     val TIP         = "tip"
     val ANIMAL      = "animal"
+
 }

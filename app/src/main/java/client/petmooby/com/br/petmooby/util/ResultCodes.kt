@@ -5,5 +5,11 @@ package client.petmooby.com.br.petmooby.util
  */
 object ResultCodes {
 
-    val RESULT_FOR_DELETE = -55
+    val RESULT_FOR_DELETE       = -55
+    val REQUEST_ADD_VACCINE     = 44
+    val REQUEST_UPDATE_VACCINE  = 45
+    val REQUEST_UPDATE          = 46
+    val REQUEST_INSERT          = 47
+    val REQUEST_DELETE          = 48
+
 }
