@@ -68,7 +68,8 @@
         <activity android:name=".actvity.VaccineActivity" />
         <activity android:name=".actvity.VaccineLitsActivity" />
         <activity android:name=".actvity.TreatmentListActivity" />
-        <activity android:name=".actvity.TreatmentActivity"></activity>
+        <activity android:name=".actvity.TreatmentActivity" />
+        <activity android:name=".actvity.RegisterUserActivity"></activity>
     </application>
 
 </manifest>

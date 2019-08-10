@@ -109,6 +109,7 @@
     <string name="login">Login</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
+    <string name="confirmPassword">Confirm password</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>
