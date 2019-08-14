@@ -57,6 +57,8 @@
                     android:layout_height="wrap_content"
                     android:maxLength="80"
                     android:layout_toRightOf="@+id/ivVaccineIcon"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
                     />
             </RelativeLayout>
             <TextView
@@ -93,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:focusable="false"
                     android:inputType="none"
                     />
             </RelativeLayout>
@@ -151,10 +154,13 @@
                     android:layout_marginLeft="5dp"
                     />
                 <EditText
+                    android:id="@+id/edtVaccineApplication"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/vaccineDateApplication"
                     android:layout_toRightOf="@+id/ivVaccineCalender"
+                    android:imeOptions="actionNext"
+
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -170,9 +176,12 @@
                     android:layout_marginLeft="5dp"
                     />
                 <EditText
+                    android:id="@+id/edtVaccinePrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/price"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
                     android:layout_toRightOf="@+id/ivVaccinePrice"
                     />
             </RelativeLayout>
@@ -189,6 +198,7 @@
                     android:layout_marginLeft="5dp"
                     />
                 <EditText
+                    android:id="@+id/edtVaccineNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/notes"

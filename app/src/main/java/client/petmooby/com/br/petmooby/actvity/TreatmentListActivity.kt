@@ -15,6 +15,7 @@ import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.Parameters
 import client.petmooby.com.br.petmooby.util.ResultCodes
 import kotlinx.android.synthetic.main.activity_treatment_list.*
+import org.parceler.Parcels
 
 class TreatmentListActivity : BaseActivity() {
 
@@ -26,7 +27,11 @@ class TreatmentListActivity : BaseActivity() {
         setContentView(R.layout.activity_treatment_list)
         setupToolbar(R.id.toolbarTreatmentList, R.string.treatments)
         initRcViewList()
-
+//        var animal = intent.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+        var animal = Parcels.unwrap<Animal>(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+        for(treatment in animal.treatmentCard!!){
+            addTreatment(treatment)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,7 +42,8 @@ class TreatmentListActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.menuAdd ->{
-                //TODO call the activity to save a treatment
+                val intent = Intent(this,TreatmentActivity::class.java)
+                startActivityForResult(intent,ResultCodes.REQUEST_INSERT)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -52,7 +58,6 @@ class TreatmentListActivity : BaseActivity() {
             override fun getSpanSize(position: Int): Int {
                 return if (position == 0) 2 else 1
             }
-
         }
     }
 
@@ -64,7 +69,8 @@ class TreatmentListActivity : BaseActivity() {
     private fun onTreatmentClick(treatmentCard: Animal.TreatmentCard){
         val intent = Intent(this,TreatmentActivity::class.java)
         intent.putExtra(Parameters.ACTION,ResultCodes.REQUEST_UPDATE)
-        intent.putExtra(Parameters.TREATMENT,treatmentCard)
+//        intent.putExtra(Parameters.TREATMENT,treatmentCard)
+        intent.putExtra(Parameters.TREATMENT,Parcels.wrap(treatmentCard))
         startActivityForResult(intent,ResultCodes.REQUEST_UPDATE)
     }
 
@@ -72,7 +78,8 @@ class TreatmentListActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == ResultCodes.REQUEST_UPDATE){
-                val treatment = data?.getParcelableExtra<Animal.TreatmentCard>(Parameters.TREATMENT)
+//                val treatment = data?.getParcelableExtra<Animal.TreatmentCard>(Parameters.TREATMENT)
+                val treatment = Parcels.unwrap<Animal.TreatmentCard>(data?.getParcelableExtra(Parameters.TREATMENT))
                 addTreatment(treatment!!)
             }
         }

@@ -110,6 +110,12 @@
     <string name="email">E-mail</string>
     <string name="password">Password</string>
     <string name="confirmPassword">Confirm password</string>
+    <string name="tellUsTheVaccineDescriptio">Please, give the vaccine description</string>
+    <string name="pleaseGiveAVaccineDate">Please, give a vaccine name.</string>
+    <string name="giveTheVaccineClinic">Please, give the date</string>
+    <string name="savedSuccess">Saved</string>
+    <string name="wasNotPossibleSaveVaccine">Was not possible save the vaccine</string>
+    <string name="errorOnSaveVaccine">Erro while trying to save the vaccine</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>

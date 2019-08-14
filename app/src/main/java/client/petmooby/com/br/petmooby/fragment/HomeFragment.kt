@@ -23,6 +23,7 @@ import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.parceler.Parcels
 
 
 /**
@@ -108,10 +109,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun animalDetail(animal: Animal){
-        animal.userPath = animal.user?.path
+        //animal.userPath = animal.user?.path
         var intent = Intent(activity,AddNewPetActivity::class.java)
         intent.putExtra(Parameters.IS_FOR_UPDATE,true)
-        intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+////        intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
         startActivityForResult(intent,CODE_RESULT_FOR_ADD_PET)
 
     }
@@ -120,11 +122,13 @@ class HomeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == CODE_RESULT_FOR_ADD_PET) {
             if (resultCode == ResultCodes.RESULT_FOR_DELETE) {
-                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+//                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
                 VariablesUtil.gbAnimals?.remove(animal)
                 updateAdapter()
             }else if(resultCode == Activity.RESULT_OK){
-                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+//                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
                 VariablesUtil.gbAnimals?.add(animal!!)
                 updateAdapter()
             }

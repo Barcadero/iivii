@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:textSize="45sp"
-                android:fontFamily="@font/Marker_Felt_Thin"
+                android:fontFamily="@font/marker_felt_thin"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -65,7 +65,7 @@
 
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnAddMedicinalTreatment"
+                android:id="@+id/btnSaveNewUserRegister"
                 style="@style/btnStyle"
                 android:layout_marginTop="45dp"
                 android:text="@string/register"

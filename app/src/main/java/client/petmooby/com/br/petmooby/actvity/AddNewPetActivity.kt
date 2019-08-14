@@ -42,6 +42,8 @@ import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
+import org.parceler.Parcel
+import org.parceler.Parcels
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -58,7 +60,6 @@ class AddNewPetActivity : AppCompatActivity() {
     var animalRef = mRef.collection(CollectionsName.ANIMAL)
     var enumSelectedBreed: EnumBreedBase?=null
     var storage = FirebaseStorage.getInstance().reference
-    //private var mCurrentPhotoPath: String? = null
     private var mCurrentPhotoBitmap: Bitmap?=null
     var animal :Animal?=null
     var isForUpdate = false
@@ -88,7 +89,17 @@ class AddNewPetActivity : AppCompatActivity() {
             remove()
         }
         btnAddVaccine.setOnClickListener {
-            startActivity(Intent(this,VaccineLitsActivity::class.java))
+            val intent = Intent(this,VaccineLitsActivity::class.java)
+//            intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
+            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
+            startActivity(intent)
+        }
+
+        btnAddMedicinalTreatment.setOnClickListener {
+            val intent = Intent(this,TreatmentListActivity::class.java)
+            //intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
+            startActivity(intent)
         }
         getAnimalSentByOtherView()
     }
@@ -96,7 +107,8 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun getAnimalSentByOtherView() {
         isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
         if (isForUpdate) {
-            animal= intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER) ?: return
+//            animal= intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER) ?: return
+            animal= Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
             animal?.user  = mRef.document(animal?.userPath!!)
             edtNewPetName.setText(animal?.name)
             edtNewPetBirthday.setText(DateTimeUtil.formatDateTime(animal?.dateOfBirthday))
@@ -308,7 +320,8 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun returnThePetForShowOnList() {
         var intent = Intent()
-        intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
+//        intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
+        intent.putExtra(Parameters.ANIMAL_PARAMETER, Parcels.wrap(animal))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -495,7 +508,8 @@ class AddNewPetActivity : AppCompatActivity() {
                         .addOnFailureListener {  }
                         .addOnSuccessListener {
                             var intent = Intent()
-                            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+//                            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+                            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
                             setResult(ResultCodes.RESULT_FOR_DELETE,intent)
                             finish()
                         }

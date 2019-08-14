@@ -7,10 +7,7 @@ import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.*
 import android.util.Log
 import client.petmooby.com.br.petmooby.R
 import org.jetbrains.anko.alert
@@ -94,4 +91,16 @@ fun Activity.showAlertError(@StringRes idResource: Int){
 fun Activity.onFailedQueryReturn(dialog: ProgressDialog,message:String){
     dialog.dismiss()
     Log.d("FACE",message)
+}
+
+fun Activity.getDefaulLayoutManager(): GridLayoutManager{
+    val layoutManager = GridLayoutManager(this,2)
+    layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+        override fun getSpanSize(position: Int): Int {
+            return if (position == 0) 2 else 1
+        }
+
+    }
+    return layoutManager
+
 }
