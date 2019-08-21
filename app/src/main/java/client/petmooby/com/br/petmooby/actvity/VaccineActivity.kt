@@ -7,19 +7,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.VISIBLE
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.HistoricVaccineAdapter
+import client.petmooby.com.br.petmooby.extensions.getDefaulLayoutManager
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.CollectionsName
-import client.petmooby.com.br.petmooby.util.CurrencyMaskTextWatch
-import client.petmooby.com.br.petmooby.util.DateTimePickerDialog
-import client.petmooby.com.br.petmooby.util.Parameters
-import client.petmooby.com.br.petmooby.util.ResultCodes
+import client.petmooby.com.br.petmooby.util.*
 import com.google.firebase.firestore.FieldValue
 import kotlinx.android.synthetic.main.activity_vaccine.*
+import kotlinx.android.synthetic.main.empty_view_list_layout.*
 import org.jetbrains.anko.alert
 import org.parceler.Parcels
 import java.util.*
@@ -65,8 +65,14 @@ class VaccineActivity : BaseActivity() {
                 //To alter a vaccine
 //                vaccine = intent.getParcelableExtra(Parameters.VACCINE_CARD)
                 vaccine = Parcels.unwrap(intent.getParcelableExtra(Parameters.VACCINE_CARD))
-                //TODO: put on delete event here
-                rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccine?.historic!!,{"on delete method"})
+                edtVaccineDescription.setText(vaccine?.vaccine_type)
+                edtVaccineDate.setText(DateTimeUtil.formatDateTime(vaccine?.nextRemember) )
+                if(vaccine?.historic != null) {
+                    rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccine?.historic!!, { "on delete method" })
+                    rcViewHistoricVaccine.layoutManager = getDefaulLayoutManager()
+                }else{
+                    layoutEmptyList.visibility = VISIBLE
+                }
 
             }
         }

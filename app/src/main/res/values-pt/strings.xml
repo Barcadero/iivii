@@ -49,4 +49,5 @@
     <string name="savedSuccess">Saved</string>
     <string name="wasNotPossibleSaveVaccine">Was not possible save the vaccine</string>
     <string name="errorOnSaveVaccine">Erro while trying to save the vaccine</string>
+    <string name="noResultAtThisMoment">No Result at this moment</string>
 </resources>

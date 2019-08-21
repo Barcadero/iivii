@@ -39,8 +39,10 @@ class MainActivity : AppCompatActivity() {
     private fun switchFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.mainFragment, fragment)
-                .commit()
-    }
+                .commitAllowingStateLoss()//it solve the problem related at the below link
+                //--------------------------------------------------------------------------------
+                // https://medium.com/@elye.project/handling-illegalstateexception-can-not-perform-this-action-after-onsaveinstancestate-d4ee8b630066
+    }           //--------------------------------------------------------------------------------
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {

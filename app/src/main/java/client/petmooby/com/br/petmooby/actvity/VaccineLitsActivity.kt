@@ -2,9 +2,12 @@ package client.petmooby.com.br.petmooby.actvity
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.UiThread
 import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.VaccineAdapter
 import client.petmooby.com.br.petmooby.extensions.getDefaulLayoutManager
@@ -13,6 +16,7 @@ import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.Parameters
 import client.petmooby.com.br.petmooby.util.ResultCodes
 import kotlinx.android.synthetic.main.activity_vaccine_lits.*
+import kotlinx.android.synthetic.main.empty_view_list_layout.*
 import org.parceler.Parcels
 
 class VaccineLitsActivity : BaseActivity() {
@@ -51,9 +55,27 @@ class VaccineLitsActivity : BaseActivity() {
 
     private fun getPetVaccines(){
          if(animal?.vaccineCards != null){
-             rcViewVaccineList.adapter = VaccineAdapter(animal?.vaccineCards!!,{vaccineCards -> onClick(vaccineCards) })
-             rcViewVaccineList.layoutManager = getDefaulLayoutManager()
+             if(!animal?.vaccineCards?.isEmpty()!!) {
+                 rcViewVaccineList.adapter       = VaccineAdapter(animal?.vaccineCards!!, { vaccineCards -> onClick(vaccineCards) })
+                 rcViewVaccineList.layoutManager = getDefaulLayoutManager()
+                 showAndHideControls(true)
+             }else{
+                 showAndHideControls(false)
+             }
+         }else{
+             showAndHideControls(false)
          }
+    }
+
+    @UiThread
+    fun showAndHideControls(show:Boolean) {
+        if(show){
+            layoutEmptyList.visibility      = GONE
+            rcViewVaccineList.visibility    = VISIBLE
+        }else {
+            layoutEmptyList.visibility = VISIBLE
+            rcViewVaccineList.visibility = GONE
+        }
     }
 
     private fun onClick(vaccineCards: Animal.VaccineCards){

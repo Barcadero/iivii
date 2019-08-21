@@ -237,6 +237,7 @@
 
 
                 </android.support.v7.widget.RecyclerView>
+                <include layout="@layout/empty_view_list_layout"/>
 
             </LinearLayout>
 
