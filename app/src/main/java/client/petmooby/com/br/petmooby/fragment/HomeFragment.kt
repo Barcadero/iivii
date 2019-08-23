@@ -5,10 +5,10 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.view.View.VISIBLE
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.AddNewPetActivity
@@ -23,7 +23,7 @@ import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
-import org.parceler.Parcels
+//import org.parceler.Parcels
 
 
 /**
@@ -33,7 +33,7 @@ const val CODE_RESULT_FOR_ADD_PET = 122
 class HomeFragment : Fragment() {
 
 
-    var rcMyAnimalsList:RecyclerView?=null
+    var rcMyAnimalsList: RecyclerView?=null
 
 
     private var docRefVet = FirebaseFirestore.getInstance()
@@ -113,7 +113,7 @@ class HomeFragment : Fragment() {
         var intent = Intent(activity,AddNewPetActivity::class.java)
         intent.putExtra(Parameters.IS_FOR_UPDATE,true)
 ////        intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
-        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
+//        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
         startActivityForResult(intent,CODE_RESULT_FOR_ADD_PET)
 
     }
@@ -123,13 +123,13 @@ class HomeFragment : Fragment() {
         if(requestCode == CODE_RESULT_FOR_ADD_PET) {
             if (resultCode == ResultCodes.RESULT_FOR_DELETE) {
 //                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
-                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-                VariablesUtil.gbAnimals?.remove(animal)
+//                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+//                VariablesUtil.gbAnimals?.remove(animal)
                 updateAdapter()
             }else if(resultCode == Activity.RESULT_OK){
 //                val animal = data?.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
-                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-                VariablesUtil.gbAnimals?.add(animal!!)
+//                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+//                VariablesUtil.gbAnimals?.add(animal!!)
                 updateAdapter()
             }
         }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.actvity.AddNewPetActivity">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -19,7 +19,7 @@
             android:theme="@style/toolbarTheme"
             />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -111,7 +111,7 @@
                     android:layout_marginTop="18dp"
                     android:src="@drawable/icons8_identidade_de_cachorro_30" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/imgAddPetName"
@@ -126,7 +126,7 @@
                         android:hint="@string/name"
                         android:inputType="textPersonName" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </RelativeLayout>
@@ -288,7 +288,7 @@
                     android:background="@color/purple"
                     />
 
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/btnAddVaccine"
                     style="@style/btnStyle"
@@ -299,7 +299,7 @@
 
                     />
 
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/btnAddMedicinalTreatment"
                     style="@style/btnStyle"
@@ -310,7 +310,7 @@
 
                     />
 
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/btnExcludeNewPet"
                     style="@style/btnDanger"

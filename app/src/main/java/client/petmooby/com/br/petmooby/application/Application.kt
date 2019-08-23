@@ -1,7 +1,8 @@
 package client.petmooby.com.br.petmooby.application
 
-import android.support.annotation.StringRes
-import android.support.multidex.MultiDexApplication
+
+import androidx.annotation.StringRes
+import androidx.multidex.MultiDexApplication
 import client.petmooby.com.br.petmooby.BuildConfig
 import java.util.*
 

@@ -1,6 +1,7 @@
 package client.petmooby.com.br.petmooby.model.enums
 
-import android.support.annotation.StringRes
+
+import androidx.annotation.StringRes
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.application.Application
 

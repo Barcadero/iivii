@@ -1,7 +1,8 @@
 package client.petmooby.com.br.petmooby.actvity
 
-import android.support.v7.app.AppCompatActivity
+
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.R
 
 class SplashActivity : AppCompatActivity() {

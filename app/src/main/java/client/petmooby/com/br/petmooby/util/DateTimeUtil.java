@@ -1,7 +1,7 @@
 package client.petmooby.com.br.petmooby.util;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.StringRes;
+
+import androidx.annotation.StringRes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

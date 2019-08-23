@@ -2,12 +2,11 @@ package client.petmooby.com.br.petmooby.actvity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.UiThread
-import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.VaccineAdapter
 import client.petmooby.com.br.petmooby.extensions.getDefaulLayoutManager
@@ -17,7 +16,6 @@ import client.petmooby.com.br.petmooby.util.Parameters
 import client.petmooby.com.br.petmooby.util.ResultCodes
 import kotlinx.android.synthetic.main.activity_vaccine_lits.*
 import kotlinx.android.synthetic.main.empty_view_list_layout.*
-import org.parceler.Parcels
 
 class VaccineLitsActivity : BaseActivity() {
 
@@ -28,7 +26,7 @@ class VaccineLitsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine_lits)
         setupToolbar(R.id.toolbarVaccineList, R.string.vaccines)
-        animal = Parcels.unwrap<Animal>(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+//        animal = Parcels.unwrap<Animal>(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
         getPetVaccines()
     }
 
@@ -42,7 +40,7 @@ class VaccineLitsActivity : BaseActivity() {
             val intent = Intent(this,VaccineActivity::class.java)
             intent.putExtra(Parameters.ACTION,ResultCodes.REQUEST_ADD_VACCINE)
 //            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal!!)
-            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
+//            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
             startActivityForResult(intent,ResultCodes.REQUEST_ADD_VACCINE)
             true
         }
@@ -82,7 +80,7 @@ class VaccineLitsActivity : BaseActivity() {
         var intent = Intent(this,VaccineActivity::class.java)
         intent.putExtra(Parameters.ACTION,ResultCodes.REQUEST_UPDATE_VACCINE)
 //        intent.putExtra(Parameters.VACCINE_CARD,vaccineCards)
-        intent.putExtra(Parameters.VACCINE_CARD,Parcels.wrap(vaccineCards))
+//        intent.putExtra(Parameters.VACCINE_CARD,Parcels.wrap(vaccineCards))
         startActivityForResult(intent, ResultCodes.REQUEST_UPDATE_VACCINE)
     }
 }

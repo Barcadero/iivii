@@ -7,12 +7,12 @@
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.actvity.VaccineActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         >
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarVaccine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,7 +20,7 @@
             android:theme="@style/toolbarTheme"
         />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
    <ScrollView
        android:id="@+id/scrollVaccine"
        android:layout_width="match_parent"
@@ -210,7 +210,7 @@
                     />
             </RelativeLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btnAddVaccine"
                 style="@style/btnStyle"
                 android:layout_marginTop="8dp"
@@ -230,13 +230,13 @@
                     android:text="@string/history"
                     />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcViewHistoricVaccine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
                 <include layout="@layout/empty_view_list_layout"/>
 
             </LinearLayout>

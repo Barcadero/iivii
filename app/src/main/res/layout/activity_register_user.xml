@@ -6,12 +6,12 @@
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.actvity.RegisterUserActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         >
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarRegisterUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:theme="@style/toolbarTheme"
             />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -64,7 +64,7 @@
                 />
 
 
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btnSaveNewUserRegister"
                 style="@style/btnStyle"
                 android:layout_marginTop="45dp"

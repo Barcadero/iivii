@@ -1,2 +1,5 @@
+<!--suppress XmlHighlighting -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.boora.corelib" />
+    package="br.com.boora.corelib"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.android.com/apk/res/android " />

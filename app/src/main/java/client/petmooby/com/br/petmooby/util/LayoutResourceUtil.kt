@@ -1,6 +1,7 @@
 package client.petmooby.com.br.petmooby.util
 
-import android.support.annotation.LayoutRes
+import androidx.annotation.LayoutRes
+
 
 /**
  * Created by idoctor on 25/07/2019.

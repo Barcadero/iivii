@@ -2,10 +2,10 @@ package client.petmooby.com.br.petmooby.fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar

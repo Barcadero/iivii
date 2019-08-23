@@ -2,13 +2,17 @@ package client.petmooby.com.br.petmooby.extensions
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.support.annotation.IdRes
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
 import android.util.Log
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.indeterminateProgressDialog
@@ -26,7 +30,7 @@ inline fun Activity.defaultRecycleView(view: Activity, resId:Int): RecyclerView 
     return recycleView
 }
 //@Deprecated("Please replace with setupToolbar(@IdRes id: Int, @IdRes idString: Int, upNavigation: Boolean = false) : ActionBar")
-inline fun AppCompatActivity.setupToolbar(@IdRes id: Int,title:String?= null,upNavigation: Boolean = false) : ActionBar{
+inline fun AppCompatActivity.setupToolbar(@IdRes id: Int,title:String?= null,upNavigation: Boolean = false) : ActionBar {
     val toolbar = findViewById<Toolbar>(id)
     setSupportActionBar(toolbar)
     if(title != null){

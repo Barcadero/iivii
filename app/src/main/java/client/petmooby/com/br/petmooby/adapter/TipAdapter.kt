@@ -1,11 +1,11 @@
 package client.petmooby.com.br.petmooby.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.application.Application
 import client.petmooby.com.br.petmooby.model.Tip

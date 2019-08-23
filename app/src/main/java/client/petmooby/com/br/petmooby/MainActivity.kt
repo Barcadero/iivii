@@ -2,13 +2,14 @@ package client.petmooby.com.br.petmooby
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
-import client.petmooby.com.br.petmooby.fragment.*
+import client.petmooby.com.br.petmooby.fragment.CalendarFragment
+import client.petmooby.com.br.petmooby.fragment.HomeFragment
+import client.petmooby.com.br.petmooby.fragment.MenuFragment
+import client.petmooby.com.br.petmooby.fragment.TipFragment
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.util.FireStoreReference
@@ -16,7 +17,7 @@ import client.petmooby.com.br.petmooby.util.PermissionUtil
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.AccessToken
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*

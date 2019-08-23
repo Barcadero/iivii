@@ -1,6 +1,6 @@
 package client.petmooby.com.br.petmooby.actvity
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**

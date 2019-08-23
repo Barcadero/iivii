@@ -10,7 +10,6 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +17,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
@@ -42,8 +42,8 @@ import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
-import org.parceler.Parcel
-import org.parceler.Parcels
+//import org.parceler.Parcel
+//import org.parceler.Parcels
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -91,14 +91,14 @@ class AddNewPetActivity : AppCompatActivity() {
         btnAddVaccine.setOnClickListener {
             val intent = Intent(this,VaccineLitsActivity::class.java)
 //            intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
-            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
+//            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
             startActivity(intent)
         }
 
         btnAddMedicinalTreatment.setOnClickListener {
             val intent = Intent(this,TreatmentListActivity::class.java)
-            //intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
-            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
+//            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+//            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
             startActivity(intent)
         }
         getAnimalSentByOtherView()
@@ -108,7 +108,7 @@ class AddNewPetActivity : AppCompatActivity() {
         isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
         if (isForUpdate) {
 //            animal= intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER) ?: return
-            animal= Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+//            animal= Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
             animal?.user  = mRef.document(animal?.userPath!!)
             edtNewPetName.setText(animal?.name)
             edtNewPetBirthday.setText(DateTimeUtil.formatDateTime(animal?.dateOfBirthday))
@@ -321,7 +321,7 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun returnThePetForShowOnList() {
         var intent = Intent()
 //        intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
-        intent.putExtra(Parameters.ANIMAL_PARAMETER, Parcels.wrap(animal))
+//        intent.putExtra(Parameters.ANIMAL_PARAMETER, Parcels.wrap(animal))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -330,23 +330,23 @@ class AddNewPetActivity : AppCompatActivity() {
         with(animal) {
             return when {
                 breed.isNullOrEmpty() -> {
-                    showAlert(R.id.animalBreedIsMissing)
+//                    showAlert(R.string.animalBreedIsMissing)
                     false
                 }
                 dateOfBirthday == null -> {
-                    showAlert(R.id.bithDayIsMissing)
+//                    showAlert(R.id.bithDayIsMissing)
                     false
                 }
                 type == null -> {
-                    showAlert(R.id.animalTypeIsMissing)
+//                    showAlert(R.id.animalTypeIsMissing)
                     false
                 }
                 gender.isNullOrEmpty() -> {
-                    showAlert(R.id.animalGenderIsMissing)
+//                    showAlert(R.id.animalGenderIsMissing)
                     false
                 }
                 user == null -> {
-                    showAlert(R.id.animalGenderIsMissing)
+//                    showAlert(R.id.animalGenderIsMissing)
                     false
                 }
                 else -> true
@@ -502,22 +502,22 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun remove(){
         alert(R.string.areYouSure,R.string.removingPet){
-            positiveButton(R.string.yes,{
+            positiveButton(R.string.yes) {
                 animalRef.document(animal?.id!!)
                         .delete()
                         .addOnFailureListener {  }
                         .addOnSuccessListener {
                             var intent = Intent()
-//                            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
-                            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
+    //                            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+//                            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
                             setResult(ResultCodes.RESULT_FOR_DELETE,intent)
                             finish()
                         }
-            })
+            }
 
-            negativeButton(R.string.no,{
+            negativeButton(R.string.no) {
                 it.dismiss()
-            })
+            }
         }.show()
 
     }

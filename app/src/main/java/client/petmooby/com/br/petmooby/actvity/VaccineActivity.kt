@@ -1,12 +1,12 @@
 package client.petmooby.com.br.petmooby.actvity
 
+//import org.parceler.Parcels
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.View.VISIBLE
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.HistoricVaccineAdapter
@@ -20,8 +20,6 @@ import client.petmooby.com.br.petmooby.util.*
 import com.google.firebase.firestore.FieldValue
 import kotlinx.android.synthetic.main.activity_vaccine.*
 import kotlinx.android.synthetic.main.empty_view_list_layout.*
-import org.jetbrains.anko.alert
-import org.parceler.Parcels
 import java.util.*
 
 class VaccineActivity : BaseActivity() {
@@ -39,14 +37,13 @@ class VaccineActivity : BaseActivity() {
         edtVaccineDate.setOnClickListener {
             DateTimePickerDialog.showDatePicker(this,edtVaccineDate,date)
         }
-        edtVaccineDate.setOnFocusChangeListener(
-                {view, hasFocus -> if(hasFocus)
-                        DateTimePickerDialog.showDatePicker(this,edtVaccineDate,date)  })
+        edtVaccineDate.setOnFocusChangeListener { view, hasFocus -> if(hasFocus)
+            DateTimePickerDialog.showDatePicker(this,edtVaccineDate,date)  }
 
-        edtVaccineApplication.setOnFocusChangeListener({view,hasFocus ->
+        edtVaccineApplication.setOnFocusChangeListener { view, hasFocus ->
             if(hasFocus)
                 DateTimePickerDialog.showDatePicker(this,edtVaccineApplication,dateVaccineApp)
-        })
+        }
         edtVaccineApplication.setOnClickListener {
             DateTimePickerDialog.showDatePicker(this,edtVaccineApplication,dateVaccineApp)
         }
@@ -59,12 +56,12 @@ class VaccineActivity : BaseActivity() {
             ResultCodes.REQUEST_ADD_VACCINE -> {
                 //To add a vaccine
 //                animal = intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER)
-                animal = Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+//                animal = Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
             }
             ResultCodes.REQUEST_UPDATE_VACCINE ->{
                 //To alter a vaccine
 //                vaccine = intent.getParcelableExtra(Parameters.VACCINE_CARD)
-                vaccine = Parcels.unwrap(intent.getParcelableExtra(Parameters.VACCINE_CARD))
+//                vaccine = Parcels.unwrap(intent.getParcelableExtra(Parameters.VACCINE_CARD))
                 edtVaccineDescription.setText(vaccine?.vaccine_type)
                 edtVaccineDate.setText(DateTimeUtil.formatDateTime(vaccine?.nextRemember) )
                 if(vaccine?.historic != null) {
@@ -135,7 +132,7 @@ class VaccineActivity : BaseActivity() {
         showAlert(R.string.savedSuccess)
         val intent = Intent()
 //        intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
-        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
+//        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
         setResult(Activity.RESULT_OK, intent)
         dialog.dismiss()
     }
