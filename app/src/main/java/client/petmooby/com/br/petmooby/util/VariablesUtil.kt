@@ -8,4 +8,5 @@ import client.petmooby.com.br.petmooby.model.Animal
 object VariablesUtil {
 
     var gbAnimals: MutableList<Animal>?=null
+    var gbSelectedAnimal:Animal?=null
 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.DateTimeUtil
+import java.text.NumberFormat
 
 /**
  * Created by Rafael Rocha on 06/08/2019.
@@ -26,7 +27,8 @@ class HistoricVaccineAdapter(val historic:List<Animal.Historic>, val onDeleteCli
         holder.notes.text   = historic.observation
         holder.doctor.text  = historic.veterinary
         holder.date.text    = DateTimeUtil.formatDateTime(historic.date)
-        holder.price.text   = historic.value.toString()
+        val format = NumberFormat.getCurrencyInstance()
+        holder.price.text   = format.format(historic.value)
         holder.btnDelete.setOnClickListener {
             onDeleteClick
         }

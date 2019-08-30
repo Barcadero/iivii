@@ -118,4 +118,7 @@
     <string name="wasNotPossibleSaveVaccine">Was not possible save the vaccine</string>
     <string name="errorOnSaveVaccine">Erro while trying to save the vaccine</string>
     <string name="noResultAtThisMoment">No Result at this moment</string>
+    <string name="giveAnApplicationDate">Please give an application date</string>
+    <string name="giveAnApplicationPrice">Please give a price.</string>
+    <string name="areSureDeleteHistory">Are you sure that you want to delete this historic</string>
 </resources>

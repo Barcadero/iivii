@@ -12,7 +12,10 @@ import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.Parameters
 import client.petmooby.com.br.petmooby.util.ResultCodes
+import client.petmooby.com.br.petmooby.util.VariablesUtil
 import kotlinx.android.synthetic.main.activity_treatment_list.*
+//import org.parceler.Parcels
+
 //import org.parceler.Parcels
 
 class TreatmentListActivity : BaseActivity() {
@@ -26,10 +29,11 @@ class TreatmentListActivity : BaseActivity() {
         setupToolbar(R.id.toolbarTreatmentList, R.string.treatments)
         initRcViewList()
 //        var animal = intent.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
+//        var animal = intent.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
 //        var animal = Parcels.unwrap<Animal>(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-//        for(treatment in animal.treatmentCard!!){
-//            addTreatment(treatment)
-//        }
+        for(treatment in VariablesUtil.gbSelectedAnimal?.treatmentCard!!){
+            addTreatment(treatment)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -67,8 +71,8 @@ class TreatmentListActivity : BaseActivity() {
     private fun onTreatmentClick(treatmentCard: Animal.TreatmentCard){
         val intent = Intent(this,TreatmentActivity::class.java)
         intent.putExtra(Parameters.ACTION,ResultCodes.REQUEST_UPDATE)
-//        intent.putExtra(Parameters.TREATMENT,treatmentCard)
-//        intent.putExtra(Parameters.TREATMENT,Parcels.wrap(treatmentCard))
+        intent.putExtra(Parameters.TREATMENT,treatmentCard)
+//        intent.putExtra(Parameters.TREATMENT, Parcels.wrap(treatmentCard))
         startActivityForResult(intent,ResultCodes.REQUEST_UPDATE)
     }
 
@@ -76,9 +80,9 @@ class TreatmentListActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == ResultCodes.REQUEST_UPDATE){
-//                val treatment = data?.getParcelableExtra<Animal.TreatmentCard>(Parameters.TREATMENT)
+                val treatment = data?.getSerializableExtra(Parameters.TREATMENT) as Animal.TreatmentCard
 //                val treatment = Parcels.unwrap<Animal.TreatmentCard>(data?.getParcelableExtra(Parameters.TREATMENT))
-//                addTreatment(treatment!!)
+                addTreatment(treatment)
             }
         }
     }

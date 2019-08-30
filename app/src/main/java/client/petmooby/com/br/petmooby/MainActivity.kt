@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             if(task.result?.isEmpty!!){
                 saveCurrenteUser()
             }else {
-                FireStoreReference.docRefUser = task?.result?.documents!![0].reference
+                FireStoreReference.docRefUser = task.result?.documents!![0].reference
                 //NOTE: Set home fragment as the main content
                 switchFragment(HomeFragment())
             }

@@ -42,6 +42,7 @@ import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
+//import org.parceler.Parcels
 //import org.parceler.Parcel
 //import org.parceler.Parcels
 import java.io.ByteArrayOutputStream
@@ -61,7 +62,7 @@ class AddNewPetActivity : AppCompatActivity() {
     var enumSelectedBreed: EnumBreedBase?=null
     var storage = FirebaseStorage.getInstance().reference
     private var mCurrentPhotoBitmap: Bitmap?=null
-    var animal :Animal?=null
+//    var animal :Animal?=null
     var isForUpdate = false
     var fromOtherScreen = false
     private val camera      = CameraUtil()
@@ -108,17 +109,18 @@ class AddNewPetActivity : AppCompatActivity() {
         isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
         if (isForUpdate) {
 //            animal= intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER) ?: return
+//            animal= intent.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
 //            animal= Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-            animal?.user  = mRef.document(animal?.userPath!!)
-            edtNewPetName.setText(animal?.name)
-            edtNewPetBirthday.setText(DateTimeUtil.formatDateTime(animal?.dateOfBirthday))
-            spNewPetGender.setSelection(EnumGender.valueOf(animal?.gender!!).ordinal)
-            if(animal?.type != null) {
-                spNewPetKindAnimal.setSelection(EnumTypeAnimal.valueOf(animal?.type?.name!!).ordinal)
+//            animal?.user  = mRef.document(animal?.userPath!!)
+            edtNewPetName.setText(VariablesUtil.gbSelectedAnimal?.name)
+            edtNewPetBirthday.setText(DateTimeUtil.formatDateTime(VariablesUtil.gbSelectedAnimal?.dateOfBirthday))
+            spNewPetGender.setSelection(EnumGender.valueOf(VariablesUtil.gbSelectedAnimal?.gender!!).ordinal)
+            if(VariablesUtil.gbSelectedAnimal?.type != null) {
+                spNewPetKindAnimal.setSelection(EnumTypeAnimal.valueOf(VariablesUtil.gbSelectedAnimal?.type?.name!!).ordinal)
                 spNewPetKindAnimal.isEnabled = false
                 fromOtherScreen = true
             }
-            if(animal?.photo != null) {
+            if(VariablesUtil.gbSelectedAnimal?.photo != null) {
                 loadProfilePicture()
             }
 
@@ -127,7 +129,7 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun loadProfilePicture() {
         Picasso.with(this)
-                .load(animal?.photo)
+                .load(VariablesUtil.gbSelectedAnimal?.photo)
                 .error(R.drawable.no_image)
                 //.placeholder(R.drawable.icons8_identidade_de_cachorro_90)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -170,8 +172,8 @@ class AddNewPetActivity : AppCompatActivity() {
                         val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
-                        if(animal?.breed != null){
-                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForDogs(animal?.breed!!))
+                        if(VariablesUtil.gbSelectedAnimal?.breed != null){
+                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForDogs(VariablesUtil.gbSelectedAnimal?.breed!!))
                             spNewPetBreed.setSelection(position)
                         }
 
@@ -182,8 +184,8 @@ class AddNewPetActivity : AppCompatActivity() {
                         val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
-                        if(animal?.breed != null){
-                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForCats(animal?.breed!!))
+                        if(VariablesUtil.gbSelectedAnimal?.breed != null){
+                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForCats(VariablesUtil.gbSelectedAnimal?.breed!!))
                             spNewPetBreed.setSelection(position)
                         }
                     }
@@ -193,8 +195,8 @@ class AddNewPetActivity : AppCompatActivity() {
                         val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
-                        if(animal?.breed != null){
-                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForBirds(animal?.breed!!))
+                        if(VariablesUtil.gbSelectedAnimal?.breed != null){
+                            val position = adapterValue.getPosition(BreedNamesResolverUtil.getByValueForBirds(VariablesUtil.gbSelectedAnimal?.breed!!))
                             spNewPetBreed.setSelection(position)
                         }
                     }
@@ -261,10 +263,10 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun savePet(){
         var dialog = showLoadingDialog()
         if(!isForUpdate) {
-            animal = Animal()
+            VariablesUtil.gbSelectedAnimal = Animal()
         }
         enumSelectedBreed = spNewPetBreed.selectedItem as EnumBreedBase
-        with(animal!!){
+        with(VariablesUtil.gbSelectedAnimal!!){
             name            = edtNewPetName.text.toString()
             dateOfBirthday  = bithDate
             breed           = enumSelectedBreed?.getValue(enumSelectedBreed!!.getIndex(enumSelectedBreed!!))
@@ -272,7 +274,7 @@ class AddNewPetActivity : AppCompatActivity() {
             gender          = EnumGender.values()[spNewPetGender.selectedItemPosition].value
             user            = FireStoreReference.docRefUser
         }
-        if(validateFields(animal!!)) {
+        if(validateFields(VariablesUtil.gbSelectedAnimal!!)) {
             if(!isForUpdate) {
                 callFireStoreServiceToSaveTheAnimal( dialog)
             }else{
@@ -283,7 +285,7 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun callFireStoreServiceToSaveTheAnimal(dialog: ProgressDialog) {
         animalRef
-                .add(animal!!)
+                .add(VariablesUtil.gbSelectedAnimal!!)
                 .addOnSuccessListener { documentReference ->
                     dialog.dismiss()
                     successSaved(documentReference)
@@ -293,8 +295,8 @@ class AddNewPetActivity : AppCompatActivity() {
     }
 
     private fun callFireStoreServiceToUpdateTheAnimal(dialog: ProgressDialog, uploadImage:Boolean) {
-        animalRef.document(animal?.id!!)
-                .set(animal!!)
+        animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
+                .set(VariablesUtil.gbSelectedAnimal!!)
                 .addOnSuccessListener { documentReference ->
                     dialog.dismiss()
                     if(uploadImage) {
@@ -307,9 +309,9 @@ class AddNewPetActivity : AppCompatActivity() {
     }
 
     private fun successSaved(documentReference: DocumentReference){
-        animal?.id = documentReference.id
+        VariablesUtil.gbSelectedAnimal?.id = documentReference.id
         isForUpdate = true
-        VariablesUtil.gbAnimals?.add(animal!!)
+        VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
         FireStoreReference.saveAnimalReference(documentReference)
         if(mCurrentPhotoBitmap != null) {
             uploadImageAndSaveOrUpdatePet()
@@ -367,7 +369,7 @@ class AddNewPetActivity : AppCompatActivity() {
         if(mCurrentPhotoBitmap == null) return
         val dialog      = showLoadingDialog(message = getString(R.string.savingImage))
         //var file        = Uri.fromFile(File(mCurrentPhotoPath))
-        val ref   = storage.child("animal/${animal?.id}.jpg")
+        val ref   = storage.child("animal/${VariablesUtil.gbSelectedAnimal?.id}.jpg")
         val baos = ByteArrayOutputStream()
         mCurrentPhotoBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
@@ -383,7 +385,7 @@ class AddNewPetActivity : AppCompatActivity() {
         }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                 animal?.photo = downloadUri?.toString()//riversRef.downloadUrl.toString()
+                VariablesUtil.gbSelectedAnimal?.photo = downloadUri?.toString()//riversRef.downloadUrl.toString()
                  callFireStoreServiceToUpdateTheAnimal(dialog,false)
             } else {
                 // Handle failures
@@ -503,12 +505,12 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun remove(){
         alert(R.string.areYouSure,R.string.removingPet){
             positiveButton(R.string.yes) {
-                animalRef.document(animal?.id!!)
+                animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
                         .delete()
                         .addOnFailureListener {  }
                         .addOnSuccessListener {
                             var intent = Intent()
-    //                            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
+                                //intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
 //                            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
                             setResult(ResultCodes.RESULT_FOR_DELETE,intent)
                             finish()

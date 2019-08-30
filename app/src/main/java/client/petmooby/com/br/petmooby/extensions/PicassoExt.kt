@@ -20,11 +20,11 @@ fun ImageView.loadUrl(url: String?, progress: ProgressBar? = null){
         Picasso.with(context).load(url).fit().into(this,
                 object : com.squareup.picasso.Callback{
                     override fun onSuccess() {
-                        progress?.visibility = View.GONE
+                        progress.visibility = View.GONE
                     }
 
                     override fun onError() {
-                        progress?.visibility = View.GONE
+                        progress.visibility = View.GONE
                     }
                 }
         )

@@ -52,14 +52,12 @@ fun AppCompatActivity.setupToolbar(@IdRes id: Int,  idString: Int, upNavigation:
 
 fun AppCompatActivity.switchFragmentToMainContent(fragment: Fragment){
     supportFragmentManager.beginTransaction()
-            ?.replace(R.id.mainFragment,fragment)
-            ?.commit()
+            ?.replace(R.id.mainFragment,fragment).commit()
 }
 
 fun AppCompatActivity.switchFragment(@IdRes id: Int, fragment: Fragment){
     supportFragmentManager.beginTransaction()
-            ?.replace(id,fragment)
-            ?.commit()
+            ?.replace(id,fragment).commit()
 }
 
 
@@ -69,27 +67,27 @@ fun AppCompatActivity.showLoadingDialog(message: String = getString(R.string.loa
         setCancelable(false)
         show()
     }
-    return dialog!!
+    return dialog
 }
 
 fun Activity.showAlert(message:String){
-    alert(message,getString(R.string.Advice)!!){
+    alert(message, getString(R.string.Advice)){
         okButton{ it.dismiss() }
-    }?.show()
+    }.show()
 }
 
 fun Activity.showAlert(@StringRes idResource: Int){
-    showAlert(getString(idResource)!!)
+    showAlert(getString(idResource))
 }
 
 fun Activity.showAlertError(message:String){
-    alert(message,getString(R.string.Advice)!!){
+    alert(message, getString(R.string.Advice)){
         okButton{ it.dismiss() }
-    }?.show()
+    }.show()
 }
 
 fun Activity.showAlertError(@StringRes idResource: Int){
-    showAlertError(getString(idResource)!!)
+    showAlertError(getString(idResource))
 }
 
 fun Activity.onFailedQueryReturn(dialog: ProgressDialog,message:String){
@@ -97,6 +95,9 @@ fun Activity.onFailedQueryReturn(dialog: ProgressDialog,message:String){
     Log.d("FACE",message)
 }
 
+/**
+ * The first item will be insert with the maximum width and the others in pair
+ */
 fun Activity.getDefaulLayoutManager(): GridLayoutManager{
     val layoutManager = GridLayoutManager(this,2)
     layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
@@ -108,3 +109,7 @@ fun Activity.getDefaulLayoutManager(): GridLayoutManager{
     return layoutManager
 
 }
+
+fun Activity.getDefaultLayoutManager(): GridLayoutManager
+    = GridLayoutManager(this,1)
+

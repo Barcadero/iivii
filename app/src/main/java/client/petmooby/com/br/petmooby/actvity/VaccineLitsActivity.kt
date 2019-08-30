@@ -14,19 +14,22 @@ import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.Parameters
 import client.petmooby.com.br.petmooby.util.ResultCodes
+import client.petmooby.com.br.petmooby.util.VariablesUtil
 import kotlinx.android.synthetic.main.activity_vaccine_lits.*
 import kotlinx.android.synthetic.main.empty_view_list_layout.*
+//import org.parceler.Parcels
 
 class VaccineLitsActivity : BaseActivity() {
 
 
-    var animal:Animal?=null
+//    var animal:Animal?=null
     //var adapter = VaccineAdapter(animal?.vaccineCards!!,{vaccineCards -> onClick(vaccineCards) })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine_lits)
         setupToolbar(R.id.toolbarVaccineList, R.string.vaccines)
 //        animal = Parcels.unwrap<Animal>(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+//        animal = intent.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
         getPetVaccines()
     }
 
@@ -52,9 +55,9 @@ class VaccineLitsActivity : BaseActivity() {
     }
 
     private fun getPetVaccines(){
-         if(animal?.vaccineCards != null){
-             if(!animal?.vaccineCards?.isEmpty()!!) {
-                 rcViewVaccineList.adapter       = VaccineAdapter(animal?.vaccineCards!!, { vaccineCards -> onClick(vaccineCards) })
+         if(VariablesUtil.gbSelectedAnimal?.vaccineCards != null){
+             if(!VariablesUtil.gbSelectedAnimal?.vaccineCards?.isEmpty()!!) {
+                 rcViewVaccineList.adapter       = VaccineAdapter(VariablesUtil.gbSelectedAnimal?.vaccineCards!!, { vaccineCards -> onClick(vaccineCards) })
                  rcViewVaccineList.layoutManager = getDefaulLayoutManager()
                  showAndHideControls(true)
              }else{
@@ -79,8 +82,8 @@ class VaccineLitsActivity : BaseActivity() {
     private fun onClick(vaccineCards: Animal.VaccineCards){
         var intent = Intent(this,VaccineActivity::class.java)
         intent.putExtra(Parameters.ACTION,ResultCodes.REQUEST_UPDATE_VACCINE)
-//        intent.putExtra(Parameters.VACCINE_CARD,vaccineCards)
-//        intent.putExtra(Parameters.VACCINE_CARD,Parcels.wrap(vaccineCards))
+        intent.putExtra(Parameters.VACCINE_CARD,vaccineCards)
+//        intent.putExtra(Parameters.VACCINE_CARD, Parcels.wrap(vaccineCards))
         startActivityForResult(intent, ResultCodes.REQUEST_UPDATE_VACCINE)
     }
 }

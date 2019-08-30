@@ -104,11 +104,11 @@ class TipFragment : Fragment() {
     private fun successQueryReturn(dialog: ProgressDialog, query: QuerySnapshot) {
         dialog.dismiss()
 
-        if(query?.isEmpty!!){
+        if(query.isEmpty){
             toast(getString(R.string.noModeResults))
         }else {
                 Thread.sleep(1000)
-                var list    = query!!.toObjects(Tip::class.java)
+                var list    = query.toObjects(Tip::class.java)
                 lastQuery   =  query.documents[query.size() - 1]
                 //lastQuery = query
                 changeListOfTips(list)
