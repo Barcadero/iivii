@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.activity_treatment_list.*
 
 class TreatmentListActivity : BaseActivity() {
 
-    private var treatments = mutableListOf<Animal.TreatmentCard>()
-    private var adapter    = TreatmentListAdapter(treatments,this::onTreatmentClick)
+//    private var treatments = mutableListOf<Animal.TreatmentCard>()
+    private var adapter:TreatmentListAdapter?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +31,9 @@ class TreatmentListActivity : BaseActivity() {
 //        var animal = intent.getParcelableExtra<Animal>(Parameters.ANIMAL_PARAMETER)
 //        var animal = intent.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
 //        var animal = Parcels.unwrap<Animal>(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-        for(treatment in VariablesUtil.gbSelectedAnimal?.treatmentCard!!){
-            addTreatment(treatment)
-        }
+//        for(treatment in VariablesUtil.gbSelectedAnimal?.treatmentCard!!){
+//            addTreatment(treatment)
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -54,18 +54,23 @@ class TreatmentListActivity : BaseActivity() {
     }
 
     private fun initRcViewList(){
-        rcViewTreatmentList.adapter = adapter
-        val layoutManager = GridLayoutManager(this,2)
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
-            override fun getSpanSize(position: Int): Int {
-                return if (position == 0) 2 else 1
+        if(VariablesUtil.gbSelectedAnimal?.treatmentCard != null){
+            VariablesUtil.gbSelectedAnimal?.treatmentCard = mutableListOf()
+        }else {
+            adapter = TreatmentListAdapter(VariablesUtil.gbSelectedAnimal?.treatmentCard!!, this::onTreatmentClick)
+            rcViewTreatmentList.adapter = adapter
+            val layoutManager = GridLayoutManager(this, 2)
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (position == 0) 2 else 1
+                }
             }
         }
     }
 
     private fun addTreatment(treatmentCard: Animal.TreatmentCard){
-        treatments.add(treatmentCard)
-        adapter.notifyItemInserted(treatments.lastIndex)
+        VariablesUtil.gbSelectedAnimal?.treatmentCard?.add(treatmentCard)
+        adapter?.notifyItemInserted(VariablesUtil.gbSelectedAnimal?.treatmentCard?.lastIndex!!)
     }
 
     private fun onTreatmentClick(treatmentCard: Animal.TreatmentCard){

@@ -121,4 +121,19 @@
     <string name="giveAnApplicationDate">Please give an application date</string>
     <string name="giveAnApplicationPrice">Please give a price.</string>
     <string name="areSureDeleteHistory">Are you sure that you want to delete this historic</string>
+    <string name="currencyRegex">R$,.</string>
+    <string name="vaccineDeleted">Vaccine Deleted</string>
+    <string name="vermifuge">VERMIFUGE</string>
+    <string name="medicine">MEDICINE</string>
+    <string name="always">Always</string>
+    <string name="informed">Informed</string>
+    <string name="informTheDate">Inform the date</string>
+    <string name="initialDate">Initial Date</string>
+    <string name="finalDate">Final Date</string>
+    <string name="pleaseGiveADate">Please inform a date.</string>
+    <string name="pleaseSelectATreatmentType">Please select a treatment type.</string>
+    <string name="pleaseSelectATreatmentInterval">Please select a treatment interval.</string>
+    <string name="pleaseSelectATreatmentPeriod">Please select a treatment period</string>
+    <string name="treatmentName">Treatment Name</string>
+    <string name="pleaseGiveATreatmentName">Please give a treatment name.</string>
 </resources>

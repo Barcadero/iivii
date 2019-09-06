@@ -14,7 +14,9 @@ import java.text.NumberFormat
 /**
  * Created by Rafael Rocha on 06/08/2019.
  */
-class HistoricVaccineAdapter(val historic:List<Animal.Historic>, val onDeleteClick: (historic: Animal.Historic) -> Unit) : RecyclerView.Adapter<HistoricVaccineAdapter.HistoricViewHolder>(){
+class HistoricVaccineAdapter(val historic:List<Animal.Historic>,
+                             val onDeleteClick: (historic: Animal.Historic) -> Unit,
+                             val onShowNotes: (historic: Animal.Historic) -> Unit ) : RecyclerView.Adapter<HistoricVaccineAdapter.HistoricViewHolder>(){
     override fun getItemCount(): Int = historic.size
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): HistoricViewHolder {
@@ -30,8 +32,12 @@ class HistoricVaccineAdapter(val historic:List<Animal.Historic>, val onDeleteCli
         val format = NumberFormat.getCurrencyInstance()
         holder.price.text   = format.format(historic.value)
         holder.btnDelete.setOnClickListener {
-            onDeleteClick
+            onDeleteClick(historic)
         }
+//        holder.notes.setOnClickListener {
+//            onShowNotes(historic)
+//        }
+        holder.itemView.setOnClickListener {  onShowNotes(historic)}
     }
 
     class HistoricViewHolder(view : View) : RecyclerView.ViewHolder(view){

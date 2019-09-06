@@ -139,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/veterinaryOrClinic"
                     android:layout_toRightOf="@+id/ivVaccineClinic"
+                    android:imeOptions="actionNext"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -207,6 +208,7 @@
                     android:maxLines="10"
                     android:gravity="top|left"
                     android:scrollbars="vertical"
+                    android:imeOptions="actionDone"
                     />
             </RelativeLayout>
 
@@ -231,6 +233,13 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:textAllCaps="true"
+                    android:layout_marginLeft="5dp"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/primaryColor"
+                    android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
                     />
 

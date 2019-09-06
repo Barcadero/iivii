@@ -64,8 +64,11 @@
             android:name=".actvity.VeterinaryPartnerDetailActivity"
             android:label="@string/title_activity_veterinary_partner_detail"
             android:theme="@style/AppTheme" />
-        <activity android:name=".actvity.AddNewPetActivity" />
-        <activity android:name=".actvity.VaccineActivity" />
+        <activity android:name=".actvity.AddNewPetActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
+        <activity android:name=".actvity.VaccineActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".actvity.VaccineLitsActivity" />
         <activity android:name=".actvity.TreatmentListActivity" />
         <activity android:name=".actvity.TreatmentActivity" />

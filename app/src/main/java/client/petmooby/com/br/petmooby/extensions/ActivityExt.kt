@@ -76,6 +76,12 @@ fun Activity.showAlert(message:String){
     }.show()
 }
 
+fun Activity.showAlert(@StringRes title:Int, message:String){
+    alert(message, getString(title)){
+        okButton{ it.dismiss() }
+    }.show()
+}
+
 fun Activity.showAlert(@StringRes idResource: Int){
     showAlert(getString(idResource))
 }
@@ -99,13 +105,13 @@ fun Activity.onFailedQueryReturn(dialog: ProgressDialog,message:String){
  * The first item will be insert with the maximum width and the others in pair
  */
 fun Activity.getDefaulLayoutManager(): GridLayoutManager{
-    val layoutManager = GridLayoutManager(this,2)
-    layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
-        override fun getSpanSize(position: Int): Int {
-            return if (position == 0) 2 else 1
-        }
-
-    }
+    val layoutManager = GridLayoutManager(this,1)
+//    layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+//        override fun getSpanSize(position: Int): Int {
+//            return if (position == 0) 2 else 1
+//        }
+//
+//    }
     return layoutManager
 
 }

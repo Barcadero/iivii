@@ -35,18 +35,22 @@
                     android:id="@+id/imageView"
                     android:src="@drawable/icons8_pills_60"/>
 
-                <EditText
+                <Spinner
+                    android:id="@+id/spTreatmentType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imageView" />
+                    android:layout_toEndOf="@+id/imageView"
+
+                    />
+
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtTreatmentPetName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/treatmentType"
+                android:text="@string/treatmentName"
                 android:textAllCaps="true"
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="8dp"
@@ -54,7 +58,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="@color/white"
                 >
                 <ImageView
@@ -63,13 +66,13 @@
                     android:id="@+id/imageView2"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/icons8_doctors_bag_60"/>
-
                 <EditText
-                    android:id="@+id/edtTreatmentPetName"
+                    android:id="@+id/edtTreatmentDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/imageView2" />
+
             </RelativeLayout>
 
             <TextView
@@ -93,6 +96,7 @@
                     android:src="@drawable/icons8_schedule_30"/>
 
                 <Spinner
+                    android:id="@+id/spTreatmentTypeInterval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -115,10 +119,13 @@
                     android:src="@drawable/icons8_alarm_clock_60"/>
 
                 <Spinner
+                    android:id="@+id/spTreatmentInterval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/ivTreatment4" />
+
+
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -136,10 +143,12 @@
                     android:src="@drawable/icons8_schedule_30"/>
 
                 <Switch
+                    android:id="@+id/swtTreatmentAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
+                    android:checked="false"
                     android:layout_toEndOf="@+id/tvTreatmentAlarm" />
             </RelativeLayout>
 
@@ -174,8 +183,8 @@
                     android:layout_marginStart="8dp"
                     />
 
-                <EditText
-                    android:id="@+id/edtTreatmentDate"
+                <Spinner
+                    android:id="@+id/spTreatmentPeriod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -196,10 +205,11 @@
                     />
 
                 <EditText
-                    android:id="@+id/edtTreatmentDateTwo"
+                    android:id="@+id/edtTreatmentDateInitial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:hint="@string/initialDate"
                     android:layout_toEndOf="@+id/ivTreatment7" />
             </RelativeLayout>
 
@@ -217,10 +227,11 @@
                     android:layout_marginStart="8dp"/>
 
                 <EditText
-                    android:id="@+id/edtTreatmentDateOne"
+                    android:id="@+id/edtTreatmentDateFinal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:hint="@string/finalDate"
                     android:layout_toEndOf="@+id/ivTreatment6" />
             </RelativeLayout>
 
