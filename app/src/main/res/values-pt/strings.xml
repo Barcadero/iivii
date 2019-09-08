@@ -136,4 +136,9 @@
     <string name="pleaseSelectATreatmentPeriod">Please select a treatment period</string>
     <string name="treatmentName">Treatment Name</string>
     <string name="pleaseGiveATreatmentName">Please give a treatment name.</string>
+    <string name="day">Day</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="treatmentDeleted">Treatment Deleted</string>
+    <string name="treatment">Treatment</string>
 </resources>

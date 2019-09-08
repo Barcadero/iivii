@@ -6,6 +6,20 @@
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.actvity.TreatmentActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTreatment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:theme="@style/toolbarTheme"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -32,7 +32,7 @@ class VaccineActivity : BaseActivity() {
     var date            = Date()
     var dateVaccineApp  = Date()
     var action          = 0
-    var animalRef = fbReference.collection(CollectionsName.ANIMAL)
+    //var animalRef = fbReference.collection(CollectionsName.ANIMAL)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine)

@@ -1,6 +1,7 @@
 package client.petmooby.com.br.petmooby.actvity
 
 import androidx.appcompat.app.AppCompatActivity
+import client.petmooby.com.br.petmooby.model.CollectionsName
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
@@ -8,4 +9,5 @@ import com.google.firebase.firestore.FirebaseFirestore
  */
 open class BaseActivity: AppCompatActivity() {
     protected var fbReference = FirebaseFirestore.getInstance()
+    protected var animalRef = fbReference.collection(CollectionsName.ANIMAL)
 }

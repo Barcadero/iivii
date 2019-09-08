@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.GridLayoutManager
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.TreatmentListAdapter
+import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.Parameters
@@ -54,17 +55,12 @@ class TreatmentListActivity : BaseActivity() {
     }
 
     private fun initRcViewList(){
-        if(VariablesUtil.gbSelectedAnimal?.treatmentCard != null){
+        if(VariablesUtil.gbSelectedAnimal?.treatmentCard == null){
             VariablesUtil.gbSelectedAnimal?.treatmentCard = mutableListOf()
         }else {
             adapter = TreatmentListAdapter(VariablesUtil.gbSelectedAnimal?.treatmentCard!!, this::onTreatmentClick)
             rcViewTreatmentList.adapter = adapter
-            val layoutManager = GridLayoutManager(this, 2)
-            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (position == 0) 2 else 1
-                }
-            }
+            rcViewTreatmentList.layoutManager = getDefaultLayoutManager()
         }
     }
 
@@ -76,7 +72,8 @@ class TreatmentListActivity : BaseActivity() {
     private fun onTreatmentClick(treatmentCard: Animal.TreatmentCard){
         val intent = Intent(this,TreatmentActivity::class.java)
         intent.putExtra(Parameters.ACTION,ResultCodes.REQUEST_UPDATE)
-        intent.putExtra(Parameters.TREATMENT,treatmentCard)
+        intent.putExtra(Parameters.TREATMENT,treatmentCard.identity)
+//        intent.putExtra(Parameters.TREATMENT,treatmentCard)
 //        intent.putExtra(Parameters.TREATMENT, Parcels.wrap(treatmentCard))
         startActivityForResult(intent,ResultCodes.REQUEST_UPDATE)
     }
