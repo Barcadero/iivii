@@ -144,4 +144,12 @@
     <string name="areYouSureToDeleteThisTreatment">Are you sure that you want delete this treatment</string>
     <string name="pleaseIntervalShouldGreatThenZero">Please, interval shoud be great than zero.</string>
     <string name="pleaseFinalDateShoulBeGreateThanInitial">Please, final date shoud be greate than initial</string>
+    <string name="areYouSureToDeleteThisVaccine">Are you sure to delete this vaccine?</string>
+    <string name="youCanOnlyHaveSomeVaccines">You can only have 8 vaccines registered.</string>
+    <string name="youCanOnlyHaveSomeTreatments">You can only have 8 registered treatments.</string>
+    <string name="emailInvalid">This e-mail is not valid.</string>
+    <string name="pleaseGiveYourName">Please, tell us your e-mail.</string>
+    <string name="pleaseGiveYourEmail">Please, tell us your e-mail</string>
+    <string name="pwdShoulBeNotEmpty">Please, Password should be not empty.</string>
+    <string name="confirmPwdShoulBeNotEmpty">Please, confirm the password.</string>
 </resources>

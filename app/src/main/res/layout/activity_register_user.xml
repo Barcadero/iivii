@@ -43,24 +43,35 @@
                 />
 
             <EditText
+                android:id="@+id/edtNewUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
+                android:maxLength="120"
                 />
             <EditText
+                android:id="@+id/edtNewUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:maxLength="120"
                 />
             <EditText
+                android:id="@+id/edtNewUserPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLength="45"
                 />
             <EditText
+                android:id="@+id/edtNewUserConfirmPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/confirmPassword"
+                android:inputType="textPassword"
+                android:maxLength="45"
                 />
 
 

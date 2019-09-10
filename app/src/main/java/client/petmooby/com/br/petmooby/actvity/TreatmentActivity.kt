@@ -253,7 +253,6 @@ class TreatmentActivity : BaseActivity() {
                     yesButton {  delete() }
                     noButton {it.dismiss()}
                 }.show()
-
             }
         }
         return super.onOptionsItemSelected(item)

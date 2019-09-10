@@ -4,15 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.TreatmentListAdapter
 import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
+import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.Parameters
 import client.petmooby.com.br.petmooby.util.ResultCodes
 import client.petmooby.com.br.petmooby.util.VariablesUtil
 import kotlinx.android.synthetic.main.activity_treatment_list.*
+import kotlinx.android.synthetic.main.activity_vaccine_lits.*
+import kotlinx.android.synthetic.main.empty_view_list_layout.*
 
 class TreatmentListActivity : BaseActivity() {
     private var adapter:TreatmentListAdapter?= null
@@ -31,8 +36,12 @@ class TreatmentListActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.menuAdd ->{
-                val intent = Intent(this,TreatmentActivity::class.java)
-                startActivityForResult(intent,ResultCodes.REQUEST_INSERT)
+                if(VariablesUtil.gbSelectedAnimal?.treatmentCard?.size!! > 7){
+                    showAlert(R.string.youCanOnlyHaveSomeTreatments)
+                }else {
+                    val intent = Intent(this, TreatmentActivity::class.java)
+                    startActivityForResult(intent, ResultCodes.REQUEST_INSERT)
+                }
                 true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -43,10 +52,12 @@ class TreatmentListActivity : BaseActivity() {
     private fun initRcViewList(){
         if(VariablesUtil.gbSelectedAnimal?.treatmentCard == null){
             VariablesUtil.gbSelectedAnimal?.treatmentCard = mutableListOf()
+            showAndHideControls(false)
         }else {
             adapter = TreatmentListAdapter(VariablesUtil.gbSelectedAnimal?.treatmentCard!!, this::onTreatmentClick)
             rcViewTreatmentList.adapter = adapter
             rcViewTreatmentList.layoutManager = getDefaultLayoutManager()
+            showAndHideControls(true)
         }
     }
 
@@ -60,6 +71,17 @@ class TreatmentListActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         rcViewTreatmentList.adapter?.notifyDataSetChanged()
+    }
+
+    @UiThread
+    fun showAndHideControls(show:Boolean) {
+        if(show){
+            layoutEmptyList.visibility      = View.GONE
+            rcViewTreatmentList.visibility    = View.VISIBLE
+        }else {
+            layoutEmptyList.visibility = View.VISIBLE
+            rcViewTreatmentList.visibility = View.GONE
+        }
     }
 
 

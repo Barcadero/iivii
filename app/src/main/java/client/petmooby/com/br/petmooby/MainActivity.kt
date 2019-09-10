@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import client.petmooby.com.br.petmooby.actvity.BaseActivity
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.fragment.CalendarFragment
@@ -12,6 +13,7 @@ import client.petmooby.com.br.petmooby.fragment.MenuFragment
 import client.petmooby.com.br.petmooby.fragment.TipFragment
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
+import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.PermissionUtil
 import client.petmooby.com.br.petmooby.util.Preference
@@ -22,10 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    private var docRefUser = FirebaseFirestore.getInstance().collection(CollectionsName.USER)
+//    private var docRefUser = FirebaseFirestore.getInstance().collection(CollectionsName.USER)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -80,6 +83,8 @@ class MainActivity : AppCompatActivity() {
             user.name           = Preference.get<String>(this,Preference.USER_NAME)
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
             user.userIdFB       = Preference.get(this,Preference.USER_ID)
+            user.type           = TypeUserEnum.FACEBOOK
+            user.registerDate   = Date()
             docRefUser.add(user)
                     .addOnSuccessListener {
                         documentReference -> FireStoreReference.docRefUser = documentReference;switchFragment(HomeFragment());dialog.dismiss()

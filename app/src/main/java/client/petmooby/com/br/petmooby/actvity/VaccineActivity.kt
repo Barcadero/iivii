@@ -1,38 +1,36 @@
 package client.petmooby.com.br.petmooby.actvity
 
-//import org.parceler.Parcels
+
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.VISIBLE
+import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.HistoricVaccineAdapter
-import client.petmooby.com.br.petmooby.extensions.*
+import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
+import client.petmooby.com.br.petmooby.extensions.setupToolbar
+import client.petmooby.com.br.petmooby.extensions.showAlert
+import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
-import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.util.*
-import com.google.firebase.firestore.FieldValue
 import kotlinx.android.synthetic.main.activity_vaccine.*
 import kotlinx.android.synthetic.main.empty_view_list_layout.*
-import kotlinx.android.synthetic.main.historic_vaccines_adapter.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
 import org.jetbrains.anko.toast
-//import org.jetbrains.anko.alert
-//import org.jetbrains.anko.noButton
-//import org.jetbrains.anko.okButton
-//import org.parceler.Parcels
+import org.jetbrains.anko.yesButton
 import java.util.*
 
 class VaccineActivity : BaseActivity() {
 
-//    var animal:Animal?=null
     var vaccine:Animal.VaccineCards?=null
     var date            = Date()
     var dateVaccineApp  = Date()
     var action          = 0
-    //var animalRef = fbReference.collection(CollectionsName.ANIMAL)
+    var historyLastIndex = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine)
@@ -57,10 +55,7 @@ class VaccineActivity : BaseActivity() {
         action = intent.getIntExtra(Parameters.ACTION,0)
         when(action){
             ResultCodes.REQUEST_ADD_VACCINE -> {
-                //To add a vaccine
-//                animal = intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER)
-//                animal = intent.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
-//                animal = Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
+                initHistoricAdapter()
             }
             ResultCodes.REQUEST_UPDATE_VACCINE ->{
                 //To alter a vaccine
@@ -70,15 +65,28 @@ class VaccineActivity : BaseActivity() {
                 edtVaccineDescription.setText(vaccine?.vaccine_type)
                 edtVaccineDate.setText(DateTimeUtil.formatDateTime(vaccine?.nextRemember) )
                 if(vaccine?.historic != null) {
-                    rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccine?.historic!!,{},{historic -> showNotes(historic)  }) //{ /*historic -> deleteVaccineHistory(historic)*/}
-                    rcViewHistoricVaccine.layoutManager = getDefaultLayoutManager()
+                    initHistoricAdapter()
                 }else{
+                    initHistoricAdapter()
                     layoutEmptyList.visibility = VISIBLE
                 }
 
             }
         }
 
+
+    }
+
+    private fun initHistoricAdapter() {
+        VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter {
+            vaccine?.identity == it.identity
+        }!!.forEach {
+            if(it.historic == null){
+                it.historic = mutableListOf()
+            }
+            rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(it.historic!!, {}, { historic -> showNotes(historic) }) //{ /*historic -> deleteVaccineHistory(historic)*/}
+            rcViewHistoricVaccine.layoutManager = getDefaultLayoutManager()
+        }
 
     }
 
@@ -102,7 +110,11 @@ class VaccineActivity : BaseActivity() {
                 }
             }
             R.id.menuDelete ->{
-                deleteVaccine()
+                alert(R.string.areYouSureToDeleteThisVaccine,R.string.delete) {
+                    yesButton {  deleteVaccine() }
+                    noButton {it.dismiss()}
+                }.show()
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -151,17 +163,16 @@ class VaccineActivity : BaseActivity() {
 
     private fun saveAndSetResult(dialog: ProgressDialog) {
         showAlert(R.string.savedSuccess)
-//        val intent = Intent()
-//        intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
-//        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
-//        setResult(Activity.RESULT_OK, intent)
         dialog.dismiss()
     }
 
     private fun deleteVaccine(){
         var dialog = showLoadingDialog()
         if(vaccine != null){
-            VariablesUtil.gbSelectedAnimal?.vaccineCards?.remove(vaccine!!)
+            //VariablesUtil.gbSelectedAnimal?.vaccineCards?.remove(vaccine!!)
+            with(VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter { it.identity == vaccine?.identity }!![0]){
+                VariablesUtil.gbSelectedAnimal?.vaccineCards?.remove(this)
+            }
             saveAnimal(dialog, true)
         }else{
             dialog.dismiss()
@@ -208,12 +219,6 @@ class VaccineActivity : BaseActivity() {
                     value = NumberFormatUtil.currencyToDouble(edtVaccinePrice.text.toString(),this@VaccineActivity)
                     veterinary = edtVaccineClinic.text.toString()
                 }
-//                for(vaccine in VariablesUtil.gbSelectedAnimal?.vaccineCards!!){
-//                    if(vaccine.identity == this.vaccine?.identity){
-//                        vaccine.historic?.add(historic)
-//                    }
-//                }
-
                 if(vaccine == null){
                     getCurrentVaccineInfo()
                 }
@@ -226,13 +231,15 @@ class VaccineActivity : BaseActivity() {
                             if(it.historic == null){
                                 it.historic = mutableListOf()
                             }
-                            it.historic?.add(historic) }
+                            it.historic?.add(historic)
+                            historyLastIndex = it.historic!!.size - 1
+                        }
 
                 animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
                         .set(VariablesUtil.gbSelectedAnimal!!)
                         .addOnSuccessListener {
-                            vaccine?.historic?.add(historic)
-                            rcViewHistoricVaccine.adapter?.notifyItemInserted(vaccine?.historic?.lastIndex!!)
+                            //vaccine?.historic?.add(historic)
+                            notifyDataChange()//notifyItemInserted(vaccine?.historic?.lastIndex!!)
                             clearVaccineApply()
                             dialog.dismiss()
                         }.addOnFailureListener {
@@ -245,28 +252,11 @@ class VaccineActivity : BaseActivity() {
         }
     }
 
-//    fun deleteVaccineHistory(historic: Animal.Historic) {
-//        alert(getString(R.string.areYouSure), getString(R.string.Advice)){
-//            okButton{  it.dismiss();deleteVaccineHistoryOnDatabase(historic) }
-//            noButton { it.dismiss() }
-//        }.show()
-//
-//    }
+    @UiThread
+    fun notifyDataChange() {
+        rcViewHistoricVaccine.adapter?.notifyItemInserted(historyLastIndex)
+    }
 
-//    private fun deleteVaccineHistoryOnDatabase(historic: Animal.Historic){
-//        var dialog = showLoadingDialog()
-//        VariablesUtil.gbSelectedAnimal.vaccineCards.
-//        animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
-//                .set(VariablesUtil.gbSelectedAnimal!!)
-//                .addOnSuccessListener {
-//                    vaccine?.historic?.add(historic)
-//                    rcViewHistoricVaccine.adapter?.notifyItemInserted(vaccine?.historic?.lastIndex!!)
-//                    dialog.dismiss()
-//                }.addOnFailureListener {
-//                    dialog.dismiss()
-//                    showAlert(R.string.wasNotPossibleSaveVaccine)
-//                }
-//    }
 
     private fun clearVaccineApply(){
         edtVaccineNotes.text.clear()
@@ -277,6 +267,23 @@ class VaccineActivity : BaseActivity() {
 
     private fun showNotes(historic: Animal.Historic){
         showAlert(R.string.notes,historic.observation!!)
+    }
+
+/*    private fun checkIfAlreadyExistAHistoricSet(){
+        VariablesUtil.gbSelectedAnimal?.vaccineCards!!
+                .filter {
+                    it.identity == this.vaccine?.identity
+                }.forEach{
+                    it.historic
+                }
+
+
+    }*/
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
 }

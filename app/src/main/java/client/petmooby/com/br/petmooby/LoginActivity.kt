@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import client.petmooby.com.br.petmooby.actvity.BaseActivity
 import client.petmooby.com.br.petmooby.application.Application
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
@@ -15,7 +16,7 @@ import org.jetbrains.anko.toast
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private var callBackManager:CallbackManager?=null
 
@@ -74,10 +75,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun startMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callBackManager!!.onActivityResult(requestCode, resultCode, data)

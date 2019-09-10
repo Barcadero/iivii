@@ -81,4 +81,7 @@ dependencies {
     //For parelable
     //implementation 'org.parceler:parceler-api:1.1.12'
     //kapt 'org.parceler:parceler:1.1.12'
+    // https://mvnrepository.com/artifact/br.com.caelum.stella/caelum-stella-core
+    implementation group: 'br.com.caelum.stella', name: 'caelum-stella-core', version: '2.1.2'
+
 }
