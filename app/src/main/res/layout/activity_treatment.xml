@@ -131,13 +131,22 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/icons8_alarm_clock_60"/>
-
+<!--
                 <Spinner
                     android:id="@+id/spTreatmentInterval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/ivTreatment4" />
+                    -->
+                <EditText
+                    android:id="@+id/edtTreatmentInterval"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:inputType="number"
+                    android:layout_toEndOf="@+id/ivTreatment4"
+                    />
 
 
             </RelativeLayout>

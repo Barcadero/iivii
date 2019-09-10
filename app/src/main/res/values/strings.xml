@@ -102,7 +102,7 @@
     <string name="treatmentType">Treatment Type</string>
     <string name="treatmentFrequence">Treatment Fraquence</string>
     <string name="alarm">Alarm</string>
-    <string name="frequencyAlarmTreatmentText">Frequenci um texto muito grande que depois deve ser posto aqui . Por enquanto vou por só esse exemplo pro espaço não ficar vazio.</string>
+    <string name="frequencyAlarmTreatmentText">Frequency for the alarm informing you about the treatment. The start and end date of treatment does not influence the alarm. When the alarm is on it sounds according to the frequency you entered. If you do not wish to receive notifications informing you about the treatment, you only have to turn off the alarm.</string>
     <string name="periodOfTreatmentAlarm">Perio em que será informado no calendário. O alrme não segue as regras das datas informadas, somente o tempo de intervalo.</string>
     <string name="saveAnyInfoAboutTreatment">Coloque qualquer informação sobre o tratamento que você deseja guardar.</string>
     <string name="register">Register</string>
@@ -140,6 +140,9 @@
     <string name="year">Year</string>
     <string name="treatmentDeleted">Treatment Deleted</string>
     <string name="treatment">Treatment</string>
+    <string name="areYouSureToDeleteThisTreatment">Are you sure that you want delete this treatment?</string>
+    <string name="pleaseIntervalShouldGreatThenZero">Please, interval shoud be great than zero.</string>
+    <string name="pleaseFinalDateShoulBeGreateThanInitial">Please, final date shoud be greate than initial</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>
