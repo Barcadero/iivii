@@ -17,6 +17,7 @@ import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.PermissionUtil
 import client.petmooby.com.br.petmooby.util.Preference
+import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.facebook.AccessToken
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -35,7 +36,17 @@ class MainActivity : BaseActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         //For facebook
-        checkIfUserExistsAndSave()
+        if(VariablesUtil.gbCurrentUser != null){
+            when(VariablesUtil.gbCurrentUser!!.type){
+                TypeUserEnum.FACEBOOK ->{
+                    checkIfUserExistsAndSave()
+                }
+                TypeUserEnum.USER_SYSTEM->{
+                    switchFragment(HomeFragment())
+                }
+            }
+        }
+
         if(!PermissionUtil.checkPersmission(this))PermissionUtil.requestPermission(this)
 
     }
@@ -124,6 +135,7 @@ class MainActivity : BaseActivity() {
         }
 
     }
+
 }
 
 

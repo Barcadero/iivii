@@ -14,6 +14,8 @@ object Preference {
     val USER_NAME   = "user.name"
     val USER_TOKEN  = "user.token"
     val USER_ID     = "user.id"
+    val USER_TYPE   = "user.type"
+
     fun getUserName(context: Context): String?{
         return get(context, USER_NAME)
     }
@@ -67,5 +69,14 @@ object Preference {
 
     fun getFacebookDebugUserId():String{
         return "1825747277526491"
+    }
+
+    fun getUserType(context: Context): Int?{
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getInt(USER_TYPE,-1)
+    }
+
+    fun setUserType(context: Context, value:Int): Boolean{
+        return set(context, USER_TYPE,value)
     }
 }

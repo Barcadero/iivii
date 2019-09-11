@@ -60,8 +60,10 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menuAdd -> {
-            if(VariablesUtil.gbAnimals?.size!! > 7){
-                showAlert(R.string.youCanOnlyHaveSomeAnimals)
+            if(VariablesUtil.gbAnimals != null){
+                if(VariablesUtil.gbAnimals?.size!! > 7) {
+                    showAlert(R.string.youCanOnlyHaveSomeAnimals)
+                }
             }else startActivityForResult(Intent(activity,AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
             true
         }
@@ -139,4 +141,5 @@ class HomeFragment : Fragment() {
         }
 
     }
+
 }

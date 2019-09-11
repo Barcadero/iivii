@@ -4,12 +4,15 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.R
+import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.fragment.HomeFragment
 import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
+import client.petmooby.com.br.petmooby.util.EncryptUtil
 import client.petmooby.com.br.petmooby.util.FireStoreReference
+import client.petmooby.com.br.petmooby.util.Preference
 import kotlinx.android.synthetic.main.activity_register_user.*
 import org.jetbrains.anko.toast
 import java.util.*
@@ -20,6 +23,9 @@ class RegisterUserActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_user)
+        btnSaveNewUserRegister.setOnClickListener {
+            validateAndSaveUser()
+        }
     }
 
 
@@ -49,8 +55,10 @@ class RegisterUserActivity : BaseActivity() {
                 .addOnSuccessListener {
                     documentReference ->
                         FireStoreReference.docRefUser = documentReference
+                        Preference.setUserType(this,currentUser?.type?.ordinal!!)
                         dialog.dismiss()
                         startMainActivity()
+                        finish()
 
                 }
                 .addOnFailureListener {
@@ -62,7 +70,8 @@ class RegisterUserActivity : BaseActivity() {
         var dialog = showLoadingDialog()
         if(validate()){
             bindUserFromFields()
-            saveUser(dialog)
+            //saveUser(dialog)
+            checkIfAEmailExist(dialog)
         }else{
             dialog.dismiss()
         }
@@ -76,9 +85,26 @@ class RegisterUserActivity : BaseActivity() {
         with(currentUser!!){
             name            = edtNewUserName.text.toString().trim()
             email           = edtNewUserEmail.text.toString().trim()
-            password        = edtNewUserPwd.text.toString().trim()
+            password        = EncryptUtil.encryptPWD(edtNewUserPwd.text.toString().trim())
             type            = TypeUserEnum.USER_SYSTEM
             registerDate    = Date()
         }
+    }
+
+    private fun checkIfAEmailExist(dialog: ProgressDialog){
+        docRefUser
+                .whereEqualTo(User.USER_EMAIL,currentUser?.email)
+                .get()
+                .addOnSuccessListener {
+                    if(it.documents.isEmpty()){
+                        saveUser(dialog)
+                    }else{
+                        dialog.dismiss()
+                        showAlert(R.string.emailAlreadyExist)
+                    }
+                }
+                .addOnFailureListener {
+                    exception -> onFailedQueryReturn(dialog,exception.message!!)
+                }
     }
 }

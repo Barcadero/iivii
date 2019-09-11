@@ -151,6 +151,10 @@
     <string name="pleaseGiveYourEmail">Please, tell us your e-mail.</string>
     <string name="pwdShoulBeNotEmpty">Please, Password should be not empty.</string>
     <string name="confirmPwdShoulBeNotEmpty">Please, confirm the password.</string>
+    <string name="emailAlreadyExist">E-mail already registered. Maybe you forgot your password.</string>
+    <string name="pleaseGiveAEmail">Please, set a e-mail address.</string>
+    <string name="pleaseEnterAPassWord">Please enter a password</string>
+    <string name="invalidCredentials">Invalid credentials. Please check your e-mail and password and try again.</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>

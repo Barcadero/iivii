@@ -16,6 +16,5 @@ open class BaseActivity: AppCompatActivity() {
 
     protected fun startMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 }

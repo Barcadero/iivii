@@ -5,7 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.actvity.BaseActivity
+import client.petmooby.com.br.petmooby.actvity.RegisterUserActivity
 import client.petmooby.com.br.petmooby.application.Application
+import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
+import client.petmooby.com.br.petmooby.extensions.showAlert
+import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
+import client.petmooby.com.br.petmooby.model.User
+import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
+import client.petmooby.com.br.petmooby.util.EncryptUtil
+import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -39,7 +47,9 @@ class LoginActivity : BaseActivity() {
                     Preference.set(this@LoginActivity, Preference.USER_NAME,name)
                     Preference.set(this@LoginActivity,Preference.USER_TOKEN,accessToken.token)
                     Preference.set(this@LoginActivity,Preference.USER_ID,userIdFB)
+                    Preference.setUserType(this@LoginActivity,TypeUserEnum.FACEBOOK.ordinal)
                     startMainActivity()
+                    finish()
                 }
 
                 override fun onCancel() {
@@ -53,24 +63,32 @@ class LoginActivity : BaseActivity() {
             })
         }
 
+        btnRegister.setOnClickListener {
+            startActivity(Intent(this,RegisterUserActivity::class.java))
+        }
 
+        btnLogin.setOnClickListener {
+            doLoginSystem()
+        }
 
 
     }
 
     private fun checkLoginin() {
-        if(Application.IS_DEBUG){
-            toast("AUTO-LOGIN by debug mode")
-            Preference.set(this@LoginActivity, Preference.USER_NAME,"Rafael Rocha debug")
-            Preference.set(this@LoginActivity,Preference.USER_TOKEN,Preference.getFacebookDebugToken())
-            Preference.set(this@LoginActivity,Preference.USER_ID,Preference.getFacebookDebugUserId())
-            startMainActivity()
-        }else {
-            var accessToken = AccessToken.getCurrentAccessToken()
-            var isLoggedIn = accessToken != null && !accessToken.isExpired
-            if (isLoggedIn) {
-                //Toast.makeText(this, "Já está logado", Toast.LENGTH_SHORT).show()
+        var type =  Preference.getUserType(this)
+        when(type){
+            TypeUserEnum.FACEBOOK.ordinal ->{
+                var accessToken = AccessToken.getCurrentAccessToken()
+                var isLoggedIn = accessToken != null && !accessToken.isExpired
+                if (isLoggedIn) {
+                    startMainActivity()
+                    finish()
+                }
+
+            }
+            TypeUserEnum.USER_SYSTEM.ordinal ->{
                 startMainActivity()
+                finish()
             }
         }
     }
@@ -80,6 +98,38 @@ class LoginActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callBackManager!!.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun doLoginSystem(){
+        if(edtLoginEmail.text.toString().trim().isEmpty()){
+            showAlert(R.string.pleaseGiveAEmail)
+            return
+        }
+        if(edtLoginPwd.text.toString().trim().isEmpty()){
+            showAlert(R.string.pleaseEnterAPassWord)
+            return
+        }
+        var dialog = showLoadingDialog()
+        docRefUser
+                .whereEqualTo(User.USER_EMAIL,edtLoginEmail.text.toString().trim())
+                .whereEqualTo(User.USER_PASSWORD,EncryptUtil.encryptPWD(edtLoginPwd.text.toString().trim()))
+                .get()
+                .addOnSuccessListener {
+                    if(it.documents.isNotEmpty()){
+                        FireStoreReference.docRefUser = it.documents[0].reference
+                        Preference.setUserType(this,TypeUserEnum.USER_SYSTEM.ordinal)
+                        dialog.dismiss()
+                        startMainActivity()
+                        finish()
+                    }else{
+                        dialog.dismiss()
+                        showAlert(R.string.invalidCredentials)
+                    }
+                }
+                .addOnFailureListener {
+                    exception -> onFailedQueryReturn(dialog,exception.message!!)
+                }
+
     }
 
 

@@ -75,15 +75,19 @@
                 />
 
             <EditText
+                android:id="@+id/edtLoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 />
 
             <EditText
+                android:id="@+id/edtLoginPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                android:inputType="textPassword"
                 />
 
             <androidx.appcompat.widget.AppCompatButton

@@ -4,12 +4,14 @@ import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import java.util.*
 
 /**
- * Created by idoctor on 16/05/2019.
+ * Created by Rafael Rocha on 16/05/2019.
  */
 class User {
     companion object {
         val TOKEN_FACEBOOK      = "tokenFacebook"
         val USER_ID_FACEBOOK    = "userIdFB"
+        var USER_EMAIL          = "email"
+        var USER_PASSWORD       = "password"
     }
 
 
