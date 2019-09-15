@@ -48,6 +48,12 @@ public class DateTimeUtil {
 		return calendar.getTime() ;
 	}
 
+	public static Calendar addDaysAsCalendar(int days){
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, 1);
+		return calendar;
+	}
+
 
 
 	

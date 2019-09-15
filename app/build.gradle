@@ -40,6 +40,10 @@ android {
 //    androidExtensions {
 //        experimental = true
 //    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -83,5 +87,7 @@ dependencies {
     //kapt 'org.parceler:parceler:1.1.12'
     // https://mvnrepository.com/artifact/br.com.caelum.stella/caelum-stella-core
     implementation group: 'br.com.caelum.stella', name: 'caelum-stella-core', version: '2.1.2'
+    //For calendar view
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
 
 }

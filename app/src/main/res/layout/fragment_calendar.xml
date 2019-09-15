@@ -2,28 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.fragment.CalendarFragment">
-    <!--
-    <ru.cleverpumpkin.calendar.CalendarView
-        android:id="@+id/calendar_view"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-        -->
-    <Button
-        android:id="@+id/btnSeeDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="See saved dates"
-        />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <com.applandeo.materialcalendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:type="many_days_picker"
+                app:eventsEnabled="true"
+
+                />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcListOfEvents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcListOfEvents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
