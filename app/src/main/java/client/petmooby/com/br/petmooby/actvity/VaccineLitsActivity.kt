@@ -26,6 +26,9 @@ class VaccineLitsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine_lits)
         setupToolbar(R.id.toolbarVaccineList, R.string.vaccines)
+        if(VariablesUtil.gbSelectedAnimal?.vaccineCards == null){
+            VariablesUtil.gbSelectedAnimal?.vaccineCards = mutableListOf()
+        }
         getPetVaccines()
     }
 
@@ -36,7 +39,7 @@ class VaccineLitsActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menuAdd -> {
-            if(VariablesUtil.gbSelectedAnimal?.vaccineCards?.size!! > 7){
+            if(VariablesUtil.gbSelectedAnimal?.vaccineCards != null && VariablesUtil.gbSelectedAnimal?.vaccineCards!!.size!! > 7){
                 showAlert(R.string.youCanOnlyHaveSomeVaccines)
             }else {
                 val intent = Intent(this, VaccineActivity::class.java)

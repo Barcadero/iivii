@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvVetPartnersList"
+    android:layout_height="70dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:padding="5dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@color/purple"
+        >
+
+        <TextView
+            android:id="@+id/txtDetailDescription"
+            android:layout_width="322dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/frameDetailCalender"
+            android:layout_alignEnd="@+id/frameDetailCalender"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-328dp"
+            android:text="Animal Name"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/frameDetailCalender"
+            android:layout_width="70dp"
+            android:layout_height="70dp">
+            <ProgressBar
+                android:id="@+id/detailProgress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                />
+
+            <ImageView
+                android:id="@+id/ivDetailPhoto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/vaccine" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/txtDetailName"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtDetailDescription"
+            android:layout_below="@+id/txtDetailDescription"
+            android:layout_marginEnd="17dp"
+            android:text="Kind of animal"
+            android:textColor="@color/primaryTextColor"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -14,20 +14,51 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
             <com.applandeo.materialcalendarview.CalendarView
                 android:id="@+id/calendarView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:type="many_days_picker"
+                android:layout_width="match_parent"
+                android:layout_height="380dp"
                 app:eventsEnabled="true"
+                app:headerColor="@color/primaryColor"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:selectionColor="@color/colorAccent"
+                app:todayLabelColor="#cc0000"
+                app:type="one_day_picker"
 
                 />
 
-
+            <LinearLayout
+                android:id="@+id/llCalender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:id="@+id/ivCalender"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/tvCalenderLegend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ThreeDotsExplanation"
+                    />
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcListOfEvents"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                >
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>

@@ -12,6 +12,7 @@ class User {
         val USER_ID_FACEBOOK    = "userIdFB"
         var USER_EMAIL          = "email"
         var USER_PASSWORD       = "password"
+        //var USER_ID             = "password"
     }
 
 

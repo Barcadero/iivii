@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
@@ -166,3 +167,6 @@ fun Fragment.onFailedQueryReturn(dialog: ProgressDialog, message:String){
     dialog.dismiss()
     Log.d("FACE",message)
 }
+
+fun Fragment.getDefaultLayoutManager(): GridLayoutManager
+        = GridLayoutManager(activity,1)

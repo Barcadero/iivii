@@ -79,4 +79,24 @@ object Preference {
     fun setUserType(context: Context, value:Int): Boolean{
         return set(context, USER_TYPE,value)
     }
+
+    fun getUserDatabaseId(context: Context): String?{
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getString(USER_ID,"")
+    }
+
+    fun setUserDatabaseId(context: Context, value:String): Boolean{
+        return set(context, USER_ID,value)
+    }
+
+    fun setUserId(context: Context, value:String ) : Boolean{
+        return set(context, USER_ID ,value)
+    }
+
+    fun getUserId(context: Context): String?{
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getString(USER_ID,"")
+    }
+
+
 }

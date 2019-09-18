@@ -5,15 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
+import client.petmooby.com.br.petmooby.adapter.DayEventsAdapter
+import client.petmooby.com.br.petmooby.extensions.defaultRecycleView
+import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.util.DateTimeUtil
 import client.petmooby.com.br.petmooby.util.DrawableUtils
 import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.utils.DateUtils
+import com.facebook.FacebookSdk.getApplicationContext
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.util.*
 
@@ -24,7 +30,8 @@ import java.util.*
 class CalendarFragment : Fragment() {
 
     val TAG = "CALENDAR"
-
+    val MAX_DAYS = 370
+    val MIN_DAYS = -35
 
 
     var rcView: RecyclerView? =null
@@ -34,44 +41,70 @@ class CalendarFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_calendar, container, false)
     }
 
+    var listForAdapter = mutableListOf<Detail>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar(R.id.toolbar, getString(R.string.Calendar))
-        val events = mutableListOf<EventDay>()
 
-        val calendar = Calendar.getInstance()
-        events.add(EventDay(calendar, R.drawable.icons8_pegada_de_urso_30))
-        events.add(EventDay(calendar, R.drawable.icons8_calendar_30))
+        val min = Calendar.getInstance()
+        min.add(Calendar.DAY_OF_MONTH, MIN_DAYS)
 
-        val calendar4 = Calendar.getInstance()
-        calendar4.add(Calendar.DAY_OF_MONTH, 13)
-        events.add(EventDay(calendar4, DrawableUtils.getThreeDots(activity!!)))
+        val max = Calendar.getInstance()
+        max.add(Calendar.DAY_OF_MONTH, MAX_DAYS)
 
-        calendarView.setMinimumDate(DateTimeUtil.addDaysAsCalendar(-35))
-        calendarView.setMaximumDate(DateTimeUtil.addDaysAsCalendar(370))
-        //calendarView.selectedDates = getSelectedDays()
-        calendarView.setEvents(events)
+        calendarView.setMinimumDate(min)
+        calendarView.setMaximumDate(max)
+
+        llCalender.visibility = View.VISIBLE
+        rcListOfEvents.layoutManager = getDefaultLayoutManager()
+        rcListOfEvents.adapter = DayEventsAdapter(listForAdapter, activity!!)
+
+        ivCalender.setImageDrawable(DrawableUtils.getThreeDots(activity!!))
+        calendarView.setOnDayClickListener { eventDay ->
+            listForAdapter.clear()
+            if(VariablesUtil.gbAnimals != null){
+                for(animal in VariablesUtil.gbAnimals!!){
+                    if(animal.vaccineCards != null){
+                        //Here we need to compare the dates get only ones related with the selected day
+                        val vaccines = animal.vaccineCards!!.filter {
+                            DateTimeUtil.getOnlyDate(it.nextRemember)
+                                    .compareTo(DateTimeUtil.getOnlyDate(eventDay.calendar.time)) == 0
+                        }
+                        for(vaccine in vaccines) {
+                            val detail = Detail(animal.photo!!, vaccine.vaccine_type!!, animal.name!!)
+                            listForAdapter.add(detail)
+                        }
+
+                    }
+                }
+                if(listForAdapter.size > 0) {
+                    llCalender.visibility = View.GONE
+                    rcListOfEvents.adapter?.notifyDataSetChanged()
+                }else{
+                    llCalender.visibility = View.VISIBLE
+                }
+            }
+
+        }
+        calendarView.setEvents(getVaccinesEvents())
 
     }
 
-    private fun getVaccinesEvents(){
-//        if(VariablesUtil.gbSelectedAnimal != null){
-//            if(VariablesUtil.gbSelectedAnimal){
-//
-//            }
-//        }
+    private fun getVaccinesEvents() : List<EventDay>{
+        var list = mutableListOf<EventDay>()
+        if(VariablesUtil.gbAnimals != null){
+            for(animal in VariablesUtil.gbAnimals!!){
+                for(vaccine in animal.vaccineCards!!){
+                    if(vaccine.nextRemember != null && vaccine.nextRemember!!.after(DateTimeUtil.addDaysAsDate(MIN_DAYS))){
+                        list.add(EventDay(DateTimeUtil.dateAsCalendar(vaccine.nextRemember),DrawableUtils.getThreeDots(activity!!)))
+                    }
+                }
+            }
+        }
+        return list
     }
-//    private fun getSelectedDays(): List<Calendar> {
-//        val calendars = mutableListOf<Calendar>()
-//
-//        for (i in 0..9) {
-//            val calendar = DateUtils.getCalendar()
-//            calendar.add(Calendar.DAY_OF_MONTH, i)
-//            calendars.add(calendar)
-//        }
-//
-//        return calendars
-//    }
 
+    data class Detail(val urlPhoto: String, val description:String, val name: String)
 
 }

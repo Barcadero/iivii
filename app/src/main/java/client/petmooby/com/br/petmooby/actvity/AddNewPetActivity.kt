@@ -302,7 +302,7 @@ class AddNewPetActivity : AppCompatActivity() {
                     if(uploadImage) {
                         uploadImageAndSaveOrUpdatePet()
                     }
-                    returnThePetForShowOnList()
+                    //returnThePetForShowOnList()
                 }.addOnFailureListener {
                     dialog.dismiss()
                 }
@@ -316,7 +316,7 @@ class AddNewPetActivity : AppCompatActivity() {
         if(mCurrentPhotoBitmap != null) {
             uploadImageAndSaveOrUpdatePet()
         }else{
-            returnThePetForShowOnList()
+            //returnThePetForShowOnList()
         }
     }
 

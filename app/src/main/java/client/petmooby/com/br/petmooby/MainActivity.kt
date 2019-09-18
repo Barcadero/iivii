@@ -35,14 +35,20 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        //For facebook
-        if(VariablesUtil.gbCurrentUser != null){
-            when(VariablesUtil.gbCurrentUser!!.type){
+
+        val userType = Preference.getUserType(this)
+        if(userType!! > -1){
+//            checkIfUserExistsAndSave()
+            when(TypeUserEnum.values()[userType]){
                 TypeUserEnum.FACEBOOK ->{
                     checkIfUserExistsAndSave()
                 }
                 TypeUserEnum.USER_SYSTEM->{
-                    switchFragment(HomeFragment())
+                    if(FireStoreReference.docRefUser == null) {
+                        getUserFromDataBase()
+                    }else{
+                        switchFragment(HomeFragment())
+                    }
                 }
             }
         }
@@ -93,8 +99,8 @@ class MainActivity : BaseActivity() {
             var user = User()
             user.name           = Preference.get<String>(this,Preference.USER_NAME)
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
-            user.userIdFB       = Preference.get(this,Preference.USER_ID)
-            user.type           = TypeUserEnum.FACEBOOK
+            user.userIdFB       = Preference.getUserId(this)//Preference.get(this,Preference.USER_ID)
+            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]//TypeUserEnum.FACEBOOK
             user.registerDate   = Date()
             docRefUser.add(user)
                     .addOnSuccessListener {
@@ -108,7 +114,7 @@ class MainActivity : BaseActivity() {
 
     fun checkIfUserExistsAndSave(){
         var dialog = showLoadingDialog(getString(R.string.checkingUser))
-        var userId = Preference.get<String>(this,Preference.USER_ID)
+        var userId = Preference.getUserId(this)//Preference.get<String>(this,Preference.USER_ID)
         docRefUser
                 .whereEqualTo(User.USER_ID_FACEBOOK,userId)
                 .get()
@@ -136,6 +142,27 @@ class MainActivity : BaseActivity() {
 
     }
 
+    fun getUserFromDataBase(){
+        var dialog = showLoadingDialog(getString(R.string.checkingUser))
+        var userId = Preference.getUserDatabaseId(this)//Preference.get<String>(this,Preference.USER_ID)
+        docRefUser.document(userId!!)
+                //.whereEqualTo(User.USER_ID_FACEBOOK,userId)
+                .get()
+                .addOnCompleteListener {
+                    task ->
+                    run {
+                        if (task.result?.exists()!!) {
+                            dialog.dismiss()
+                            FireStoreReference.docRefUser = task.result?.reference
+                            switchFragment(HomeFragment())
+                        }
+                    }
+                }
+
+                .addOnFailureListener {
+                    exception -> onFailedQueryReturn(dialog,exception.message!!)
+                }
+    }
 }
 
 

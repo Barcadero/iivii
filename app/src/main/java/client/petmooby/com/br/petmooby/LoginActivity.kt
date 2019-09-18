@@ -87,8 +87,11 @@ class LoginActivity : BaseActivity() {
 
             }
             TypeUserEnum.USER_SYSTEM.ordinal ->{
-                startMainActivity()
-                finish()
+                val isLoggedIn = Preference.getUserDatabaseId(this)
+                if (isLoggedIn!!.isNotEmpty()) {
+                    startMainActivity()
+                    finish()
+                }
             }
         }
     }
@@ -117,6 +120,7 @@ class LoginActivity : BaseActivity() {
                 .addOnSuccessListener {
                     if(it.documents.isNotEmpty()){
                         FireStoreReference.docRefUser = it.documents[0].reference
+                        Preference.setUserDatabaseId(this, FireStoreReference.docRefUser!!.id!!)
                         Preference.setUserType(this,TypeUserEnum.USER_SYSTEM.ordinal)
                         dialog.dismiss()
                         startMainActivity()
