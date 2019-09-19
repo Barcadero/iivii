@@ -63,8 +63,8 @@ class HomeFragment : Fragment() {
             if(VariablesUtil.gbAnimals != null){
                 if(VariablesUtil.gbAnimals?.size!! > 7) {
                     showAlert(R.string.youCanOnlyHaveSomeAnimals)
-                }
-            }else startActivityForResult(Intent(activity,AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
+                }else startNewAnimalActivity()
+            }else startNewAnimalActivity()
             true
         }
         else -> {
@@ -72,6 +72,10 @@ class HomeFragment : Fragment() {
             // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun startNewAnimalActivity() {
+        startActivityForResult(Intent(activity, AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
     }
 
     private fun getMyAnimals(){

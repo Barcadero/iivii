@@ -14,10 +14,7 @@ import client.petmooby.com.br.petmooby.fragment.TipFragment
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
-import client.petmooby.com.br.petmooby.util.FireStoreReference
-import client.petmooby.com.br.petmooby.util.PermissionUtil
-import client.petmooby.com.br.petmooby.util.Preference
-import client.petmooby.com.br.petmooby.util.VariablesUtil
+import client.petmooby.com.br.petmooby.util.*
 import com.facebook.AccessToken
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -52,7 +49,11 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-
+    //For test
+//    val calendar = Calendar.getInstance()
+//    calendar.set(2019,8,19,0,58,15)
+//    NotificationWorkerUtil().scheduleEvent(calendar.time,this)
+   // NotificationWorkerUtil().scheduleEventPeriodic(Date(),this)
         if(!PermissionUtil.checkPersmission(this))PermissionUtil.requestPermission(this)
 
     }

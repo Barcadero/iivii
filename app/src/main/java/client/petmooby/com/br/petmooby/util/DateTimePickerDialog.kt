@@ -19,7 +19,7 @@ class DateTimePickerDialog  {
             val hour = c.get(Calendar.HOUR)
             val minute = c.get(Calendar.MINUTE)
             val tpd = TimePickerDialog(context,TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
-                Toast.makeText(context, h.toString() + " : " + m +" : " , Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "$h : $m : ", Toast.LENGTH_LONG).show()
             }),hour,minute,false)
             tpd.show()
         }
@@ -30,7 +30,9 @@ class DateTimePickerDialog  {
             val month   = c.get(Calendar.MONTH)
             val day     = c.get(Calendar.DAY_OF_MONTH)
             val date    = DatePickerDialog(context,DatePickerDialog.OnDateSetListener(function = { view, year, month,day ->
-                datePar.date = DateTimeUtil.getDate(year,month,day).date
+                val calendar = Calendar.getInstance()
+                calendar.set(year,month,day)
+                datePar.time = calendar.time.time
                 when(component){
                     is TextView ->{
                         component.text = DateTimeUtil.formatDateTime(datePar,"dd/MM/yyyy")

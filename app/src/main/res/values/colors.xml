@@ -37,4 +37,5 @@
     <color name="cardViewBackground">#EFBBFF</color>
     <color name="selectedItemNav">#FFF</color>
     <color name="unselectedItemNav">#B9B9B9</color>
+    <color name="black">#000</color>
 </resources>
