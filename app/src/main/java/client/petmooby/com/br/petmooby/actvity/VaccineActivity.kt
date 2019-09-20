@@ -39,14 +39,14 @@ class VaccineActivity : BaseActivity() {
             DateTimePickerDialog.showDatePicker(this,edtVaccineDate,date)
         }
         edtVaccineDate.setOnFocusChangeListener { view, hasFocus -> if(hasFocus)
-            DateTimePickerDialog.showDatePicker(this,edtVaccineDate,date)  }
+            DateTimePickerDialog.showDatePicker(this,view,date)  }
 
         edtVaccineApplication.setOnFocusChangeListener { view, hasFocus ->
             if(hasFocus)
-                DateTimePickerDialog.showDatePicker(this,edtVaccineApplication,dateVaccineApp)
+                DateTimePickerDialog.showDatePicker(this,view,dateVaccineApp)
         }
         edtVaccineApplication.setOnClickListener {
-            DateTimePickerDialog.showDatePicker(this,edtVaccineApplication,dateVaccineApp)
+            DateTimePickerDialog.showDatePicker(this,it,dateVaccineApp)
         }
         edtVaccinePrice.addTextChangedListener(CurrencyMaskTextWatch(edtVaccinePrice,this))
         btnAddVaccine.setOnClickListener {
@@ -73,8 +73,6 @@ class VaccineActivity : BaseActivity() {
 
             }
         }
-
-
     }
 
     private fun initHistoricAdapter() {
@@ -100,11 +98,9 @@ class VaccineActivity : BaseActivity() {
             R.id.menuSave ->{
                 when(action){
                     ResultCodes.REQUEST_ADD_VACCINE -> {
-                        //To add a vaccine
                         saveVaccine()
                     }
                     ResultCodes.REQUEST_UPDATE_VACCINE ->{
-                        //To alter a vaccine
                         saveVaccine()
                     }
                 }
@@ -121,7 +117,7 @@ class VaccineActivity : BaseActivity() {
     }
 
     private fun saveVaccine(){
-        var dialog = showLoadingDialog()
+        val dialog = showLoadingDialog()
         try {
             getCurrentVaccineInfo()
             saveAnimal(dialog)
@@ -162,17 +158,18 @@ class VaccineActivity : BaseActivity() {
     }
 
     private fun saveAndSetResult(dialog: ProgressDialog) {
+        VaccineUtil().scheduleEvent(this,vaccine!!)
         showAlert(R.string.savedSuccess)
         dialog.dismiss()
     }
 
     private fun deleteVaccine(){
-        var dialog = showLoadingDialog()
+        val dialog = showLoadingDialog()
         if(vaccine != null){
-            //VariablesUtil.gbSelectedAnimal?.vaccineCards?.remove(vaccine!!)
             with(VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter { it.identity == vaccine?.identity }!![0]){
                 VariablesUtil.gbSelectedAnimal?.vaccineCards?.remove(this)
             }
+            VaccineUtil().cancelEvent(this,vaccine!!)
             saveAnimal(dialog, true)
         }else{
             dialog.dismiss()
@@ -188,8 +185,6 @@ class VaccineActivity : BaseActivity() {
             edtVaccineDate.error = getString(R.string.pleaseGiveAVaccineDate)
             return false
         }
-
-
         return true
     }
 
@@ -210,9 +205,9 @@ class VaccineActivity : BaseActivity() {
 
     private fun addHistory(){
         if(validateForApplyVaccine()){
-            var dialog = showLoadingDialog()
+            val dialog = showLoadingDialog()
             try {
-                var historic = Animal.Historic()
+                val historic = Animal.Historic()
                 with(historic) {
                     date = dateVaccineApp
                     observation = edtVaccineNotes.text.toString()
@@ -268,17 +263,6 @@ class VaccineActivity : BaseActivity() {
     private fun showNotes(historic: Animal.Historic){
         showAlert(R.string.notes,historic.observation!!)
     }
-
-/*    private fun checkIfAlreadyExistAHistoricSet(){
-        VariablesUtil.gbSelectedAnimal?.vaccineCards!!
-                .filter {
-                    it.identity == this.vaccine?.identity
-                }.forEach{
-                    it.historic
-                }
-
-
-    }*/
 
     override fun onBackPressed() {
         super.onBackPressed()

@@ -82,6 +82,13 @@ public class DateTimeUtil {
 		return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
 	}
 
+	public static Date addHourdToADate(Date date,int hours){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.HOUR, hours);
+		return calendar.getTime();
+	}
+
 
 
 	
