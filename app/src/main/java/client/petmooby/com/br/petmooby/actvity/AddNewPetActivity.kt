@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -128,6 +129,7 @@ class AddNewPetActivity : AppCompatActivity() {
     }
 
     private fun loadProfilePicture() {
+        progressAddPet.visibility = VISIBLE
         Picasso.with(this)
                 .load(VariablesUtil.gbSelectedAnimal?.photo)
                 .error(R.drawable.no_image)
@@ -522,6 +524,11 @@ class AddNewPetActivity : AppCompatActivity() {
             }
         }.show()
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        returnThePetForShowOnList()
     }
 
 

@@ -141,6 +141,8 @@ class HomeFragment : Fragment() {
 //                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
                 VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
                 updateAdapter()
+            }else{
+                updateAdapter()
             }
         }
 

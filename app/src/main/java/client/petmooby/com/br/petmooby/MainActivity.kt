@@ -145,7 +145,8 @@ class MainActivity : BaseActivity() {
 
     fun getUserFromDataBase(){
         var dialog = showLoadingDialog(getString(R.string.checkingUser))
-        var userId = Preference.getUserDatabaseId(this)//Preference.get<String>(this,Preference.USER_ID)
+//        var userId = Preference.getUserDatabaseId(this)//Preference.get<String>(this,Preference.USER_ID)
+        var userId = Preference.getUserId(this)
         docRefUser.document(userId!!)
                 //.whereEqualTo(User.USER_ID_FACEBOOK,userId)
                 .get()
@@ -155,6 +156,9 @@ class MainActivity : BaseActivity() {
                         if (task.result?.exists()!!) {
                             dialog.dismiss()
                             FireStoreReference.docRefUser = task.result?.reference
+                            switchFragment(HomeFragment())
+                        }else{
+                            dialog.dismiss()
                             switchFragment(HomeFragment())
                         }
                     }

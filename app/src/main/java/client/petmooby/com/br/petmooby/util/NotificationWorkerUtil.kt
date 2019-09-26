@@ -1,6 +1,7 @@
 package client.petmooby.com.br.petmooby.util
 
 import android.content.Context
+import android.util.Log
 import androidx.work.*
 import java.time.Duration
 import java.util.*
@@ -15,13 +16,15 @@ class NotificationWorkerUtil {
 
     fun scheduleEvent(dateEvent:Date, context: Context, tag:String, id:Int,clazz: Class<out ListenableWorker>){
         val inputData = Data.Builder().putInt(tag, id).build()
-        val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.MILLISECONDS)
+        val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
+        Log.d(workTag,"Date now : ${DateTimeUtil.formatDateTime(Date(),"dd/MM/yyyy 'at' HH:mm:ss")}")
+        Log.d(workTag,"Date dateEvent : ${DateTimeUtil.formatDateTime(dateEvent,"dd/MM/yyyy 'at' HH:mm:ss")}")
+        Log.d(workTag,"Differ in hours $future")
         val notificationWork = OneTimeWorkRequest.Builder(clazz)
-                .setInitialDelay(future,TimeUnit.MILLISECONDS)
+                .setInitialDelay(future,TimeUnit.HOURS)
                 .setInputData(inputData)
                 .addTag(tag)
                 .build()
-//NotificationWorker::class.java!!
         WorkManager.getInstance(context).enqueueUniqueWork(tag,ExistingWorkPolicy.REPLACE,notificationWork)
     }
 
@@ -31,9 +34,9 @@ class NotificationWorkerUtil {
 
     fun scheduleEventPeriodic(dateEvent:Date, context: Context, tag: String,id: Int,clazz: Class<out ListenableWorker>){
         val inputData = Data.Builder().putInt(tag, id).build()
-        val notificationWork = PeriodicWorkRequest.Builder(clazz,2,TimeUnit.MINUTES)//(NotificationWorker::class.java!!)
-                //.setInitialDelay(60000,TimeUnit.MILLISECONDS)
-                //.setInitialDelay(future,TimeUnit.MILLISECONDS)
+        val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
+        val notificationWork = PeriodicWorkRequest.Builder(clazz,future,TimeUnit.HOURS)//(NotificationWorker::class.java!!)
+                .setInitialDelay(future,TimeUnit.HOURS)
                 .setInputData(inputData)
                 .addTag(workTag)
                 .build()

@@ -35,33 +35,41 @@
                 android:layout_margin="8dp"
                 android:gravity="center"
                 >
-                <ProgressBar
-                    android:id="@+id/progressAddPet"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:visibility="gone"
-                    android:background="@android:color/transparent"
-                    />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivProfileMyPet"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentBottom="true"
+                <FrameLayout
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_marginStart="78dp"
-                    android:clickable="true"
-                    android:src="@drawable/icons8_identidade_de_cachorro_60"
-                    app:civ_border_color="@color/primaryDarkColor"
-                    app:civ_border_width="2dp" />
+                    android:id="@+id/frameNewPetProfile"
+                    >
+                    <ProgressBar
+                        android:id="@+id/progressAddPet"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone"
+                        android:background="@android:color/transparent"
+                        />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfileMyPet"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:clickable="true"
+                        android:src="@drawable/icons8_identidade_de_cachorro_60"
+                        app:civ_border_color="@color/primaryDarkColor"
+                        app:civ_border_width="2dp" />
+                </FrameLayout>
+
+
+
 
                 <Button
                     android:id="@+id/btnNewPetCapture"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/ivProfileMyPet"
+                    android:layout_alignTop="@+id/frameNewPetProfile"
                     android:layout_marginStart="11dp"
                     android:background="@android:color/transparent"
-                    android:layout_toEndOf="@+id/ivProfileMyPet"
+                    android:layout_toEndOf="@+id/frameNewPetProfile"
                     android:drawableStart="@drawable/ic_camera"
                     android:textColor="@color/primaryDarkColor"
                     android:textAlignment="textStart"

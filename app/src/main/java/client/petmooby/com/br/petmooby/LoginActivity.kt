@@ -121,6 +121,7 @@ class LoginActivity : BaseActivity() {
                     if(it.documents.isNotEmpty()){
                         FireStoreReference.docRefUser = it.documents[0].reference
                         Preference.setUserDatabaseId(this, FireStoreReference.docRefUser!!.id!!)
+                        Preference.setUserId(this,FireStoreReference.docRefUser!!.id!!)
                         Preference.setUserType(this,TypeUserEnum.USER_SYSTEM.ordinal)
                         dialog.dismiss()
                         startMainActivity()

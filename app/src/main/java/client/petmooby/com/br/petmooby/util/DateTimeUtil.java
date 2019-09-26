@@ -89,6 +89,16 @@ public class DateTimeUtil {
 		return calendar.getTime();
 	}
 
+	public static void main(String[] args){
+		System.out.println("Execute");
+	}
+
+	public static Date getDate(int year, int month, int day, int hours, int minutes, int seconds){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(year,month,day,hours,minutes,seconds);
+		return calendar.getTime() ;
+	}
+
 
 
 	
