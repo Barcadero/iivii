@@ -15,6 +15,7 @@ import client.petmooby.com.br.petmooby.application.Application;
 
 public class DateTimeUtil {
 	public static final String APPLICATION_FORMAT_INPUT = "ddMMyyyy";
+	public static final String APPLICATION_FORMAT_OUTPUT = "dd/MM/yyyy";
 
 
 	
@@ -98,6 +99,7 @@ public class DateTimeUtil {
 		calendar.set(year,month,day,hours,minutes,seconds);
 		return calendar.getTime() ;
 	}
+
 
 
 

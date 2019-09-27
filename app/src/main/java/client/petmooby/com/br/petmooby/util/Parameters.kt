@@ -1,5 +1,7 @@
 package client.petmooby.com.br.petmooby.util
 
+import java.util.*
+
 /**
  * Created by Rafael Rocha on 26/07/2019.
  */
@@ -10,4 +12,6 @@ object Parameters {
     val VACCINE_CARD     = "animal.vaccine"
     val ACTION           = "action"
     val TREATMENT        = "animal.treatmentCard"
+
+
 }

@@ -14,8 +14,16 @@ class NotificationWorkerUtil {
         val workTag = "notificationWork"
     }
 
-    fun scheduleEvent(dateEvent:Date, context: Context, tag:String, id:Int,clazz: Class<out ListenableWorker>){
-        val inputData = Data.Builder().putInt(tag, id).build()
+    fun scheduleEvent(dateEvent:Date, context: Context,param:ParametersEvent ,clazz: Class<out ListenableWorker>){
+        val inputDataBuilder = Data.Builder()
+        inputDataBuilder.putLong("id",param.id)
+        inputDataBuilder.putString("name",param.animalName)
+        inputDataBuilder.putString("date",DateTimeUtil.formatDateTime(param.dateTime,DateTimeUtil.APPLICATION_FORMAT_OUTPUT))
+        inputDataBuilder.putString("tag",param.tag)
+
+        val inputData = inputDataBuilder.putInt(param.tag, param.id.toInt())
+                .build()
+
         val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
         Log.d(workTag,"Date now : ${DateTimeUtil.formatDateTime(Date(),"dd/MM/yyyy 'at' HH:mm:ss")}")
         Log.d(workTag,"Date dateEvent : ${DateTimeUtil.formatDateTime(dateEvent,"dd/MM/yyyy 'at' HH:mm:ss")}")
@@ -23,9 +31,9 @@ class NotificationWorkerUtil {
         val notificationWork = OneTimeWorkRequest.Builder(clazz)
                 .setInitialDelay(future,TimeUnit.HOURS)
                 .setInputData(inputData)
-                .addTag(tag)
+                .addTag(param.tag)
                 .build()
-        WorkManager.getInstance(context).enqueueUniqueWork(tag,ExistingWorkPolicy.REPLACE,notificationWork)
+        WorkManager.getInstance(context).enqueueUniqueWork(param.tag,ExistingWorkPolicy.REPLACE,notificationWork)
     }
 
     fun cancel(context: Context, tag: String){

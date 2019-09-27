@@ -12,4 +12,11 @@ class TestDateTimeUtil {
         var hours = DateTimeUtil.getDateDiff(dateNow,dateFuture,TimeUnit.HOURS)
         println("differ in hours: $hours")
     }
+
+    @Test fun decreaseHoursFromDate(){
+        val date = DateTimeUtil.getDate(2019,8,25,19,59,23)
+        val dateResult     = DateTimeUtil.addHourdToADate(DateTimeUtil.getOnlyDate(date) ,-12)
+        println("Date result: ${DateTimeUtil.formatDateTime(dateResult,"dd/MM/yyyy HH:mm:ss")}")
+    }
+
 }
