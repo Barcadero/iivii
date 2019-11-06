@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import client.petmooby.com.br.petmooby.MainActivity
 import client.petmooby.com.br.petmooby.R
+import client.petmooby.com.br.petmooby.application.Application
 import client.petmooby.com.br.petmooby.model.enums.EnumTypeEvent
 import kotlin.random.Random
 
@@ -29,7 +30,7 @@ object NotificationUtil {
                 .setContentIntent(p)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.logo)
                 .setAutoCancel(true)
 
         val n = builder.build()
@@ -44,7 +45,13 @@ object NotificationUtil {
                 title = context.getString(R.string.vaccine)
                 val builder = StringBuilder()
                 //A vacina do Rex está próxima: dia 25/09/2019
-                //builder.append(conntext.getString(R.string.))
+                if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
+                    builder.append("A vacina do(a) ${param.animalName} está próxima: dia ${param.dateString}")
+                }else{
+                    //English version
+                    builder.append("The ${param.animalName} vaccine is near: ${param.dateString}")
+                }
+                message = builder.toString()
             }
         }
         create(context, Random(5000).nextInt(),Intent(context, MainActivity::class.java),title,message)

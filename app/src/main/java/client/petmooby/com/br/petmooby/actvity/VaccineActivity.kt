@@ -158,7 +158,7 @@ class VaccineActivity : BaseActivity() {
     }
 
     private fun saveAndSetResult(dialog: ProgressDialog) {
-        VaccineUtil().scheduleEvent(this,vaccine!!)
+        VaccineUtil().scheduleEvent(this,vaccine!!,VariablesUtil.gbSelectedAnimal?.name!!)
         showAlert(R.string.savedSuccess)
         dialog.dismiss()
     }

@@ -53,7 +53,7 @@ class MainActivity : BaseActivity() {
 //    val calendar = Calendar.getInstance()
 //    calendar.set(2019,8,19,0,58,15)
 //    NotificationWorkerUtil().scheduleEvent(calendar.time,this)
-   // NotificationWorkerUtil().scheduleEventPeriodic(Date(),this)
+//    NotificationWorkerUtil().scheduleEventPeriodic(Date(),this,"vaccine",225544,NotificationWorkerVaccine::class.java)
         if(!PermissionUtil.checkPersmission(this))PermissionUtil.requestPermission(this)
 
     }

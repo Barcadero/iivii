@@ -5,7 +5,7 @@ import client.petmooby.com.br.petmooby.model.Animal
 
 class VaccineUtil {
 
-    fun scheduleEvent(context: Context,vaccine:Animal.VaccineCards){
+    fun scheduleEvent(context: Context,vaccine:Animal.VaccineCards, name : String){
         val param = ParametersEvent()
         val identity = vaccine.identity
         val date     = DateTimeUtil.addHourdToADate(DateTimeUtil.getOnlyDate(vaccine.nextRemember!!) ,-12)
@@ -13,8 +13,10 @@ class VaccineUtil {
             id = identity?.toLong()!!
             tag = identity.toString()
             dateTime = date
+            animalName = name
         }
-        NotificationWorkerUtil().scheduleEvent(date, context,param,NotificationWorkerVaccine::class.java)
+//        NotificationWorkerUtil().scheduleEvent(date, context,param,NotificationWorkerVaccine::class.java)
+        NotificationWorkerUtil().scheduleEventPeriodic(date, context,param,NotificationWorkerVaccine::class.java)
     }
 
     fun cancelEvent(context: Context,vaccine:Animal.VaccineCards){

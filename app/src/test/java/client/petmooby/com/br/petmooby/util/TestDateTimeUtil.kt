@@ -19,4 +19,11 @@ class TestDateTimeUtil {
         println("Date result: ${DateTimeUtil.formatDateTime(dateResult,"dd/MM/yyyy HH:mm:ss")}")
     }
 
+
+    @Test fun add25Hours(){
+        val date = DateTimeUtil.getDate(2019,10,1,10,20,23)
+        val dateResult     = DateTimeUtil.addHourdToADate(DateTimeUtil.getOnlyDate(date) ,25)
+        println("Date result 25 hours: ${DateTimeUtil.formatDateTime(dateResult,"dd/MM/yyyy HH:mm:ss")}")
+    }
+
 }

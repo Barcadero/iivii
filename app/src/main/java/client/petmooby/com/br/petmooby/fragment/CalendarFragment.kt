@@ -95,6 +95,7 @@ class CalendarFragment : Fragment() {
         var list = mutableListOf<EventDay>()
         if(VariablesUtil.gbAnimals != null){
             for(animal in VariablesUtil.gbAnimals!!){
+                if(animal.vaccineCards == null)continue
                 for(vaccine in animal.vaccineCards!!){
                     if(vaccine.nextRemember != null && vaccine.nextRemember!!.after(DateTimeUtil.addDaysAsDate(MIN_DAYS))){
                         list.add(EventDay(DateTimeUtil.dateAsCalendar(vaccine.nextRemember),DrawableUtils.getThreeDots(activity!!)))
