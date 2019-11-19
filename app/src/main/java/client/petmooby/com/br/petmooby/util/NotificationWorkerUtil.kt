@@ -46,8 +46,8 @@ class NotificationWorkerUtil {
     fun scheduleEventPeriodic(dateEvent:Date, context: Context, param:ParametersEvent ,clazz: Class<out ListenableWorker>){
         val inputData = getInputData(param)
         val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
-        val notificationWork = PeriodicWorkRequest.Builder(clazz,1,TimeUnit.HOURS)//(NotificationWorker::class.java!!)
-                .setInitialDelay(20,TimeUnit.MINUTES)
+        val notificationWork = PeriodicWorkRequest.Builder(clazz,2,TimeUnit.DAYS)//(NotificationWorker::class.java!!)
+                .setInitialDelay(future,TimeUnit.HOURS)
                 .setInputData(inputData)
                 .addTag(workTag)
                 .build()
