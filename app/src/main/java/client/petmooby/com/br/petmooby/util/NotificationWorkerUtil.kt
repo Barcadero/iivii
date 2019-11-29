@@ -32,7 +32,13 @@ class NotificationWorkerUtil {
         val inputDataBuilder = Data.Builder()
         inputDataBuilder.putLong("id", param.id)
         inputDataBuilder.putString("name", param.animalName)
-        inputDataBuilder.putString("date", DateTimeUtil.formatDateTime(param.dateTime, DateTimeUtil.APPLICATION_FORMAT_OUTPUT))
+        if(param.dateTime != null) {
+            inputDataBuilder.putString("date", DateTimeUtil.formatDateTime(param.dateTime, DateTimeUtil.APPLICATION_FORMAT_OUTPUT))
+        }
+        if(param.vaccineType != null){
+            inputDataBuilder.putString("vaccineType",param.vaccineType)
+        }
+        inputDataBuilder.putString("treatmentName",param.treatmentName)
         inputDataBuilder.putString("tag", param.tag)
 
         return inputDataBuilder.putInt(param.tag, param.id.toInt())
@@ -46,10 +52,23 @@ class NotificationWorkerUtil {
     fun scheduleEventPeriodic(dateEvent:Date, context: Context, param:ParametersEvent ,clazz: Class<out ListenableWorker>){
         val inputData = getInputData(param)
         val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
-        val notificationWork = PeriodicWorkRequest.Builder(clazz,2,TimeUnit.DAYS)//(NotificationWorker::class.java!!)
+        Log.d("NOTIFICATION","NEXT NOTIFICATION IN HOURS: $future")
+        val notificationWork = PeriodicWorkRequest.Builder(clazz,370,TimeUnit.DAYS)//(NotificationWorker::class.java!!)
                 .setInitialDelay(future,TimeUnit.HOURS)
                 .setInputData(inputData)
-                .addTag(workTag)
+                .addTag(param.tag)
+                .build()
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE,notificationWork)
+    }
+
+    fun scheduleEventPeriodic(context: Context, param:ParametersEvent ,timeUnit: TimeUnit,clazz: Class<out ListenableWorker>){
+        val inputData = getInputData(param)
+        //val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
+        //Log.d("NOTIFICATION","NEXT NOTIFICATION IN HOURS: $future")
+        val notificationWork = PeriodicWorkRequest.Builder(clazz,param.repeatInterval,timeUnit)//(NotificationWorker::class.java!!)
+                //.setInitialDelay(future,TimeUnit.HOURS)
+                .setInputData(inputData)
+                .addTag(param.tag)
                 .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE,notificationWork)
     }

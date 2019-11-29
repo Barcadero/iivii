@@ -56,23 +56,37 @@ object NotificationUtil {
         manager.notify(id, n)
     }
 
-    fun notifyVaccine(context: Context, param:ParametersEvent){
-        var message = ""
-        var title = ""
+    fun notify(context: Context, param:ParametersEvent){
+        var message:String
+        var title:String
         when(param.type){
             EnumTypeEvent.VACCINE ->{
                 title = context.getString(R.string.vaccine)
                 val builder = StringBuilder()
                 //A vacina do Rex está próxima: dia 25/09/2019
                 if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
-                    builder.append("A vacina do(a) ${param.animalName} está próxima: dia ${param.dateString}")
+                    builder.append("${param.animalName} precisa ser vacinado " )
+                            .append("\n por ${param.vaccineType} no dia: ${param.dateString}.")
                 }else{
                     //English version
-                    builder.append("The ${param.animalName} vaccine is near: ${param.dateString}")
+                    builder.append("${param.animalName} needs to be vaccinated " )
+                            .append("\n for ${param.vaccineType} in day: ${param.dateString}.")
+                }
+                message = builder.toString()
+            }
+            else ->{
+                title = "Treatment"
+                val builder = StringBuilder()
+                if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
+                    builder.append("${param.treatmentName} para ${param.animalName}.")
+                }else{
+                    //English version
+                    builder.append("${param.treatmentName} for ${param.animalName}.")
                 }
                 message = builder.toString()
             }
         }
         create(context, Random(5000).nextInt(),Intent(context, MainActivity::class.java),title,message)
     }
+
 }

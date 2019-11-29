@@ -90,6 +90,10 @@ class VaccineLitsActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        rcViewVaccineList.adapter?.notifyDataSetChanged()
+        if(rcViewVaccineList.adapter == null){
+            getPetVaccines()
+        }else {
+            rcViewVaccineList.adapter?.notifyDataSetChanged()
+        }
     }
 }

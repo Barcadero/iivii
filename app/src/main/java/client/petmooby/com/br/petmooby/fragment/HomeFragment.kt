@@ -23,9 +23,6 @@ import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
-//import org.parceler.Parcels
-
-//import org.parceler.Parcels
 
 
 /**

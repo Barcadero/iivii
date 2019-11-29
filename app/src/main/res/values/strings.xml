@@ -158,6 +158,7 @@
     <string name="ThreeDotsExplanation">The three dots above symbolize that for that date there are events. To view them, click on the date.</string>
     <string name="notificationVaccine">Vaccine Notification</string>
     <string name="notificationVaccineBody">Notification vaccine body</string>
+    <string name="hour">Hour</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>

@@ -10,7 +10,8 @@ import client.petmooby.com.br.petmooby.application.Application
 enum class EnumTypeInterval(@StringRes resId:Int, value:String) {
     DAY(R.string.day,"DAY"),
     MONTH(R.string.month,"MONTH"),
-    YEAR(  R.string.year,"YEAR");
+    YEAR(  R.string.year,"YEAR"),
+    HOUR(  R.string.hour,"HOUR");
 
     val label = Application.getString(resId)
     val value = value

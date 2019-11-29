@@ -7,7 +7,7 @@ import androidx.work.WorkerParameters
 import client.petmooby.com.br.petmooby.model.enums.EnumTypeEvent
 
 
-class NotificationWorkerVaccine(@NonNull context: Context, @NonNull  params: WorkerParameters): Worker(context,params) {
+class NotificationWorkerTreatment(@NonNull context: Context, @NonNull  params: WorkerParameters): Worker(context,params) {
 
     private val parameters = params
     override fun doWork(): Result {
@@ -15,10 +15,10 @@ class NotificationWorkerVaccine(@NonNull context: Context, @NonNull  params: Wor
         with(parameters.inputData){
             param.id = getLong("id",0L)
             param.animalName = getString("name")!!
-            param.dateString = getString("date")!!
-            param.vaccineType = getString("vaccineType")!!
+            param.treatmentName = getString("treatmentName")!!
+            //param.dateString = getString("date")!!
         }
-        param.type = EnumTypeEvent.VACCINE
+        param.type = EnumTypeEvent.TREATMENT
         NotificationUtil.notify(super.getApplicationContext(),param)
         return Result.success()
     }

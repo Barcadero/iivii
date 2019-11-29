@@ -10,5 +10,8 @@ class ParametersEvent {
     var dateTime: Date?=null
     var tag = ""
     var type = EnumTypeEvent.OTHER
+    var vaccineType=""
     var dateString=""
+    var repeatInterval = 0L
+    var treatmentName = ""
 }

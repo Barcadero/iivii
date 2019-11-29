@@ -18,6 +18,7 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
@@ -56,18 +57,19 @@ import java.util.*
 class AddNewPetActivity : AppCompatActivity() {
 
     val PICK_IMAGE          = 125
-    val TAKE_PICTURE       = 130
-    var bithDate = Date()
-    var mRef = FirebaseFirestore.getInstance()
-    var animalRef = mRef.collection(CollectionsName.ANIMAL)
+    val TAKE_PICTURE        = 130
+    var bithDate            = Date()
+    var mRef                = FirebaseFirestore.getInstance()
+    var animalRef           = mRef.collection(CollectionsName.ANIMAL)
     var enumSelectedBreed: EnumBreedBase?=null
-    var storage = FirebaseStorage.getInstance().reference
+    var storage             = FirebaseStorage.getInstance().reference
     private var mCurrentPhotoBitmap: Bitmap?=null
 //    var animal :Animal?=null
-    var isForUpdate = false
-    var fromOtherScreen = false
+    var isForUpdate         = false
+    var fromOtherScreen     = false
     private val camera      = CameraUtil()
     private val photoName   = "photoProfile.jpg"
+    private var enableButtons = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_pet)
@@ -92,18 +94,23 @@ class AddNewPetActivity : AppCompatActivity() {
         }
         btnAddVaccine.setOnClickListener {
             val intent = Intent(this,VaccineLitsActivity::class.java)
-//            intent.putExtra(Parameters.ANIMAL_PARAMETER, animal)
-//            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
             startActivity(intent)
         }
 
         btnAddMedicinalTreatment.setOnClickListener {
             val intent = Intent(this,TreatmentListActivity::class.java)
-//            intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
-//            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
             startActivity(intent)
         }
+
+        isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
+        enableControlsButtons(isForUpdate)
         getAnimalSentByOtherView()
+    }
+
+    @UiThread
+    fun enableControlsButtons(enable: Boolean) {
+        btnAddVaccine.isEnabled     = enable
+        btnAddMedicinalTreatment.isEnabled = enable
     }
 
     private fun getAnimalSentByOtherView() {
@@ -313,6 +320,7 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun successSaved(documentReference: DocumentReference){
         VariablesUtil.gbSelectedAnimal?.id = documentReference.id
         isForUpdate = true
+        enableControlsButtons(true)
         VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
         FireStoreReference.saveAnimalReference(documentReference)
         if(mCurrentPhotoBitmap != null) {

@@ -227,6 +227,11 @@ class TreatmentActivity : BaseActivity() {
                     }else {
                         saveAndSetResult(dialog)
                         spTreatmentType.isEnabled = false
+                        val animal = VariablesUtil.gbSelectedAnimal
+                        if(animal != null){
+                            TreatmentUtil.generateTreatmentAlarm(this,animal,currentTreatment?.identity!!)
+                        }
+
                     }
                 }.addOnFailureListener {
                     showAlert(R.string.wasNotPossibleSaveVaccine)
@@ -262,6 +267,7 @@ class TreatmentActivity : BaseActivity() {
         var dialog = showLoadingDialog()
         with(VariablesUtil.gbSelectedAnimal?.treatmentCard?.filter { it.identity == currentTreatment?.identity }!![0]){
             VariablesUtil.gbSelectedAnimal?.treatmentCard?.remove(this)
+            TreatmentUtil.cancelEvent(this@TreatmentActivity,this)
         }
         saveAnimal(dialog,true)
     }

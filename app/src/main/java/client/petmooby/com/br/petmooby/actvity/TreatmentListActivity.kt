@@ -70,7 +70,11 @@ class TreatmentListActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        rcViewTreatmentList.adapter?.notifyDataSetChanged()
+        if(rcViewTreatmentList.adapter == null) {
+            initRcViewList()
+        }else{
+            rcViewTreatmentList.adapter?.notifyDataSetChanged()
+        }
     }
 
     @UiThread

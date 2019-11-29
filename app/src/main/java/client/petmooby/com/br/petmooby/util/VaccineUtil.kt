@@ -14,6 +14,7 @@ class VaccineUtil {
             tag = identity.toString()
             dateTime = date
             animalName = name
+            vaccineType = vaccine.vaccine_type!!
         }
 //        NotificationWorkerUtil().scheduleEvent(date, context,param,NotificationWorkerVaccine::class.java)
         NotificationWorkerUtil().scheduleEventPeriodic(date, context,param,NotificationWorkerVaccine::class.java)
