@@ -98,5 +98,10 @@ object Preference {
         return preferences.getString(USER_ID,"")
     }
 
+    fun clear(context: Context){
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        preferences.edit().clear().apply()
+    }
+
 
 }

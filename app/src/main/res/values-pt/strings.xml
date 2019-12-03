@@ -160,4 +160,8 @@
     <string name="notificationVaccine">Vaccine Notification</string>
     <string name="notificationVaccineBody">Notification vaccine body</string>
     <string name="hour">Hora</string>
+    <string name="every">cada</string>
+    <string name="hours">horas</string>
+    <string name="one">um</string>
+    <string name="oneHour">uma</string>
 </resources>

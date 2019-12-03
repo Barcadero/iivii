@@ -49,6 +49,11 @@ class NotificationWorkerUtil {
         WorkManager.getInstance(context).cancelAllWorkByTag(tag)
     }
 
+
+    fun cancel(context: Context){
+        WorkManager.getInstance(context).cancelAllWork()
+    }
+
     fun scheduleEventPeriodic(dateEvent:Date, context: Context, param:ParametersEvent ,clazz: Class<out ListenableWorker>){
         val inputData = getInputData(param)
         val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
@@ -66,7 +71,7 @@ class NotificationWorkerUtil {
         //val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
         //Log.d("NOTIFICATION","NEXT NOTIFICATION IN HOURS: $future")
         val notificationWork = PeriodicWorkRequest.Builder(clazz,param.repeatInterval,timeUnit)//(NotificationWorker::class.java!!)
-                //.setInitialDelay(future,TimeUnit.HOURS)
+                .setInitialDelay(param.repeatInterval,timeUnit)
                 .setInputData(inputData)
                 .addTag(param.tag)
                 .build()

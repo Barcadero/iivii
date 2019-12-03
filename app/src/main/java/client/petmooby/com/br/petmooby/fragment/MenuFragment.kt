@@ -13,6 +13,9 @@ import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.VeterinaryPartnersListActivity
 import client.petmooby.com.br.petmooby.extensions.callEmailHost
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
+import client.petmooby.com.br.petmooby.util.NotificationWorkerUtil
+import client.petmooby.com.br.petmooby.util.Preference
+import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.facebook.AccessToken
 import com.facebook.AccessTokenTracker
 import com.facebook.login.LoginManager
@@ -67,8 +70,17 @@ class MenuFragment : Fragment() {
 
     private fun logout(){
         activity!!.alert(R.string.Logout, R.string.areYouSure) {
-            yesButton { LoginManager.getInstance().logOut() }
+            yesButton { logoutYesButton() }
             noButton {}
         }.show()
+    }
+
+    private fun logoutYesButton(){
+        LoginManager.getInstance().logOut()
+        Preference.clear(activity!!)
+        NotificationWorkerUtil().cancel(activity!!)
+        startActivity(Intent(activity!!,LoginActivity::class.java))
+        activity!!.finish()
+        VariablesUtil.clear()
     }
 }// Required empty public constructor

@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.transferr.passenger.extensions.loadUrl
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.fragment.CalendarFragment
+import client.petmooby.com.br.petmooby.model.metadata.Detail
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 
-class DayEventsAdapter(val events : List<CalendarFragment.Detail>, val context: Context) : RecyclerView.Adapter<DayEventsAdapter.ViewHolder>() {
+class DayEventsAdapter(val events : List<Detail>, val context: Context) : RecyclerView.Adapter<DayEventsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view  = LayoutInflater.from(parent.context).inflate(R.layout.adapter_calender_detail,parent,false)

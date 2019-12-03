@@ -11,4 +11,10 @@ object VariablesUtil {
     var gbAnimals: MutableList<Animal>?=null
     var gbSelectedAnimal:Animal?=null
     var gbCurrentUser:User?=null
+
+    fun clear(){
+        gbAnimals           = null
+        gbCurrentUser       = null
+        gbSelectedAnimal    = null
+    }
 }

@@ -100,6 +100,27 @@ public class DateTimeUtil {
 		return calendar.getTime() ;
 	}
 
+	public  static Date  addDaysToADate(Date date, int days){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, days);
+		return calendar.getTime();
+	}
+
+	public  static Date  addYearsToADate(Date date, int year){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.YEAR, year);
+		return calendar.getTime();
+	}
+
+	public  static Date  addMonthsToADate(Date date, int months){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.MONTH, months);
+		return calendar.getTime();
+	}
+
 
 
 
