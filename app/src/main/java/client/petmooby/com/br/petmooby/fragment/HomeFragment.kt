@@ -110,11 +110,15 @@ class HomeFragment : Fragment() {
     private fun scheduleAllEvents(animal: Animal?) {
         //Schedule all alarms for each animal
         val vaccineUtil = VaccineUtil()
-        for (vaccine in animal?.vaccineCards!!) {
-            vaccineUtil.scheduleEvent(activity!!, vaccine, animal.name!!)
+        if(animal?.vaccineCards != null) {
+            for (vaccine in animal.vaccineCards!!) {
+                vaccineUtil.scheduleEvent(activity!!, vaccine, animal.name!!,false)
+            }
         }
-        for (treatment in animal.treatmentCard!!) {
-            TreatmentUtil.generateTreatmentAlarm(activity!!, animal.name!!, treatment)
+        if(animal?.treatmentCard != null) {
+            for (treatment in animal.treatmentCard!!) {
+                TreatmentUtil.generateTreatmentAlarm(activity!!, animal.name!!, treatment,false)
+            }
         }
     }
 

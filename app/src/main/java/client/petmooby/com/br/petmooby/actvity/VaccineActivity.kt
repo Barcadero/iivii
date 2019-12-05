@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
@@ -27,10 +28,11 @@ import java.util.*
 class VaccineActivity : BaseActivity() {
 
     var vaccine:Animal.VaccineCards?=null
-    var date            = Date()
-    var dateVaccineApp  = Date()
-    var action          = 0
-    var historyLastIndex = 0
+    var date                = Date()
+    var dateVaccineApp      = Date()
+    var action              = 0
+    var historyLastIndex    = 0
+    var isForUpdate         = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine)
@@ -55,37 +57,56 @@ class VaccineActivity : BaseActivity() {
         action = intent.getIntExtra(Parameters.ACTION,0)
         when(action){
             ResultCodes.REQUEST_ADD_VACCINE -> {
+                isForUpdate = false
                 initHistoricAdapter()
             }
             ResultCodes.REQUEST_UPDATE_VACCINE ->{
-                //To alter a vaccine
-//                vaccine = intent.getParcelableExtra(Parameters.VACCINE_CARD)
-                vaccine = intent.getSerializableExtra(Parameters.VACCINE_CARD) as Animal.VaccineCards
-//                vaccine = Parcels.unwrap(intent.getParcelableExtra(Parameters.VACCINE_CARD))
+                isForUpdate = true
+                vaccine     = intent.getSerializableExtra(Parameters.VACCINE_CARD) as Animal.VaccineCards
                 edtVaccineDescription.setText(vaccine?.vaccine_type)
                 edtVaccineDate.setText(DateTimeUtil.formatDateTime(vaccine?.nextRemember) )
-                if(vaccine?.historic != null) {
-                    initHistoricAdapter()
-                }else{
-                    initHistoricAdapter()
-                    layoutEmptyList.visibility = VISIBLE
-                }
+                initHistoricAdapter()
+//                if(vaccine?.historic != null) {
+//                    initHistoricAdapter(vaccine)
+//                }else{
+//                    initHistoricAdapter(vaccine)
+//                    layoutEmptyList.visibility = VISIBLE
+//                }
 
             }
         }
     }
 
     private fun initHistoricAdapter() {
-        VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter {
-            vaccine?.identity == it.identity
-        }!!.forEach {
-            if(it.historic == null){
-                it.historic = mutableListOf()
+//        if(vaccineCard != null) {
+//            setHistoryAdapterLayout(vaccineCard)
+//        }else{
+            VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter {
+                vaccine?.identity == it.identity
+            }!!.forEach {
+                if (it.historic == null) {
+                    it.historic = mutableListOf()
+                }
+                setHistoryAdapterLayout(it)
             }
-            rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(it.historic!!, {}, { historic -> showNotes(historic) }) //{ /*historic -> deleteVaccineHistory(historic)*/}
-            rcViewHistoricVaccine.layoutManager = getDefaultLayoutManager()
-        }
+//        }
 
+
+    }
+    @UiThread
+    private fun setHistoryAdapterLayout(vaccineCard: Animal.VaccineCards) {
+        if(vaccineCard.historic == null){
+            vaccineCard.historic = mutableListOf()
+        }
+        rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccineCard.historic!!, {}, { historic -> showNotes(historic) })
+        rcViewHistoricVaccine.layoutManager = getDefaultLayoutManager()
+        if(vaccineCard.historic!!.size > 0){
+            rcViewHistoricVaccine.visibility = VISIBLE
+            layoutEmptyList.visibility = GONE
+        }else{
+            layoutEmptyList.visibility = VISIBLE
+            rcViewHistoricVaccine.visibility = GONE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -158,7 +179,7 @@ class VaccineActivity : BaseActivity() {
     }
 
     private fun saveAndSetResult(dialog: ProgressDialog) {
-        VaccineUtil().scheduleEvent(this,vaccine!!,VariablesUtil.gbSelectedAnimal?.name!!)
+        VaccineUtil().scheduleEvent(this,vaccine!!,VariablesUtil.gbSelectedAnimal?.name!!,isForUpdate)
         showAlert(R.string.savedSuccess)
         dialog.dismiss()
     }
@@ -249,6 +270,9 @@ class VaccineActivity : BaseActivity() {
 
     @UiThread
     fun notifyDataChange() {
+        if(rcViewHistoricVaccine.adapter == null){
+            initHistoricAdapter()
+        }
         rcViewHistoricVaccine.adapter?.notifyItemInserted(historyLastIndex)
     }
 

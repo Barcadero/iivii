@@ -14,11 +14,11 @@ object TreatmentUtil {
         }
     }*/
 
-    fun generateTreatmentAlarm(context: Context,animalName:String,treatment: Animal.TreatmentCard){
-        scheduleEvent(context,treatment,animalName)
+    fun generateTreatmentAlarm(context: Context,animalName:String,treatment: Animal.TreatmentCard,isForUpdate: Boolean){
+        scheduleEvent(context,treatment,animalName,isForUpdate)
     }
 
-    private fun scheduleEvent(context: Context, treatment:Animal.TreatmentCard, name : String){
+    private fun scheduleEvent(context: Context, treatment:Animal.TreatmentCard, name : String, isForUpdate: Boolean){
         if(!treatment.isActive!!)return
         val param = ParametersEvent()
         val identity = treatment.identity
@@ -47,15 +47,15 @@ object TreatmentUtil {
         }
 
 //        NotificationWorkerUtil().scheduleEvent(date, context,param,NotificationWorkerVaccine::class.java)
-        scheduleNotificationAlarm(treatment, context, param, timeUnit)
+        scheduleNotificationAlarm(treatment, context, param, timeUnit, isForUpdate)
     }
 
-    private fun scheduleNotificationAlarm(treatment: Animal.TreatmentCard, context: Context, param: ParametersEvent, timeUnit: TimeUnit) {
+    private fun scheduleNotificationAlarm(treatment: Animal.TreatmentCard, context: Context, param: ParametersEvent, timeUnit: TimeUnit,isForUpdate:Boolean) {
         if (treatment.isActive!!) {
 //            if (treatment.typeInterval == EnumTypeInterval.HOUR) {
 //                NotificationWorkerUtil().scheduleEventPeriodicWithAlarm(context, param, TimeUnit.HOURS)
 //            } else {
-                NotificationWorkerUtil().scheduleEventPeriodic(context, param, timeUnit, NotificationWorkerTreatment::class.java)
+                NotificationWorkerUtil().scheduleEventPeriodic(context, param, timeUnit,isForUpdate, NotificationWorkerTreatment::class.java)
 //            }
         }
     }

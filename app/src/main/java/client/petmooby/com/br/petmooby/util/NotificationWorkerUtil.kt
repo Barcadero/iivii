@@ -18,7 +18,7 @@ class NotificationWorkerUtil {
         val PARAMETER = "parameters"
     }
 
-    fun scheduleEvent(dateEvent:Date, context: Context,param:ParametersEvent ,clazz: Class<out ListenableWorker>){
+    /*fun scheduleEvent(dateEvent:Date, context: Context,param:ParametersEvent ,clazz: Class<out ListenableWorker>){
         val inputData = getInputData(param)
 
         val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
@@ -31,7 +31,7 @@ class NotificationWorkerUtil {
                 .addTag(param.tag)
                 .build()
         WorkManager.getInstance(context).enqueueUniqueWork(param.tag,ExistingWorkPolicy.REPLACE,notificationWork)
-    }
+    }*/
 
     private fun getInputData(param: ParametersEvent): Data {
         val inputDataBuilder = Data.Builder()
@@ -59,7 +59,7 @@ class NotificationWorkerUtil {
         WorkManager.getInstance(context).cancelAllWork()
     }
 
-    fun scheduleEventPeriodic(dateEvent:Date, context: Context, param:ParametersEvent ,clazz: Class<out ListenableWorker>){
+    fun scheduleEventPeriodic(dateEvent:Date, context: Context, param:ParametersEvent , isForUpdate:Boolean, clazz: Class<out ListenableWorker>){
         val inputData = getInputData(param)
         val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
         Log.d("NOTIFICATION","NEXT NOTIFICATION IN HOURS: $future")
@@ -68,10 +68,18 @@ class NotificationWorkerUtil {
                 .setInputData(inputData)
                 .addTag(param.tag)
                 .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE,notificationWork)
+        enqueueUniqueWork(isForUpdate, context, param, notificationWork)
     }
 
-    fun scheduleEventPeriodic(context: Context, param:ParametersEvent ,timeUnit: TimeUnit,clazz: Class<out ListenableWorker>){
+    private fun enqueueUniqueWork(isForUpdate: Boolean, context: Context, param: ParametersEvent, notificationWork: PeriodicWorkRequest) {
+        if (isForUpdate) {
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE, notificationWork)
+        } else {
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.KEEP, notificationWork)
+        }
+    }
+
+    fun scheduleEventPeriodic(context: Context, param:ParametersEvent ,timeUnit: TimeUnit,isForUpdate: Boolean,clazz: Class<out ListenableWorker>){
         val inputData = getInputData(param)
         //val future = DateTimeUtil.getDateDiff(Date(),dateEvent,TimeUnit.HOURS)
         //Log.d("NOTIFICATION","NEXT NOTIFICATION IN HOURS: $future")
@@ -80,7 +88,8 @@ class NotificationWorkerUtil {
                 .setInputData(inputData)
                 .addTag(param.tag)
                 .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE,notificationWork)
+//        WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE,notificationWork)
+        enqueueUniqueWork(isForUpdate,context,param,notificationWork)
     }
     //Save that code to use later
     fun scheduleEventPeriodicWithAlarm(context: Context, param:ParametersEvent ,timeUnit: TimeUnit){
