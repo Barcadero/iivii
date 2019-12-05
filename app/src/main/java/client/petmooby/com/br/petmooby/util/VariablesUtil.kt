@@ -17,4 +17,11 @@ object VariablesUtil {
         gbCurrentUser       = null
         gbSelectedAnimal    = null
     }
+
+    fun addAnimal(animal:Animal){
+        if(gbAnimals == null){
+            gbAnimals = mutableListOf()
+        }
+        gbAnimals!!.add(animal)
+    }
 }

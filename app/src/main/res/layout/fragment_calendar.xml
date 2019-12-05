@@ -22,6 +22,7 @@
         app:abbreviationsBarColor="@color/colorBtnMainMenuBackground"
         app:abbreviationsLabelsColor="@color/black"
         app:daysLabelsColor="@color/white"
+        app:highlightedDaysLabelsColor="@color/black"
 
         />
     <ScrollView

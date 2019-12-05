@@ -7,19 +7,19 @@ import java.util.concurrent.TimeUnit
 
 object TreatmentUtil {
 
-    fun generateTreatmentAlarm(context: Context,animal:Animal,identity: Long){
+    /*fun generateTreatmentAlarm(context: Context,animal:Animal,identity: Long){
         var treatment = animal.treatmentCard?.filter { it.identity == identity }!![0]
         if(treatment != null){
             scheduleEvent(context,treatment,animal.name!!)
-//            when(treatment.typeInterval){
-//                EnumTypeInterval.HOUR ->{
-//                    scheduleEvent(context,treatment,animal.name!!)
-//                }
-//            }
         }
+    }*/
+
+    fun generateTreatmentAlarm(context: Context,animalName:String,treatment: Animal.TreatmentCard){
+        scheduleEvent(context,treatment,animalName)
     }
 
-    fun scheduleEvent(context: Context, treatment:Animal.TreatmentCard, name : String){
+    private fun scheduleEvent(context: Context, treatment:Animal.TreatmentCard, name : String){
+        if(!treatment.isActive!!)return
         val param = ParametersEvent()
         val identity = treatment.identity
         var interval = treatment.timeInterval
@@ -47,11 +47,27 @@ object TreatmentUtil {
         }
 
 //        NotificationWorkerUtil().scheduleEvent(date, context,param,NotificationWorkerVaccine::class.java)
-        NotificationWorkerUtil().scheduleEventPeriodic(context,param,timeUnit,NotificationWorkerTreatment::class.java)
+        scheduleNotificationAlarm(treatment, context, param, timeUnit)
+    }
+
+    private fun scheduleNotificationAlarm(treatment: Animal.TreatmentCard, context: Context, param: ParametersEvent, timeUnit: TimeUnit) {
+        if (treatment.isActive!!) {
+//            if (treatment.typeInterval == EnumTypeInterval.HOUR) {
+//                NotificationWorkerUtil().scheduleEventPeriodicWithAlarm(context, param, TimeUnit.HOURS)
+//            } else {
+                NotificationWorkerUtil().scheduleEventPeriodic(context, param, timeUnit, NotificationWorkerTreatment::class.java)
+//            }
+        }
     }
 
     fun cancelEvent(context: Context, treatmentCard: Animal.TreatmentCard){
         val identity = treatmentCard.identity
-        NotificationWorkerUtil().cancel(context,identity.toString())
+//        if(treatmentCard.typeInterval == EnumTypeInterval.HOUR){
+//            val param = ParametersEvent()
+//            param.tag = treatmentCard.identity.toString()
+//            NotificationWorkerUtil().cancelAlarmManager(context,param)
+//        }else {
+            NotificationWorkerUtil().cancel(context, identity.toString())
+//        }
     }
 }

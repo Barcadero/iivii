@@ -321,7 +321,8 @@ class AddNewPetActivity : AppCompatActivity() {
         VariablesUtil.gbSelectedAnimal?.id = documentReference.id
         isForUpdate = true
         enableControlsButtons(true)
-        VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
+//        VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
+        VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
         FireStoreReference.saveAnimalReference(documentReference)
         if(mCurrentPhotoBitmap != null) {
             uploadImageAndSaveOrUpdatePet()

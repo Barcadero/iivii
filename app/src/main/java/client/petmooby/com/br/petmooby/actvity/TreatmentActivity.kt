@@ -35,6 +35,7 @@ class TreatmentActivity : BaseActivity() {
     var mDateInitial:Date?          = Date()
     var mDateFinal:Date?            = Date()
     var currentTreatment: Animal.TreatmentCard?=null
+    var isForUpdate                 = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_treatment)
@@ -182,6 +183,7 @@ class TreatmentActivity : BaseActivity() {
         if(!validate())return
         if(currentTreatment == null){
             //Save a treatment
+            isForUpdate = false
             currentTreatment = Animal.TreatmentCard()
             with(currentTreatment!!){
                 dateFinal      = mDateFinal
@@ -199,6 +201,7 @@ class TreatmentActivity : BaseActivity() {
             saveAnimal(dialog)
         }else{
             //Update a treatment
+            isForUpdate = true
             with(VariablesUtil.gbSelectedAnimal?.treatmentCard?.filter { it.identity == currentTreatment?.identity }!![0]){
                 dateFinal     = mDateFinal
                 dateInitial   = mDateInitial
@@ -229,7 +232,15 @@ class TreatmentActivity : BaseActivity() {
                         spTreatmentType.isEnabled = false
                         val animal = VariablesUtil.gbSelectedAnimal
                         if(animal != null){
-                            TreatmentUtil.generateTreatmentAlarm(this,animal,currentTreatment?.identity!!)
+                            if(isForUpdate){
+                                if(currentTreatment?.isActive!!){
+                                    TreatmentUtil.generateTreatmentAlarm(this, animal.name!!, currentTreatment!!)
+                                }else{
+                                    TreatmentUtil.cancelEvent(this,currentTreatment!!)
+                                }
+                            }else {
+                                TreatmentUtil.generateTreatmentAlarm(this, animal.name!!, currentTreatment!!)
+                            }
                         }
 
                     }

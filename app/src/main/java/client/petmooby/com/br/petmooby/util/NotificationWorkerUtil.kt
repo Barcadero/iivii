@@ -1,8 +1,12 @@
 package client.petmooby.com.br.petmooby.util
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.work.*
+import client.petmooby.com.br.petmooby.android.receiver.NotificationAlarmReceiver
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -11,6 +15,7 @@ class NotificationWorkerUtil {
 
     companion object {
         val workTag = "notificationWork"
+        val PARAMETER = "parameters"
     }
 
     fun scheduleEvent(dateEvent:Date, context: Context,param:ParametersEvent ,clazz: Class<out ListenableWorker>){
@@ -76,6 +81,47 @@ class NotificationWorkerUtil {
                 .addTag(param.tag)
                 .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(param.tag, ExistingPeriodicWorkPolicy.REPLACE,notificationWork)
+    }
+    //Save that code to use later
+    fun scheduleEventPeriodicWithAlarm(context: Context, param:ParametersEvent ,timeUnit: TimeUnit){
+        val intent = createIntentForAlarmManager(context, param)
+
+        // Create a PendingIntent to be triggered when the alarm goes off
+        val pIntent = createPendingIntent(context, param, intent)
+        // Setup periodic alarm every every half hour from this point onwards
+        val calendar: Calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            add(Calendar.HOUR, param.repeatInterval.toInt())
+            set(Calendar.MINUTE, 0)
+        }
+        val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+        if(timeUnit == TimeUnit.HOURS) {
+            alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
+                    AlarmManager.INTERVAL_HOUR, pIntent)
+        }
+    }
+
+    private fun createIntentForAlarmManager(context: Context, param: ParametersEvent): Intent {
+        // Construct an intent that will execute the AlarmReceiver
+        val intent = Intent(context, NotificationAlarmReceiver::class.java)
+        intent.putExtra(PARAMETER, param)
+        return intent
+    }
+
+    private fun createPendingIntent(context: Context, param: ParametersEvent, intent: Intent): PendingIntent? {
+        return PendingIntent.getBroadcast(context, param.tag.toInt(),
+                intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
+    //Save that code to use later
+    fun cancelAlarmManager(context: Context, param: ParametersEvent){
+        val intent = createIntentForAlarmManager(context, param)
+        // Create a PendingIntent to be triggered when the alarm goes off
+        val pIntent = createPendingIntent(context, param, intent)
+        val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmMgr?.cancel(pIntent)
     }
 
 }

@@ -16,10 +16,7 @@ import client.petmooby.com.br.petmooby.adapter.AnimalAdapter
 import client.petmooby.com.br.petmooby.extensions.*
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.CollectionsName
-import client.petmooby.com.br.petmooby.util.FireStoreReference
-import client.petmooby.com.br.petmooby.util.Parameters
-import client.petmooby.com.br.petmooby.util.ResultCodes
-import client.petmooby.com.br.petmooby.util.VariablesUtil
+import client.petmooby.com.br.petmooby.util.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -96,21 +93,33 @@ class HomeFragment : Fragment() {
         if(querySnapshot.isEmpty){
             llHomeNoPetYet.visibility = VISIBLE
         }else{
-            VariablesUtil.gbAnimals = mutableListOf<Animal>()
+            //VariablesUtil.gbAnimals = mutableListOf<Animal>()
             querySnapshot.documents.forEach{
                 var animal = it.toObject(Animal::class.java)
                 if(animal?.id == null){
                     animal?.id = it.id
 
                 }
-                VariablesUtil.gbAnimals?.add(animal!!)
+                VariablesUtil.addAnimal(animal!!)
+                scheduleAllEvents(animal)
             }
             updateAdapter()
         }
     }
 
+    private fun scheduleAllEvents(animal: Animal?) {
+        //Schedule all alarms for each animal
+        val vaccineUtil = VaccineUtil()
+        for (vaccine in animal?.vaccineCards!!) {
+            vaccineUtil.scheduleEvent(activity!!, vaccine, animal.name!!)
+        }
+        for (treatment in animal.treatmentCard!!) {
+            TreatmentUtil.generateTreatmentAlarm(activity!!, animal.name!!, treatment)
+        }
+    }
+
     private fun updateAdapter() {
-        rcMyAnimalsList?.adapter = AnimalAdapter(VariablesUtil.gbAnimals!!, { animal -> animalDetail(animal) })
+        rcMyAnimalsList?.adapter = AnimalAdapter(VariablesUtil.gbAnimals!!) { animal -> animalDetail(animal) }
     }
 
     private fun animalDetail(animal: Animal){
@@ -136,7 +145,8 @@ class HomeFragment : Fragment() {
             }else if(resultCode == Activity.RESULT_OK){
 //                val animal = data?.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
 //                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-                VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
+//                VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
+                VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
                 updateAdapter()
             }else{
                 updateAdapter()

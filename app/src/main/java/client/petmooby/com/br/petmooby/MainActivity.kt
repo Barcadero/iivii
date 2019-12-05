@@ -23,6 +23,20 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 import java.util.*
+import android.app.AlarmManager
+import android.content.Context.ALARM_SERVICE
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import client.petmooby.com.br.petmooby.android.receiver.NotificationAlarmReceiver
+import client.petmooby.com.br.petmooby.android.service.NotificationAlarmService
+import com.annimon.stream.operator.IntArray
+
+
 
 class MainActivity : BaseActivity() {
 
@@ -31,7 +45,8 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
+//        scheduleAlarm()
+//    startServiceNotification()
 
         val userType = Preference.getUserType(this)
         if(userType!! > -1){
@@ -168,6 +183,29 @@ class MainActivity : BaseActivity() {
                     exception -> onFailedQueryReturn(dialog,exception.message!!)
                 }
     }
+
+
+    fun startServiceNotification(){
+        val i = Intent(this, NotificationAlarmService::class.java)
+        i.putExtra("animal","text")
+        startService(i)
+    }
+
+    /*fun scheduleAlarm() {
+        // Construct an intent that will execute the AlarmReceiver
+        val intent = Intent(applicationContext, NotificationAlarmReceiver::class.java)
+        intent.putExtra("name","first intent")
+        // Create a PendingIntent to be triggered when the alarm goes off
+        val pIntent = PendingIntent.getBroadcast(this, 100,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        // Setup periodic alarm every every half hour from this point onwards
+        val firstMillis = System.currentTimeMillis() // alarm is set right away
+        val alarm = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pIntent)
+    }*/
 }
 
 

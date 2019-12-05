@@ -74,6 +74,15 @@
         <activity android:name=".actvity.TreatmentActivity" />
         <activity android:name=".actvity.RegisterUserActivity" />
         <activity android:name=".actvity.SplashActivity"></activity>
+
+        <receiver
+            android:name=".android.receiver.NotificationAlarmReceiver"
+            android:process=":remote" >
+        </receiver>
+
+        <service
+            android:name=".android.service.NotificationAlarmService"
+            android:exported="false" />
     </application>
 
 </manifest>
