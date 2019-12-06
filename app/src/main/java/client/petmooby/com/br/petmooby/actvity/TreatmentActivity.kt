@@ -234,7 +234,7 @@ class TreatmentActivity : BaseActivity() {
                         if(animal != null){
                             if(isForUpdate){
                                 if(currentTreatment?.isActive!!){
-                                    TreatmentUtil.generateTreatmentAlarm(this, animal.name!!, currentTreatment!!,true)
+                                    TreatmentUtil.generateTreatmentAlarm(this, animal.name!!, currentTreatment!!,isForUpdate)
                                 }else{
                                     TreatmentUtil.cancelEvent(this,currentTreatment!!)
                                 }
