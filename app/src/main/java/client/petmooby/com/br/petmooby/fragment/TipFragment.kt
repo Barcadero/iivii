@@ -71,7 +71,7 @@ class TipFragment : Fragment() {
 
     private fun loadRCTipView(tips : LastTip){
         listOfTips = tips.lastTips!!.toMutableList()
-        rcListOfTips.adapter = TipAdapter(listOfTips!!,{toast("clicou em ")})
+        rcListOfTips.adapter = TipAdapter(listOfTips!!) {/*do noting*/}
     }
 
     fun getLastTipList(){
