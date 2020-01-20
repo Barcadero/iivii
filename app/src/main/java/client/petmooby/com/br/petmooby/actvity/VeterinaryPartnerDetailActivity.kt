@@ -20,10 +20,11 @@ class VeterinaryPartnerDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_veterinary_partner_detail)
         setSupportActionBar(toolbarVetPartner as Toolbar)
+    }
 
+    override fun onResume() {
+        super.onResume()
         retrieveVetFromBundle()
-
-
     }
 
     private fun retrieveVetFromBundle() {
@@ -36,7 +37,7 @@ class VeterinaryPartnerDetailActivity : AppCompatActivity() {
         tvVetDetailName.text    = vetTip.name
         PicassoUtil.build(vetTip.photo!!, ivVetDetailProfile,context = this)
         toolbarVetPartner.findViewById<TextView>(R.id.toolbarTitle).text = vetTip.name
-        setupToolbar(R.id.toolbar,"")
+        setupToolbar(R.id.toolbarVetPartner,"")
 
     }
 

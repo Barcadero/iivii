@@ -9,6 +9,6 @@ import androidx.annotation.LayoutRes
 object LayoutResourceUtil {
     @LayoutRes
     fun getSpinnerDropDown(): Int{
-        return android.R.layout.simple_spinner_item
+        return android.R.layout.simple_spinner_dropdown_item
     }
 }
