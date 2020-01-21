@@ -132,6 +132,7 @@ class AddNewPetActivity : AppCompatActivity() {
             if(VariablesUtil.gbSelectedAnimal?.photo != null) {
                 loadProfilePicture()
             }
+            bithDate = VariablesUtil.gbSelectedAnimal?.dateOfBirthday!!
 
         }
     }

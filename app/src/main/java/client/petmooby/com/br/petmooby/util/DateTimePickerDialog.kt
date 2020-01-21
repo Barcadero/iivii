@@ -26,6 +26,9 @@ class DateTimePickerDialog  {
 
         fun showDatePicker(context:Context, component: View, datePar: Date) {
             val c       = Calendar.getInstance()
+            if(datePar != null){
+                c.time = datePar
+            }
             val year    = c.get(Calendar.YEAR)
             val month   = c.get(Calendar.MONTH)
             val day     = c.get(Calendar.DAY_OF_MONTH)
