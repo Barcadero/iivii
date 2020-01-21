@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/iosSecondaryLightColor"
     tools:context="client.petmooby.com.br.petmooby.LoginActivity">
 
     <!-- Login progress -->
@@ -101,7 +102,7 @@
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnLoginFace"
-                style="@style/btnStyle"
+                style="@style/btnStyleFB"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:layout_gravity="center_horizontal"

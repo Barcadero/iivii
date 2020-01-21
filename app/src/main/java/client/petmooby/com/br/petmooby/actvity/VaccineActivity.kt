@@ -78,20 +78,31 @@ class VaccineActivity : BaseActivity() {
     }
 
     private fun initHistoricAdapter() {
-//        if(vaccineCard != null) {
-//            setHistoryAdapterLayout(vaccineCard)
-//        }else{
-            VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter {
-                vaccine?.identity == it.identity
-            }!!.forEach {
-                if (it.historic == null) {
-                    it.historic = mutableListOf()
+        var hasVaccine = false
+        var hasHistoric = false
+       VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter {
+            vaccine?.identity == it.identity
+        }!!.forEach {
+            hasVaccine = true
+            if (it.historic == null) {
+                it.historic = mutableListOf()
+            }else{
+                if(it.historic?.isNotEmpty()!!) {
+                    hasHistoric = true
                 }
-                setHistoryAdapterLayout(it)
             }
-//        }
+            setHistoryAdapterLayout(it)
+        }
 
-
+        if(hasVaccine){
+            if(hasHistoric){
+                llVaccineHistoricList.visibility = VISIBLE
+            }else{
+                llVaccineHistoricList.visibility = GONE
+            }
+        }else{
+            llVaccineHistoricList.visibility = GONE
+        }
     }
     @UiThread
     private fun setHistoryAdapterLayout(vaccineCard: Animal.VaccineCards) {
@@ -101,11 +112,13 @@ class VaccineActivity : BaseActivity() {
         rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccineCard.historic!!, {}, { historic -> showNotes(historic) })
         rcViewHistoricVaccine.layoutManager = getDefaultLayoutManager()
         if(vaccineCard.historic!!.size > 0){
-            rcViewHistoricVaccine.visibility = VISIBLE
-            layoutEmptyList.visibility = GONE
+//            rcViewHistoricVaccine.visibility = VISIBLE
+//            layoutEmptyList.visibility = GONE
+            llVaccineHistoricList.visibility = VISIBLE
         }else{
-            layoutEmptyList.visibility = VISIBLE
-            rcViewHistoricVaccine.visibility = GONE
+//            layoutEmptyList.visibility = VISIBLE
+//            rcViewHistoricVaccine.visibility = GONE
+            llVaccineHistoricList.visibility = GONE
         }
     }
 

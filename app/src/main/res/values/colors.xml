@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primaryColor">#870d4e</color>
+    <color name="primaryColor">#ff80ab</color>
     <color name="primaryLightColor">#bb467a</color>
     <color name="primaryDarkColor">#550026</color>
     <color name="secondaryColor">#ff80ab</color>
     <color name="secondaryLightColor">#ffb2dd</color>
+    <color name="iosSecondaryColor">#E7D3FF</color>
+    <color name="iosSecondaryLightColor">#AE6AE9</color><!--Deixar essa cor de fundo.-->
     <color name="secondaryDarkColor">#c94f7c</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
@@ -34,7 +36,7 @@
     <color name="purple">#944FCC</color>
     <color name="colorBtnMainMenuBackground">#944FCC</color>
     <color name="colorBackground">#fff8e1</color>
-    <color name="cardViewBackground">#EFBBFF</color>
+    <color name="cardViewBackground">#E7D3FF</color>
     <color name="selectedItemNav">#FFF</color>
     <color name="unselectedItemNav">#B9B9B9</color>
     <color name="black">#000</color>

@@ -11,7 +11,8 @@
         <item name="android:textColor">@color/colorText</item>
          <item name="android:background">@color/background</item>
         -->
-        <item name="android:windowBackground">@color/secondaryLightColor</item>
+        <item name="android:windowBackground">@color/iosSecondaryColor</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarStyle">@style/AppClientTheme.ActionBarStyle</item>
@@ -70,6 +71,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/btn_active</item>
     </style>
+
+    <style name="btnStyleFB" parent="btnStyle">
+        <item name="android:background">@drawable/btn_active_fb</item>
+    </style>
+
+
 
     <style name="btnDanger" parent="btnStyle">
         <item name="android:background">@drawable/btn_danger_background</item>

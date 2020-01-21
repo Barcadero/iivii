@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -147,12 +148,12 @@ class AddNewPetActivity : AppCompatActivity() {
                 .into(ivProfileMyPet, object : Callback {
                     override fun onSuccess() {
                         progressAddPet.visibility = View.GONE
-                        ivProfileMyPet.visibility = View.VISIBLE
+                        ivProfileMyPet.visibility = VISIBLE
                     }
 
                     override fun onError() {
                         progressAddPet.visibility = View.GONE
-                        ivProfileMyPet.visibility = View.VISIBLE
+                        ivProfileMyPet.visibility = VISIBLE
                     }
 
                 })
@@ -160,6 +161,16 @@ class AddNewPetActivity : AppCompatActivity() {
 
     private fun showImagePicker() {
         ImagePicker.pickImage(this, getString(R.string.selectAPicture), PICK_IMAGE, true)
+    }
+
+    private fun enableSpinnerBreed(enable:Boolean){
+        if(enable) {
+            spNewPetBreed.visibility = VISIBLE
+            btnNewPetBreed.visibility = GONE
+        }else{
+            spNewPetBreed.visibility = GONE
+            btnNewPetBreed.visibility = VISIBLE
+        }
     }
 
     private fun initSpinners() {
@@ -174,9 +185,12 @@ class AddNewPetActivity : AppCompatActivity() {
                         //NOTHING SELECTED
                         spNewPetBreed.isEnabled = false
                         enumSelectedBreed = null
+                        enableSpinnerBreed(false)
+
                     }
                     1 -> {
                         //DOGS
+                        enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
                         val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
                         adapterValue.sort(EnumBreedComparator())
@@ -189,6 +203,7 @@ class AddNewPetActivity : AppCompatActivity() {
                     }
                     2 -> {
                         //CATS
+                        enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
                         val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
                         adapterValue.sort(EnumBreedComparator())
@@ -200,6 +215,7 @@ class AddNewPetActivity : AppCompatActivity() {
                     }
                     3 -> {
                         //Birds
+                        enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
                         val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
                         adapterValue.sort(EnumBreedComparator())

@@ -19,10 +19,10 @@
     android:layout_height="wrap_content"
 
     android:text="@string/Options"
-    android:textColor="@color/primaryDarkColor"
+    android:textColor="@color/black"
     android:layout_marginTop="48dp"
     android:textSize="16sp"
-    android:textStyle="bold"
+    android:textStyle="normal"
     android:textAllCaps="true"
         />
 
@@ -40,10 +40,10 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:text="@string/About"
-    android:textColor="@color/primaryDarkColor"
+    android:textColor="@color/black"
 
     android:textSize="16sp"
-    android:textStyle="bold"
+    android:textStyle="normal"
     android:textAllCaps="true"
         />
     <Button
@@ -74,11 +74,11 @@
     <TextView
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@drawable/btn_corners_gray"
+    android:layout_marginTop="5dp"
     android:text="@string/helpUs"
-    android:textColor="@color/primaryDarkColor"
+    android:textColor="@color/black"
     android:textSize="16sp"
-    android:textStyle="bold"
+    android:textStyle="normal"
     android:textAllCaps="false"
 
         />
