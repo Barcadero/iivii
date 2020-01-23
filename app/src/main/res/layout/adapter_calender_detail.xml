@@ -45,7 +45,7 @@
                 android:visibility="invisible"
                 />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivDetailPhoto"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
@@ -54,7 +54,10 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="2dp"
-                app:srcCompat="@drawable/ic_camera" />
+                app:srcCompat="@drawable/ic_camera"
+                app:riv_corner_radius="15dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="false"/>
 
         </FrameLayout>
 

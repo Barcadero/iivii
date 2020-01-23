@@ -79,7 +79,7 @@ class TreatmentActivity : BaseActivity() {
                 edtTreatmentDateInitial.setText(DateTimeUtil.formatDateTime(currentTreatment?.dateInitial,"dd/MM/yyyy"))
             }
             edtTreatmentDesc.setText(currentTreatment?.name)
-            swtTreatmentAlarm.isChecked = currentTreatment?.isActive!!
+            swtTreatmentAlarm.isChecked = currentTreatment?.isIsActive!!
             edtTreatmentNote.setText(currentTreatment?.notes)
             //spTreatmentInterval.setSelection((currentTreatment?.timeInterval!! - 1).toInt())
             spTreatmentTypeInterval.setSelection(currentTreatment?.typeInterval?.ordinal!!)
@@ -190,7 +190,7 @@ class TreatmentActivity : BaseActivity() {
                 dateInitial    = mDateInitial
                 name                = edtTreatmentDesc.text.toString()
                 identity            = Random().nextInt(1000000000).toLong()
-                isActive            = swtTreatmentAlarm.isChecked
+                isIsActive            = swtTreatmentAlarm.isChecked
                 notes               = edtTreatmentNote.text.toString()
                 timeInterval        = edtTreatmentInterval.text.toString().toLong()
                 typeInterval        = spTreatmentTypeInterval.selectedItem as EnumTypeInterval
@@ -206,7 +206,7 @@ class TreatmentActivity : BaseActivity() {
                 dateFinal     = mDateFinal
                 dateInitial   = mDateInitial
                 name               = edtTreatmentDesc.text.toString()
-                isActive           = swtTreatmentAlarm.isChecked
+                isIsActive           = swtTreatmentAlarm.isChecked
                 notes           = edtTreatmentNote.text.toString()
                 timeInterval    = edtTreatmentInterval.text.toString().toLong()
                 typeInterval    = spTreatmentTypeInterval.selectedItem as EnumTypeInterval
@@ -233,7 +233,7 @@ class TreatmentActivity : BaseActivity() {
                         val animal = VariablesUtil.gbSelectedAnimal
                         if(animal != null){
                             if(isForUpdate){
-                                if(currentTreatment?.isActive!!){
+                                if(currentTreatment?.isIsActive!!){
                                     TreatmentUtil.generateTreatmentAlarm(this, animal.name!!, currentTreatment!!,isForUpdate)
                                 }else{
                                     TreatmentUtil.cancelEvent(this,currentTreatment!!)

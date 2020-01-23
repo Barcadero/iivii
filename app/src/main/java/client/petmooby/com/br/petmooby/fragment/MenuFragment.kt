@@ -69,7 +69,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun logout(){
-        activity!!.alert(R.string.Logout, R.string.areYouSure) {
+        activity!!.alert( R.string.logoutMessage,R.string.Logout) {
             yesButton { logoutYesButton() }
             noButton {}
         }.show()

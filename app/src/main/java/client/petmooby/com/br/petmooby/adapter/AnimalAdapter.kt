@@ -15,6 +15,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.adapter_my_animal_list.view.*
 
 /**
  * Created by Rafael Rocha on 15/07/2019.
@@ -54,6 +55,9 @@ class AnimalAdapter (
 
         //}
         holder.itemView.setOnClickListener {onClick(animal)}
+        if(position == itemCount - 1){
+            holder.viewSeparator.visibility = GONE
+        }
     }
 
     override fun getItemCount() = animals.size
@@ -69,5 +73,6 @@ class AnimalAdapter (
         var txtKind     = view.findViewById<TextView>(R.id.txtMyPetKind)
         var ivProfile = view.findViewById<ImageView>(R.id.ivProfileMyPet)
         var progressMyAnimal = view.findViewById<ProgressBar>(R.id.progressMyAnimal)
+        val viewSeparator = view.viewAnimalList
     }
 }

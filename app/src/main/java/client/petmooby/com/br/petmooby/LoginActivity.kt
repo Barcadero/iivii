@@ -40,10 +40,10 @@ class LoginActivity : BaseActivity() {
 
             LoginManager.getInstance().registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
-                    var profile = Profile.getCurrentProfile()
-                    var name = "${profile?.firstName}  ${profile?.lastName}"
-                    var accessToken = loginResult.accessToken
-                    var userIdFB = profile.id
+                    val profile = Profile.getCurrentProfile()
+                    val name = "${profile?.firstName}  ${profile?.lastName}"
+                    val accessToken = loginResult.accessToken
+                    val userIdFB = profile.id
                     Preference.set(this@LoginActivity, Preference.USER_NAME,name)
                     Preference.set(this@LoginActivity,Preference.USER_TOKEN,accessToken.token)
                     Preference.set(this@LoginActivity,Preference.USER_ID,userIdFB)

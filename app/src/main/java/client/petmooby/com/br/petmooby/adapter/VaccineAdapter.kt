@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.adapter
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
@@ -20,6 +21,9 @@ class VaccineAdapter (val vaccines: List<Animal.VaccineCards>,
         val vaccine = vaccines[position]
         holder.vaccineName.text = vaccine.vaccine_type
         holder.dateNext.text = DateTimeUtil.formatDateTime(vaccine.nextRemember)
+        if(position == itemCount - 1){
+            holder.viewSeparator.visibility = GONE
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): VaccineHolder {
@@ -36,6 +40,6 @@ class VaccineAdapter (val vaccines: List<Animal.VaccineCards>,
     class VaccineHolder(view : View) : RecyclerView.ViewHolder(view){
         var vaccineName = view.txtVaccineName
         var dateNext    = view.txtDateNext
-
+        val viewSeparator = view.viewVaccineList
     }
 }

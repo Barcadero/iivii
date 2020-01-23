@@ -13,6 +13,6 @@ object NumberFormatUtil {
     fun currencyToDouble(value:String,context: Context):Double{
         if(value == null)return 0.0
         val cleanString = value.replace(getCurrencyRengex(context), "")
-        return cleanString.toDouble() / 100
+        return cleanString.trim().toDouble() / 100
     }
 }

@@ -4,14 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/iosSecondaryColor"
+    android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.actvity.VeterinaryPartnersListActivity">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutVetList"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarVetList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            app:title="@string/listOfPartners"
+            android:theme="@style/toolbarTheme"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
     <FrameLayout
         android:id="@+id/frameFragmentVetList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-
         />
 
 </LinearLayout>

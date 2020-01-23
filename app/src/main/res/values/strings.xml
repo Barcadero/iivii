@@ -165,6 +165,9 @@
     <string name="oneHour">one</string>
     <string name="select">Select</string>
     <string name="followOurTips">Follow our tips, every week a new tip for your PET.</string>
+    <string name="logoutMessage">When logout is done all the treatments alarms are turned off. Do you really want to logout?</string>
+    <string name="loginMessage">For proper operation of Petmooby, all treatment alarms will be turned off every time you log in. You can turn them back on. Vaccine alarms continue to function normally.</string>
+    <string name="listOfPartners">List of Partners</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>

@@ -15,6 +15,7 @@ object Preference {
     val USER_TOKEN  = "user.token"
     val USER_ID     = "user.id"
     val USER_TYPE   = "user.type"
+    val LOGIN_MSN   = "login.message"
 
     fun getUserName(context: Context): String?{
         return get(context, USER_NAME)
@@ -56,6 +57,9 @@ object Preference {
                 }
                 Int::class->{
                     editor.putInt(key, value as Int)
+                }
+                Boolean::class ->{
+                    editor.putBoolean(key, value as Boolean)
                 }
             }
             return editor.commit()
@@ -101,6 +105,15 @@ object Preference {
     fun clear(context: Context){
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.edit().clear().apply()
+    }
+
+    fun setShowMessageLogin(context: Context, value:Boolean) : Boolean{
+        return set(context, LOGIN_MSN ,value)
+    }
+
+    fun getShowMessageLogin(context: Context): Boolean{
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getBoolean(LOGIN_MSN,true)
     }
 
 

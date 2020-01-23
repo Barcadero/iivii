@@ -27,7 +27,7 @@ class CurrencyMaskTextWatch(var editText: EditText, val context:Context) : TextW
 
             val cleanString = s.toString().replace(NumberFormatUtil.getCurrencyRengex(context), "")
 //            val cleanString = s.toString().replace(Regex("[$,.]"), "")
-            val parsed      = cleanString.toDouble()
+            val parsed      = cleanString.trim().toDouble()
             val formatted   = NumberFormat.getCurrencyInstance().format((parsed/100))
             current         = formatted
             editText.setText(formatted)

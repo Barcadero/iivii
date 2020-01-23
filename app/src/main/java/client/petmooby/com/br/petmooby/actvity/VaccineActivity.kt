@@ -11,10 +11,7 @@ import android.view.View.VISIBLE
 import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.HistoricVaccineAdapter
-import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
-import client.petmooby.com.br.petmooby.extensions.setupToolbar
-import client.petmooby.com.br.petmooby.extensions.showAlert
-import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
+import client.petmooby.com.br.petmooby.extensions.*
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.*
 import kotlinx.android.synthetic.main.activity_vaccine.*
@@ -271,12 +268,16 @@ class VaccineActivity : BaseActivity() {
                             notifyDataChange()//notifyItemInserted(vaccine?.historic?.lastIndex!!)
                             clearVaccineApply()
                             dialog.dismiss()
+                            llVaccineHistoricList.visibility = VISIBLE
+                            hideKeyboard()
                         }.addOnFailureListener {
                     dialog.dismiss()
                     showAlert(R.string.wasNotPossibleSaveVaccine)
                 }
             }catch (e:Exception){
                 dialog.dismiss()
+                e.printStackTrace()
+                LogUtil.logDebug(e.message!!)
             }
         }
     }

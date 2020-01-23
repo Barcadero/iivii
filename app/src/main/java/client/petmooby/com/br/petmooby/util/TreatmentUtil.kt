@@ -19,7 +19,7 @@ object TreatmentUtil {
     }
 
     private fun scheduleEvent(context: Context, treatment:Animal.TreatmentCard, name : String, isForUpdate: Boolean){
-        if(!treatment.isActive!!)return
+        if(!treatment.isIsActive!!)return
         val param = ParametersEvent()
         val identity = treatment.identity
         var interval = treatment.timeInterval
@@ -51,7 +51,7 @@ object TreatmentUtil {
     }
 
     private fun scheduleNotificationAlarm(treatment: Animal.TreatmentCard, context: Context, param: ParametersEvent, timeUnit: TimeUnit,isForUpdate:Boolean) {
-        if (treatment.isActive!!) {
+        if (treatment.isIsActive!!) {
 //            if (treatment.typeInterval == EnumTypeInterval.HOUR) {
 //                NotificationWorkerUtil().scheduleEventPeriodicWithAlarm(context, param, TimeUnit.HOURS)
 //            } else {

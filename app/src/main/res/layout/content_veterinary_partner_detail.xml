@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="client.petmooby.com.br.petmooby.actvity.VeterinaryPartnerDetailActivity"
     tools:showIn="@layout/activity_veterinary_partner_detail">
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:background="@color/purple"
+        android:background="@color/iosSecondaryLightColor"
         >
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivVetDetailProfile"
@@ -24,8 +24,6 @@
             android:layout_marginTop="8dp"
             android:layout_centerVertical="true"
             android:visibility="visible"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@color/primaryDarkColor"
             />
         <ProgressBar
             android:id="@+id/progressVetList"

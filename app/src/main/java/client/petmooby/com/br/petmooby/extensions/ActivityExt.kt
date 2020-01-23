@@ -3,6 +3,8 @@ package client.petmooby.com.br.petmooby.extensions
 import android.app.Activity
 import android.app.ProgressDialog
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
@@ -17,6 +19,7 @@ import client.petmooby.com.br.petmooby.R
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.okButton
+
 
 /**
  * Created by Rafael Rocha on 25/07/18.
@@ -119,3 +122,14 @@ fun Activity.getDefaulLayoutManager(): GridLayoutManager{
 fun Activity.getDefaultLayoutManager(): GridLayoutManager
     = GridLayoutManager(this,1)
 
+fun Activity.hideKeyboard() {
+    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    //Find the currently focused view, so we can grab the correct window token from it.
+    var view = currentFocus
+    //If no view currently has focus, create a new one, just so we can grab a window token from it
+    if (view == null) {
+        view = View(this)
+    }
+    imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+
+}

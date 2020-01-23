@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.adapter
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.model.VeterinaryTip
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.adapter_vet_partners_list.view.*
 
 /**
  * Created by idoctor on 16/05/2019.
@@ -41,6 +43,9 @@ class VeterinaryTipAdapter(
                 })
 
         holder.itemView.setOnClickListener { onClick(vet) }
+        if(position == itemCount - 1){
+            holder.viewVeterinaryList.visibility = GONE
+        }
 
     }
 
@@ -58,6 +63,7 @@ class VeterinaryTipAdapter(
         var tvNameVet       = view.findViewById<TextView>(R.id.tvNameVet)
         var tvEmailVet      = view.findViewById<TextView>(R.id.tvEmailVet)
         var progess         = view.findViewById<ProgressBar>(R.id.progressVetList)
+        var viewVeterinaryList   = view.viewVeterinaryList
 
     }
 

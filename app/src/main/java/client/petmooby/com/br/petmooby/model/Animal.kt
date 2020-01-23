@@ -25,8 +25,9 @@ import java.util.*
       var photo         :String?=""
       var treatmentCard:MutableList<TreatmentCard>?=null
       var type:EnumTypeAnimal?=null
-     var userPath:String ?=null
+//     var userPath:String ?=null
      var vaccineCards:MutableList<VaccineCards>?=null
+    var vetConsultation:MutableList<VetConsultation>?=null
 
 
 
@@ -53,13 +54,30 @@ import java.util.*
             var dateFinal: Date? = null
             , var dateInitial: Date? = null
             , var identity: Long? = 0
-            , var isActive: Boolean? = false
+            , var isIsActive: Boolean? = false
             , var name: String? = ""
             , var notes: String? = ""
             , var timeInterval: Long? = 0
             , var typeInterval: EnumTypeInterval? = null
             , var typePeriod: EnumTypePeriod? = null
             , var typeTreatment: EnumTypeTreatment? = null) : Serializable
+
+    class VetConsultation
+
+     : Serializable{
+        var identity: Long?=null
+        var nameVet:String?=null
+        var nameClinic:String?=null
+        var date: Date?         =null
+        var dateReturn:Date?    =null
+        var notes : String?     =null
+        var price : String?     =null
+        var rank   : Int?       =null
+        var photo1: String?     =null
+        var descPhoto1: String?=null
+        var photo2: String?          =null
+        var descPhoto2: String?      =null
+    }
 
 
 }

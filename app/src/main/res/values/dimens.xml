@@ -6,7 +6,7 @@
     <dimen name="icon_width">35dp</dimen>
     <dimen name="icon_height">35dp</dimen>
     <dimen name="icon_margin_top">20dp</dimen>
-    <dimen name="text_size_larger">20sp</dimen>
+    <dimen name="text_size_larger">16sp</dimen>
     <dimen name="marginTopForToolbar">60dp</dimen>
     <dimen name="btnHeight">55dp</dimen>
     <dimen name="btnWidth">@dimen/match_parent</dimen>

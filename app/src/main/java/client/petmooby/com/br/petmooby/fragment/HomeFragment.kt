@@ -20,6 +20,10 @@ import client.petmooby.com.br.petmooby.util.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.okButton
+import org.jetbrains.anko.yesButton
 
 
 /**
@@ -44,7 +48,17 @@ class HomeFragment : Fragment() {
         setupToolbar(R.id.toolbar,getString(R.string.Home))
 
         rcMyAnimalsList = defaultRecycleView(activity!!,R.id.rcMyAnimalsList)
-        getMyAnimals()
+        val showMessage = Preference.getShowMessageLogin(activity!!)
+        if(showMessage) {
+            activity!!.alert(R.string.loginMessage, R.string.Advice) {
+                okButton { Preference.setShowMessageLogin(activity!!,false); getMyAnimals() }
+                onCancelled { Preference.setShowMessageLogin(activity!!,false);getMyAnimals() }
+            }.show()
+        }else{
+            getMyAnimals()
+        }
+
+
 
     }
 

@@ -11,6 +11,7 @@ import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.DayEventsAdapter
 import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
+import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.enums.EnumTypeInterval
 import client.petmooby.com.br.petmooby.model.enums.EnumTypePeriod
 import client.petmooby.com.br.petmooby.model.metadata.Detail
@@ -68,7 +69,7 @@ class CalendarFragment : Fragment() {
             showEventCards(eventDay)
 
         }
-        calendarView.setEvents(getEvents())
+
 
     }
 
@@ -187,6 +188,18 @@ class CalendarFragment : Fragment() {
             }
         } else {
             list.add(AnimalEventDay(DateTimeUtil.dateAsCalendar(nextRemember), DrawableUtils.getThreeDots(activity!!), detail))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val dialog = showLoadingDialog()
+        try {
+            calendarView.setEvents(getEvents())
+            dialog.dismiss()
+        }catch (e:Exception){
+            dialog.dismiss()
+            e.printStackTrace()
         }
     }
 

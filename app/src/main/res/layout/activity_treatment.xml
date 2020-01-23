@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/alarm"
                     android:id="@+id/tvTreatmentAlarm"
-                    android:textSize="25dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/icons8_schedule_30"/>
