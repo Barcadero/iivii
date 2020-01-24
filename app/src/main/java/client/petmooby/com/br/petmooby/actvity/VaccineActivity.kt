@@ -175,17 +175,29 @@ class VaccineActivity : BaseActivity() {
 
     private fun getCurrentVaccineInfo() {
         validateFields()
-        vaccine = Animal.VaccineCards()
-        with(vaccine!!) {
-            identity = Random().nextInt(1000000000)
-            nextRemember = date
-            vaccine_type = edtVaccineDescription.text.toString()
-            //historic = historicTemp
+        if(!isForUpdate) {
+            vaccine = Animal.VaccineCards()
+            with(vaccine!!) {
+                identity = Random().nextInt(1000000000)
+                nextRemember = date
+                vaccine_type = edtVaccineDescription.text.toString()
+            }
+        }else{
+            with(VariablesUtil
+                    .gbSelectedAnimal?.vaccineCards
+                    ?.filter { vaccine?.identity == it.identity }!!
+                    [0]){
+                nextRemember = date
+                vaccine_type = edtVaccineDescription.text.toString()
+            }
         }
+
         if (VariablesUtil.gbSelectedAnimal?.vaccineCards == null) {
             VariablesUtil.gbSelectedAnimal?.vaccineCards = mutableListOf()
         }
-        VariablesUtil.gbSelectedAnimal?.vaccineCards?.add(vaccine!!)
+        if(!isForUpdate) {
+            VariablesUtil.gbSelectedAnimal?.vaccineCards?.add(vaccine!!)
+        }
     }
 
     private fun saveAndSetResult(dialog: ProgressDialog) {

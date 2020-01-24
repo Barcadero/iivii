@@ -184,4 +184,5 @@
         <item>DOG</item>
         <item>CAT</item>
     </string-array>
+    <string name="vaccineTextNotification">%1$s needs to be vaccinated for %2$s in day: %3$s.</string>
 </resources>

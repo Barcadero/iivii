@@ -57,6 +57,8 @@ class AnimalAdapter (
         holder.itemView.setOnClickListener {onClick(animal)}
         if(position == itemCount - 1){
             holder.viewSeparator.visibility = GONE
+        }else{
+            holder.viewSeparator.visibility = VISIBLE
         }
     }
 

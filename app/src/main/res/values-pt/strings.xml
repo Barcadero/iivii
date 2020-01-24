@@ -169,4 +169,5 @@
     <string name="logoutMessage">Ao sair, todos os alrmes de tratamento serão desligados. Quer mesmo sair?</string>
     <string name="loginMessage">Para o bom funcionamento do Petmooby, todos os alarmes de tratamento serão desligados ao entrar. Você pode ativá-los novamente. Os alarmes de vacina funcionarão nomalmente.</string>
     <string name="listOfPartners">Lista de Parceiros</string>
+    <string name="vaccineTextNotification">%1$s precisa ser vacinado por %2$s no dia: %3$s.</string>
 </resources>

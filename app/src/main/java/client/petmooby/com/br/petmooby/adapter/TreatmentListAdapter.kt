@@ -3,6 +3,7 @@ package client.petmooby.com.br.petmooby.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
@@ -23,6 +24,8 @@ class TreatmentListAdapter (
         holder.name.text = treatment.name
         if(position == itemCount - 1) {
             holder.viewSeparetor.visibility = GONE
+        }else{
+            holder.viewSeparetor.visibility = VISIBLE
         }
 
     }

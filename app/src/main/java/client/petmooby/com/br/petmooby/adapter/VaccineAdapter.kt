@@ -3,6 +3,7 @@ package client.petmooby.com.br.petmooby.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
@@ -23,6 +24,8 @@ class VaccineAdapter (val vaccines: List<Animal.VaccineCards>,
         holder.dateNext.text = DateTimeUtil.formatDateTime(vaccine.nextRemember)
         if(position == itemCount - 1){
             holder.viewSeparator.visibility = GONE
+        }else{
+            holder.viewSeparator.visibility = VISIBLE
         }
     }
 

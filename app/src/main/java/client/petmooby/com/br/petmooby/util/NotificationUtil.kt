@@ -36,7 +36,7 @@ object NotificationUtil {
                 .setContentIntent(p)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setSmallIcon(R.mipmap.logo)
+                //.setSmallIcon(R.mipmap.logo)
                 .setLargeIcon(BitmapFactory.decodeResource(context.resources,
                         R.mipmap.logo))
                 .setAutoCancel(true)
@@ -51,6 +51,9 @@ object NotificationUtil {
                     NotificationManager.IMPORTANCE_HIGH)
             manager.createNotificationChannel(channel)
             builder.setChannelId(channelId)
+            builder.setSmallIcon(R.drawable.paw_notification)
+        }else{
+            builder.setSmallIcon(R.mipmap.logo)
         }
         val n = builder.build()
         manager.notify(id, n)
@@ -64,14 +67,15 @@ object NotificationUtil {
                 title = context.getString(R.string.vaccine)
                 val builder = StringBuilder()
                 //A vacina do Rex está próxima: dia 25/09/2019
-                if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
-                    builder.append("${param.animalName} precisa ser vacinado " )
-                            .append("\n por ${param.vaccineType} no dia: ${param.dateString}.")
-                }else{
-                    //English version
-                    builder.append("${param.animalName} needs to be vaccinated " )
-                            .append("\n for ${param.vaccineType} in day: ${param.dateString}.")
-                }
+//                if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
+//                    builder.append("${param.animalName} precisa ser vacinado " )
+//                            .append("\n por ${param.vaccineType} no dia: ${param.dateString}.")
+//                }else{
+//                    //English version
+//                    builder.append("${param.animalName} needs to be vaccinated " )
+//                            .append("\n for ${param.vaccineType} in day: ${param.dateString}.")
+//                }
+                builder.append(context.getString(R.string.vaccineTextNotification,param.animalName,param.vaccineType,param.dateString))
                 message = builder.toString()
             }
             else ->{
