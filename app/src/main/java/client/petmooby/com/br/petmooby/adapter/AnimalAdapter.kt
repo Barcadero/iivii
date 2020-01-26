@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.model.Animal
@@ -29,29 +30,33 @@ class AnimalAdapter (
         val context = holder.itemView.context
         holder.txtPetName.text              = animal.name
         holder.txtKind.text                 = animal.breed
-        holder.progressMyAnimal.visibility  = VISIBLE
         holder.ivProfile.visibility         = INVISIBLE
-        //if(animal.photo != null) {
-            //PicassoUtil.build(animal.photo!!, holder.ivProfile, context = context)
+        if(animal.photo == null)animal.photo = ""
+        if(animal.photo!!.isEmpty()){
+            holder.ivProfile.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icons8_identidade_de_cachorro_90))
+            holder.ivProfile.visibility         = VISIBLE
+        }else {
+            holder.progressMyAnimal.visibility  = VISIBLE
             Picasso.with(context)
-                    .load(animal.photo)
+                    .load(if (animal.photo?.isEmpty()!!) null else animal.photo)
                     .error(R.drawable.no_image)
-                    //.placeholder(R.drawable.icons8_identidade_de_cachorro_90)
+                    .placeholder(R.drawable.icons8_identidade_de_cachorro_90)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .memoryPolicy(MemoryPolicy.NO_STORE)
                     .fit()
-                    .into(holder.ivProfile,object :Callback {
+                    .into(holder.ivProfile, object : Callback {
                         override fun onSuccess() {
-                            holder.progressMyAnimal.visibility  = GONE
-                            holder.ivProfile.visibility         = VISIBLE
+                            holder.progressMyAnimal.visibility = GONE
+                            holder.ivProfile.visibility = VISIBLE
                         }
 
                         override fun onError() {
-                            holder.progressMyAnimal.visibility  = GONE
-                            holder.ivProfile.visibility         = VISIBLE
+                            holder.progressMyAnimal.visibility = GONE
+                            holder.ivProfile.visibility = VISIBLE
                         }
 
                     })
+        }
 
         //}
         holder.itemView.setOnClickListener {onClick(animal)}

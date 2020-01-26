@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/iosSecondaryLightColor"
     tools:context="client.petmooby.com.br.petmooby.actvity.RegisterUserActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -48,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:imeOptions="actionNext"
+                android:inputType="textPersonName|textCapWords"
                 android:maxLength="120"
                 />
             <EditText

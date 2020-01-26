@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
@@ -78,7 +79,12 @@ class AddNewPetActivity : AppCompatActivity() {
             DateTimePickerDialog.showDatePicker(this,edtNewPetBirthday,bithDate)
         }
         edtNewPetBirthday.addTextChangedListener(DateMaskTextWatcher(edtNewPetBirthday))
-        setupToolbar(R.id.toolbarNewPet, R.string.addPet)
+        isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
+        if(isForUpdate) {
+            setupToolbar(R.id.toolbarNewPet, VariablesUtil.gbSelectedAnimal?.name)
+        }else {
+            setupToolbar(R.id.toolbarNewPet, R.string.addPet)
+        }
         initSpinners()
         ivProfileMyPet.setOnClickListener {
             showImagePicker()
@@ -103,7 +109,7 @@ class AddNewPetActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
+
         enableControlsButtons(isForUpdate)
         getAnimalSentByOtherView()
     }
@@ -138,6 +144,12 @@ class AddNewPetActivity : AppCompatActivity() {
     }
 
     private fun loadProfilePicture() {
+        val imgPath = VariablesUtil.gbSelectedAnimal?.photo
+        if(imgPath?.isEmpty()!!){
+            ivProfileMyPet.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_identidade_de_cachorro_90))
+            ivProfileMyPet.visibility         = VISIBLE
+            return
+        }
         progressAddPet.visibility = VISIBLE
         Picasso.with(this)
                 .load(VariablesUtil.gbSelectedAnimal?.photo)
@@ -148,7 +160,7 @@ class AddNewPetActivity : AppCompatActivity() {
                 .fit()
                 .into(ivProfileMyPet, object : Callback {
                     override fun onSuccess() {
-                        progressAddPet.visibility = View.GONE
+                        progressAddPet.visibility = GONE
                         ivProfileMyPet.visibility = VISIBLE
                     }
 

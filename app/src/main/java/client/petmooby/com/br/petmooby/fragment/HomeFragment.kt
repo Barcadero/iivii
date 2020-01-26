@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
             //VariablesUtil.gbAnimals = mutableListOf<Animal>()
             querySnapshot.documents.forEach{
                 var animal = it.toObject(Animal::class.java)
-                if(animal?.id == null){
+                if(animal?.id == null || animal.id!!.isEmpty()){
                     animal?.id = it.id
 
                 }
