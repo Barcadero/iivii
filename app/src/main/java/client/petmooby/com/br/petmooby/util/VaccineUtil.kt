@@ -24,4 +24,12 @@ class VaccineUtil {
         val identity = vaccine.identity
         NotificationWorkerUtil().cancel(context,identity.toString())
     }
+
+    fun cancelEventVaccinesForAAnimal(context: Context,animal:Animal){
+        if(animal.vaccineCards != null && animal.vaccineCards?.isNotEmpty()!!){
+            animal.vaccineCards?.forEach {
+                NotificationWorkerUtil().cancel(context,it.identity.toString())
+            }
+        }
+    }
 }

@@ -13,4 +13,5 @@
     <dimen name="txtMedium">16sp</dimen>
     <dimen name="widthPaw">120dp</dimen>
     <dimen name="HeightPaw">100dp</dimen>
+    <dimen name="iconTreatmentSize">30dp</dimen>
 </resources>

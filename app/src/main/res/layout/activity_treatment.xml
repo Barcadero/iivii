@@ -42,10 +42,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:id="@+id/imageView"
                     android:src="@drawable/icons8_pills_60"/>
 
@@ -72,11 +72,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:id="@+id/imageView2"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/icons8_doctors_bag_60"/>
@@ -100,11 +100,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:id="@+id/ivTreatment3"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/icons8_schedule_30"/>
@@ -113,7 +113,8 @@
                     android:id="@+id/spTreatmentTypeInterval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_alignTop="@+id/ivTreatment3"
+                    android:gravity="center"
                     android:layout_toEndOf="@+id/ivTreatment3" />
             </RelativeLayout>
 
@@ -121,12 +122,11 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
 
                 >
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:id="@+id/ivTreatment4"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="8dp"
@@ -153,14 +153,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/alarm"
                     android:id="@+id/tvTreatmentAlarm"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/icons8_schedule_30"/>
@@ -175,14 +175,22 @@
                     android:layout_toEndOf="@+id/tvTreatmentAlarm" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:background="@color/primaryDarkColor"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/frequencyAlarmTreatmentText"
                 android:layout_margin="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/primaryDarkColor"
+                android:textStyle="normal"
+
                 />
 
             <TextView
@@ -196,15 +204,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+
                 >
+
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
                     android:id="@+id/ivTreatment5"
-                    android:src="@drawable/icons8_schedule_30"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
+
                     android:layout_marginStart="8dp"
-                    />
+                    android:layout_marginBottom="0dp"
+                    android:src="@drawable/icons8_schedule_30" />
 
                 <Spinner
                     android:id="@+id/spTreatmentPeriod"
@@ -217,21 +227,22 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+
                 >
+
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:foregroundGravity="center"
                     android:id="@+id/ivTreatment7"
-                    android:src="@drawable/icons8calendar60"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:layout_marginStart="8dp"
-                    />
+                    android:src="@drawable/icons8calendar60" />
 
                 <EditText
                     android:id="@+id/edtTreatmentDateInitial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+
                     android:hint="@string/initialDate"
                     android:layout_toEndOf="@+id/ivTreatment7" />
             </RelativeLayout>
@@ -239,13 +250,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+
                 >
 
                 <ImageView
                     android:id="@+id/ivTreatment6"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:src="@drawable/icons8calendar60"
                     android:layout_marginStart="8dp"/>
 
@@ -258,24 +269,32 @@
                     android:layout_toEndOf="@+id/ivTreatment6" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:background="@color/primaryDarkColor"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/periodOfTreatmentAlarm"
                 android:layout_margin="10dp"
-                android:textColor="@color/primaryDarkColor"
-                android:textStyle="bold"
+
+                android:textStyle="normal"
                 />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 >
                 <ImageView
                     android:id="@+id/ivTreatmentNotes"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/iconTreatmentSize"
+                    android:layout_height="@dimen/iconTreatmentSize"
                     android:src="@drawable/icons8_compose_60"
                     android:layout_marginLeft="5dp"
                     />
@@ -295,8 +314,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/saveAnyInfoAboutTreatment"
-                android:textColor="@color/primaryDarkColor"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:layout_marginBottom="15dp"
                 android:layout_margin="8dp"
                 />

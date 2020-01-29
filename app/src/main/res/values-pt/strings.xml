@@ -170,4 +170,8 @@
     <string name="loginMessage">Para o bom funcionamento do Petmooby, todos os alarmes de tratamento serão desligados ao entrar. Você pode ativá-los novamente. Os alarmes de vacina funcionarão nomalmente.</string>
     <string name="listOfPartners">Lista de Parceiros</string>
     <string name="vaccineTextNotification">%1$s precisa ser vacinado por %2$s no dia: %3$s.</string>
+    <string name="takeAPicture">Tire uma foto</string>
+    <string name="gallery">Galeria</string>
+    <string name="hitoricWasRemoved">Historic was removed</string>
+    <string name="areYouSureDeleteHistoric">Tem certeza que deseja deletar esse histórico?</string>
 </resources>

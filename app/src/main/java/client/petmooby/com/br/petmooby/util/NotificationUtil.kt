@@ -64,22 +64,13 @@ object NotificationUtil {
         var title:String
         when(param.type){
             EnumTypeEvent.VACCINE ->{
-                title = context.getString(R.string.vaccine)
+                title = "${context.getString(R.string.vaccine)} - ${param.animalName}"
                 val builder = StringBuilder()
-                //A vacina do Rex está próxima: dia 25/09/2019
-//                if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
-//                    builder.append("${param.animalName} precisa ser vacinado " )
-//                            .append("\n por ${param.vaccineType} no dia: ${param.dateString}.")
-//                }else{
-//                    //English version
-//                    builder.append("${param.animalName} needs to be vaccinated " )
-//                            .append("\n for ${param.vaccineType} in day: ${param.dateString}.")
-//                }
                 builder.append(context.getString(R.string.vaccineTextNotification,param.animalName,param.vaccineType,param.dateString))
                 message = builder.toString()
             }
             else ->{
-                title = "Treatment"
+                title = "${context.getString(R.string.treatment)} - ${param.animalName}"
                 val builder = StringBuilder()
                 if(Application.DEVICE_LANGUAGE == Application.LANG_PT){
                     builder.append("${param.treatmentName} para ${param.animalName}.")

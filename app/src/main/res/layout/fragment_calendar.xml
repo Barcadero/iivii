@@ -6,10 +6,12 @@
     android:orientation="vertical"
     tools:context="client.petmooby.com.br.petmooby.fragment.CalendarFragment">
 
+
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="380dp"
+        android:layout_height="340dp"
+        android:visibility="visible"
         app:eventsEnabled="true"
         app:headerColor="@color/colorBtnMainMenuBackground"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -25,6 +27,8 @@
         app:highlightedDaysLabelsColor="@color/black"
 
         />
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

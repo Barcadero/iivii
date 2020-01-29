@@ -553,6 +553,7 @@ class AddNewPetActivity : AppCompatActivity() {
                                 //intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
 //                            intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal) )
                             setResult(ResultCodes.RESULT_FOR_DELETE,intent)
+                            removeEvents(VariablesUtil.gbSelectedAnimal!!)
                             finish()
                         }
             }
@@ -562,6 +563,11 @@ class AddNewPetActivity : AppCompatActivity() {
             }
         }.show()
 
+    }
+
+    private fun removeEvents(animal: Animal){
+        VaccineUtil().cancelEventVaccinesForAAnimal(this,animal)
+        TreatmentUtil.cancelEventTreatmentForAAnimal(this,animal)
     }
 
     override fun onBackPressed() {

@@ -76,7 +76,7 @@
                     android:textColor="@color/primaryDarkColor"
                     android:textAlignment="textStart"
                     android:drawablePadding="8dp"
-                    android:text="Capture" />
+                    android:text="@string/takeAPicture" />
 
                 <Button
                     android:id="@+id/btnNewPetGallery"
@@ -91,7 +91,7 @@
                     android:textAlignment="textStart"
                     android:drawablePadding="8dp"
                     android:drawableTint="@color/primaryDarkColor"
-                    android:text="Gallary" />
+                    android:text="@string/gallery" />
 
 
 
@@ -160,8 +160,10 @@
                     android:layout_toEndOf="@+id/ivNameEdit"
                     android:layout_toRightOf="@+id/ivNameEdit"
                     android:hint="@string/birthday"
-                    android:focusable="true"
-                    android:inputType="number" />
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:inputType="none" />
 
                 <ImageButton
                     android:id="@+id/btnNewPetCalender"
@@ -308,24 +310,27 @@
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/btnAddVaccine"
                     style="@style/btnStyle"
                     android:layout_marginTop="8dp"
                     android:text="@string/vaccine"
                     android:textAllCaps="true"
-                    android:drawableLeft="@drawable/layer_vaccine_animal"
+                    android:drawableStart="@drawable/layer_vaccine_animal"
+                    android:drawablePadding="0dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
 
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/btnAddMedicinalTreatment"
                     style="@style/btnStyle"
                     android:layout_marginTop="8dp"
                     android:text="@string/medicinalTreatment"
                     android:textAllCaps="true"
-                    android:drawableLeft="@drawable/layer_medicinal_treatment"
+                    android:drawableStart="@drawable/layer_medicinal_treatment"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
 
                     />
 

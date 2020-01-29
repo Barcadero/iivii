@@ -23,11 +23,10 @@ import java.util.*
       var gender        :String?=""
       var name          :String?=""
       var photo         :String?=""
-      var treatmentCard:MutableList<TreatmentCard>?=null
+      var treatmentCard:MutableList<TreatmentCard>?= mutableListOf()
       var type:EnumTypeAnimal?=null
-//     var userPath:String ?=null
-     var vaccineCards:MutableList<VaccineCards>?=null
-    var vetConsultation:MutableList<VetConsultation>?=null
+      var vaccineCards:MutableList<VaccineCards>?=mutableListOf()
+      var vetConsultation:MutableList<VetConsultation>?=mutableListOf()
 
 
 
@@ -38,7 +37,7 @@ import java.util.*
     //    @Parcel
     class VaccineCards(
             var identity: Int? = 0
-            , var historic: MutableList<Historic>? = null
+            , var historic: MutableList<Historic>? = mutableListOf()
             , var nextRemember: Date? = null
             , var vaccine_type: String? = "") : Serializable
 
@@ -46,6 +45,7 @@ import java.util.*
     class Historic(
             var date: Date? = null
             , var observation: String? = ""
+            , var tradeMark:String?=null
             , var value: Double? = null
             , var veterinary: String? = "") : Serializable
 

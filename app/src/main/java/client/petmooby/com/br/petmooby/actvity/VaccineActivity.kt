@@ -16,10 +16,7 @@ import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.util.*
 import kotlinx.android.synthetic.main.activity_vaccine.*
 import kotlinx.android.synthetic.main.empty_view_list_layout.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.toast
-import org.jetbrains.anko.yesButton
+import org.jetbrains.anko.*
 import java.util.*
 
 class VaccineActivity : BaseActivity() {
@@ -106,7 +103,7 @@ class VaccineActivity : BaseActivity() {
         if(vaccineCard.historic == null){
             vaccineCard.historic = mutableListOf()
         }
-        rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccineCard.historic!!, {}, { historic -> showNotes(historic) })
+        rcViewHistoricVaccine.adapter = HistoricVaccineAdapter(vaccineCard.historic!!, {historic -> onClickDeleteHistory(historic)}, { historic -> showNotes(historic) })
         rcViewHistoricVaccine.layoutManager = getDefaultLayoutManager()
         if(vaccineCard.historic!!.size > 0){
 //            rcViewHistoricVaccine.visibility = VISIBLE
@@ -169,6 +166,18 @@ class VaccineActivity : BaseActivity() {
                         saveAndSetResult(dialog)
                     }
                 }.addOnFailureListener {
+                    showAlert(R.string.wasNotPossibleSaveVaccine)
+                }
+    }
+
+    private fun saveAnimal(dialog: ProgressDialog, onSuccess: () -> Unit) {
+        animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
+                .set(VariablesUtil.gbSelectedAnimal!!)
+                .addOnSuccessListener {
+                    dialog.dismiss()
+                   onSuccess
+                }.addOnFailureListener {
+                    dialog.dismiss()
                     showAlert(R.string.wasNotPossibleSaveVaccine)
                 }
     }
@@ -277,7 +286,7 @@ class VaccineActivity : BaseActivity() {
                         .set(VariablesUtil.gbSelectedAnimal!!)
                         .addOnSuccessListener {
                             //vaccine?.historic?.add(historic)
-                            notifyDataChange()//notifyItemInserted(vaccine?.historic?.lastIndex!!)
+                            notifyDataChange(false)//notifyItemInserted(vaccine?.historic?.lastIndex!!)
                             clearVaccineApply()
                             dialog.dismiss()
                             llVaccineHistoricList.visibility = VISIBLE
@@ -295,11 +304,15 @@ class VaccineActivity : BaseActivity() {
     }
 
     @UiThread
-    fun notifyDataChange() {
+    fun notifyDataChange(isDelete: Boolean) {
         if(rcViewHistoricVaccine.adapter == null){
             initHistoricAdapter()
         }
-        rcViewHistoricVaccine.adapter?.notifyItemInserted(historyLastIndex)
+        if(isDelete) {
+            rcViewHistoricVaccine.adapter?.notifyDataSetChanged()
+        }else{
+            rcViewHistoricVaccine.adapter?.notifyItemInserted(historyLastIndex)
+        }
     }
 
 
@@ -318,6 +331,42 @@ class VaccineActivity : BaseActivity() {
         super.onBackPressed()
         setResult(Activity.RESULT_OK)
         finish()
+    }
+
+    private fun onClickDeleteHistory(historic: Animal.Historic){
+        alert(R.string.areYouSureDeleteHistoric,R.string.Advice){
+            yesButton { deleteHistoric(historic) }
+            noButton { it.dismiss() }
+            onCancelled { it.dismiss() }
+        }.show()
+    }
+
+    private fun deleteHistoric(historic: Animal.Historic){
+        val dialog = showLoadingDialog()
+        if(vaccine != null){
+            with(VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter { it.identity == vaccine?.identity }!![0]){
+//                if(this.historic?.remove(historic)!!){
+//                    LogUtil.logDebug("Deleted history")
+//                }
+                this.historic?.forEach {
+                    if(it.date?.equals(historic.date)!! && it.value == historic.value
+                            && it.veterinary == historic.veterinary){
+                        this.historic?.remove(it)
+                    }
+                }
+//                if(vaccine != null) {
+//                    vaccine!!.historic?.remove(historic)
+//                }
+            }
+            saveAnimal(dialog) {notifyHistoricDataDelete()}
+        }else{
+            dialog.dismiss()
+        }
+    }
+
+    private fun notifyHistoricDataDelete(){
+        notifyDataChange(true)
+        toast(R.string.hitoricWasRemoved)
     }
 
 }

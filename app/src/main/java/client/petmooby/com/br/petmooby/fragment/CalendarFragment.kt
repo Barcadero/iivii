@@ -12,15 +12,15 @@ import client.petmooby.com.br.petmooby.adapter.DayEventsAdapter
 import client.petmooby.com.br.petmooby.extensions.getDefaultLayoutManager
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
+import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.enums.EnumTypeInterval
 import client.petmooby.com.br.petmooby.model.enums.EnumTypePeriod
 import client.petmooby.com.br.petmooby.model.metadata.Detail
-import client.petmooby.com.br.petmooby.util.AnimalEventDay
-import client.petmooby.com.br.petmooby.util.DateTimeUtil
-import client.petmooby.com.br.petmooby.util.DrawableUtils
-import client.petmooby.com.br.petmooby.util.VariablesUtil
+import client.petmooby.com.br.petmooby.util.*
 import com.applandeo.materialcalendarview.EventDay
 import kotlinx.android.synthetic.main.fragment_calendar.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import java.util.*
 
 
@@ -67,7 +67,6 @@ class CalendarFragment : Fragment() {
         ivCalender.setImageDrawable(DrawableUtils.getThreeDots(activity!!))
         calendarView.setOnDayClickListener { eventDay ->
             showEventCards(eventDay)
-
         }
 
 
@@ -98,7 +97,7 @@ class CalendarFragment : Fragment() {
                 if(animal.vaccineCards != null && animal.vaccineCards!!.size > 0) {
                     for (vaccine in animal.vaccineCards!!) {
                         if (vaccine.nextRemember != null && vaccine.nextRemember!!.after(DateTimeUtil.addDaysAsDate(MIN_DAYS))) {
-                            val detail = Detail(animal.photo!!, vaccine.vaccine_type!!, animal.name!!)
+                            val detail = Detail(animal.photo!!, "${getString(R.string.vaccine)} : ${vaccine.vaccine_type!!}", animal.name!!)
                             addEventIfExist(list, vaccine.nextRemember!!, detail)
                         }
                     }
@@ -115,7 +114,7 @@ class CalendarFragment : Fragment() {
                             treatmentIsActive = false
                         }
                         if (treatmentIsActive) {
-                            var desc = "${treatment.typeTreatment?.toString()} : ${treatment.name}"
+                            var desc = "${animalTreatmentDescription(treatment)} : ${treatment.name}"
                             var detail = Detail(animal.photo!!, desc, animal.name!!)
                             when(treatment.typeInterval){
                                 EnumTypeInterval.YEAR -> {
@@ -149,9 +148,9 @@ class CalendarFragment : Fragment() {
                                     var dateEvent = treatment.dateInitial
                                     if(treatment.typeInterval == EnumTypeInterval.HOUR){
                                         desc = if(treatment.timeInterval!! > 0){
-                                            "${getString(R.string.every)} ${treatment.timeInterval} ${getString(R.string.hours)} }"
+                                            "${animalTreatmentDescription(treatment)} : ${getString(R.string.every)} ${treatment.timeInterval} ${getString(R.string.hours)}"
                                         }else{
-                                            "${getString(R.string.every)} ${getString(R.string.oneHour)} ${getString(R.string.hour)} }"
+                                            "${animalTreatmentDescription(treatment)} : ${getString(R.string.every)} ${getString(R.string.oneHour)} ${getString(R.string.hour)}"
                                         }
                                         detail = Detail(animal.photo!!, desc, animal.name!!)
                                     }
@@ -177,6 +176,9 @@ class CalendarFragment : Fragment() {
 
     }
 
+    private fun animalTreatmentDescription(treatment: Animal.TreatmentCard) =
+            StringUtil.capitalizeString(treatment.typeTreatment?.toString()!!)
+
     private fun addEventIfExist(list: MutableList<AnimalEventDay>, nextRemember: Date, detail: Detail) {
         var tempList = list.filter { DateTimeUtil.getOnlyDate(it.calendar.time) == DateTimeUtil.getOnlyDate(nextRemember) }
         if (tempList.isNotEmpty()) {
@@ -184,10 +186,10 @@ class CalendarFragment : Fragment() {
             if (tempEvent.details.isNotEmpty()) {
                 tempEvent.details.add(detail)
             } else {
-                list.add(AnimalEventDay(DateTimeUtil.dateAsCalendar(nextRemember), DrawableUtils.getThreeDots(activity!!), detail))
+                list.add(AnimalEventDay(DateTimeUtil.dateAsCalendar(nextRemember), detail))
             }
         } else {
-            list.add(AnimalEventDay(DateTimeUtil.dateAsCalendar(nextRemember), DrawableUtils.getThreeDots(activity!!), detail))
+            list.add(AnimalEventDay(DateTimeUtil.dateAsCalendar(nextRemember), detail))
         }
     }
 
@@ -195,8 +197,16 @@ class CalendarFragment : Fragment() {
         super.onResume()
         val dialog = showLoadingDialog()
         try {
-            calendarView.setEvents(getEvents())
-            dialog.dismiss()
+            doAsync {
+                var events = getEvents()
+                Thread.sleep(500)
+                uiThread {
+                    calendarView.setEvents(events)
+                    dialog.dismiss()
+                    LogUtil.logDebug("Close the dialog")
+                }
+            }
+
         }catch (e:Exception){
             dialog.dismiss()
             e.printStackTrace()

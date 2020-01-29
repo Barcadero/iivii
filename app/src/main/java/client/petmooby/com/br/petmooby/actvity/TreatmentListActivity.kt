@@ -24,6 +24,7 @@ class TreatmentListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_treatment_list)
+        ivEmptyListIcon.setImageResource(R.drawable.icons8_pills_60)
         setupToolbar(R.id.toolbarTreatmentList, R.string.treatments)
         initRcViewList()
     }
@@ -50,7 +51,7 @@ class TreatmentListActivity : BaseActivity() {
     }
 
     private fun initRcViewList(){
-        if(VariablesUtil.gbSelectedAnimal?.treatmentCard == null){
+        if(VariablesUtil.gbSelectedAnimal?.treatmentCard == null || VariablesUtil.gbSelectedAnimal?.treatmentCard?.isEmpty()!!){
             VariablesUtil.gbSelectedAnimal?.treatmentCard = mutableListOf()
             showAndHideControls(false)
         }else {

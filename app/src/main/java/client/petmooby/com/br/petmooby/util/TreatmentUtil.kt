@@ -70,4 +70,12 @@ object TreatmentUtil {
             NotificationWorkerUtil().cancel(context, identity.toString())
 //        }
     }
+
+    fun cancelEventTreatmentForAAnimal(context: Context,animal:Animal){
+        if(animal.treatmentCard != null && animal.treatmentCard?.isNotEmpty()!!){
+            animal.treatmentCard?.forEach {
+                NotificationWorkerUtil().cancel(context,it.identity.toString())
+            }
+        }
+    }
 }

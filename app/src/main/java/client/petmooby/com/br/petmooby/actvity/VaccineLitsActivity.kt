@@ -26,6 +26,7 @@ class VaccineLitsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine_lits)
         setupToolbar(R.id.toolbarVaccineList, R.string.vaccines)
+        ivEmptyListIcon.setImageResource(R.drawable.vaccine_animal)
         if(VariablesUtil.gbSelectedAnimal?.vaccineCards == null){
             VariablesUtil.gbSelectedAnimal?.vaccineCards = mutableListOf()
         }

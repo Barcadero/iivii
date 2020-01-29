@@ -185,4 +185,8 @@
         <item>CAT</item>
     </string-array>
     <string name="vaccineTextNotification">%1$s needs to be vaccinated for %2$s in day: %3$s.</string>
+    <string name="takeAPicture">Take a picture</string>
+    <string name="gallery">Gallery</string>
+    <string name="hitoricWasRemoved">Historic was removed</string>
+    <string name="areYouSureDeleteHistoric">Are you sure to delete this historic?</string>
 </resources>
