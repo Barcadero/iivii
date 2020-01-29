@@ -4,10 +4,12 @@ package client.petmooby.com.br.petmooby.actvity
 import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.adapter.HistoricVaccineAdapter
@@ -68,6 +70,18 @@ class VaccineActivity : BaseActivity() {
 //                }
 
             }
+        }
+//        ----------------------------------------------------
+//        This enable DONE action but instead of ENTER button
+//        ----------------------------------------------------
+        edtVaccineNotes.setRawInputType(InputType.TYPE_CLASS_TEXT)
+//        ----------------------------------------------------
+        edtVaccineNotes.setOnEditorActionListener { v, actionId, event ->
+            if(v == edtVaccineNotes && actionId == EditorInfo.IME_ACTION_DONE){
+//                It is causing error on recycle view refresh
+//                runOnUiThread { addHistory() }
+            }
+            false
         }
     }
 
@@ -175,7 +189,7 @@ class VaccineActivity : BaseActivity() {
                 .set(VariablesUtil.gbSelectedAnimal!!)
                 .addOnSuccessListener {
                     dialog.dismiss()
-                   onSuccess
+                    runOnUiThread(onSuccess)
                 }.addOnFailureListener {
                     dialog.dismiss()
                     showAlert(R.string.wasNotPossibleSaveVaccine)
@@ -310,6 +324,12 @@ class VaccineActivity : BaseActivity() {
         }
         if(isDelete) {
             rcViewHistoricVaccine.adapter?.notifyDataSetChanged()
+            val count = rcViewHistoricVaccine.adapter?.itemCount
+            if(count == 0){
+                llVaccineHistoricList.visibility = GONE
+            }else{
+                llVaccineHistoricList.visibility = VISIBLE
+            }
         }else{
             rcViewHistoricVaccine.adapter?.notifyItemInserted(historyLastIndex)
         }
@@ -345,15 +365,15 @@ class VaccineActivity : BaseActivity() {
         val dialog = showLoadingDialog()
         if(vaccine != null){
             with(VariablesUtil.gbSelectedAnimal?.vaccineCards?.filter { it.identity == vaccine?.identity }!![0]){
-//                if(this.historic?.remove(historic)!!){
-//                    LogUtil.logDebug("Deleted history")
-//                }
-                this.historic?.forEach {
-                    if(it.date?.equals(historic.date)!! && it.value == historic.value
-                            && it.veterinary == historic.veterinary){
-                        this.historic?.remove(it)
-                    }
+                if(this.historic?.remove(historic)!!){
+                    LogUtil.logDebug("Deleted history")
                 }
+//                this.historic?.forEach {
+//                    if(it.date?.equals(historic.date)!! && it.value == historic.value
+//                            && it.veterinary == historic.veterinary){
+//                        this.historic?.remove(it)
+//                    }
+//                }
 //                if(vaccine != null) {
 //                    vaccine!!.historic?.remove(historic)
 //                }

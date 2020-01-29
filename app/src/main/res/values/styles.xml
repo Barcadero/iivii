@@ -17,6 +17,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarStyle">@style/AppClientTheme.ActionBarStyle</item>
         <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
     <style name="AppClientTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -81,5 +82,15 @@
     <style name="btnDanger" parent="btnStyle">
         <item name="android:background">@drawable/btn_danger_background</item>
     </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:editTextColor">@color/btnColor</item>
+        <item name="android:background">@color/iosSecondaryColor</item>
+        <item name="android:windowTitleStyle">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
+
 
 </resources>
