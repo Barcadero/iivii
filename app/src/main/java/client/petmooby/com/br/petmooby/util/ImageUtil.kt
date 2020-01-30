@@ -1,11 +1,23 @@
 package client.petmooby.com.br.petmooby.util
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import client.petmooby.com.br.petmooby.application.Application
+import id.zelory.compressor.Compressor
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.math.BigDecimal
+import java.util.*
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+
+
 
 /**
  * Created by Rafael Rocha on 26/07/2019.
@@ -56,5 +68,104 @@ object ImageUtil {
         return if (matrix == null) {
             original
         } else Bitmap.createBitmap(original, 0, 0, original.width, original.height, matrix, true)
+    }
+
+     fun bitmapToFile(context: Context, bitmap:Bitmap): File {
+        // Get the context wrapper
+        val wrapper = ContextWrapper(context)
+
+        // Initialize a new file instance to save bitmap object
+        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
+        file = File(file,"${UUID.randomUUID()}.jpg")
+
+         var stream: OutputStream?=null
+        try{
+            // Compress the bitmap and save in jpg format
+            stream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+        }catch (e: IOException){
+            e.printStackTrace()
+        }finally {
+            stream?.flush()
+            stream?.close()
+        }
+
+        // Return the saved bitmap uri
+        return file
+    }
+
+    fun compress(context: Context, f: File, bitmapOrigin: Bitmap): Bitmap {
+
+        val width   = bitmapOrigin.width.toDouble()
+        val height  = bitmapOrigin.height.toDouble()
+        val base = 200
+        val margin = 10
+
+        val scale = if (width > height) {
+            ((base * 100) / width)
+        } else
+            ((base * 100) / height)
+
+        val maxWidth: Int
+        val maxHeight: Int
+        if (width > height) {
+            val led = getRelativeProportion(height,scale)
+            maxWidth = base
+            maxHeight = led + margin
+        } else {
+            val led = getRelativeProportion(width, scale)
+            maxWidth = led + margin
+            maxHeight = base
+        }
+
+        return Compressor(context)
+//                .setMaxHeight(maxHeight)
+//                .setMaxWidth(maxWidth)
+                .setQuality(100)
+                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                .compressToBitmap(f)
+    }
+
+    private fun getRelativeProportion(width: Double, scale: Double): Int {
+        var set = (width * (scale / 100))
+        var led = BigDecimal(set).setScale(1, BigDecimal.ROUND_HALF_UP).toInt()
+        return led
+    }
+
+    fun rotate(original: Bitmap, filePath:String?): Bitmap {
+
+//            Bitmap.createBitmap(original, 0, 0, original.width, original.height, matrix, true)
+            val exif: ExifInterface
+            try {
+                exif = ExifInterface(filePath)
+
+                val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+                val matrix = Matrix()
+                if (orientation == 6) {
+                    matrix.postRotate(90f)
+
+                } else if (orientation == 3) {
+                    matrix.postRotate(180f)
+
+                } else if (orientation == 8) {
+                    matrix.postRotate(270f)
+
+                }
+                if (original != null) {
+                    return Bitmap.createBitmap(original, 0, 0, original.width, original.height, matrix, true)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            return original
+
+    }
+
+    fun resizeImage(bitmapOrigin: Bitmap, newWidth: Float) : Bitmap{
+        val scale = newWidth / bitmapOrigin.width
+        val newHeight = bitmapOrigin.height * scale
+        return Bitmap.createScaledBitmap(bitmapOrigin, newWidth.toInt(), newHeight.toInt(), false)
+
     }
 }

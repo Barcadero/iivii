@@ -38,7 +38,7 @@
             android:layout_centerVertical="true"
 
             android:layout_marginLeft="5dp"
-            android:src="@drawable/icons8_identidade_de_cachorro_90"
+            android:src="@drawable/no_image"
             />
         <!--
             TO put borders on de.hdodenhof.circleimageview.CircleImageView

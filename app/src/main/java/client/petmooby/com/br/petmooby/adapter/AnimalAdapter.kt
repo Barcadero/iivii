@@ -33,14 +33,14 @@ class AnimalAdapter (
         holder.ivProfile.visibility         = INVISIBLE
         if(animal.photo == null)animal.photo = ""
         if(animal.photo!!.isEmpty()){
-            holder.ivProfile.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icons8_identidade_de_cachorro_90))
+            holder.ivProfile.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.no_image))
             holder.ivProfile.visibility         = VISIBLE
         }else {
             holder.progressMyAnimal.visibility  = VISIBLE
             Picasso.with(context)
                     .load(if (animal.photo?.isEmpty()!!) null else animal.photo)
                     .error(R.drawable.no_image)
-                    .placeholder(R.drawable.icons8_identidade_de_cachorro_90)
+                    .placeholder(R.drawable.no_image)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .memoryPolicy(MemoryPolicy.NO_STORE)
                     .fit()

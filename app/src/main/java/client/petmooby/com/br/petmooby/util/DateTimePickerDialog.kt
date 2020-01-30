@@ -34,6 +34,9 @@ class DateTimePickerDialog  {
             val day     = c.get(Calendar.DAY_OF_MONTH)
             val date    = DatePickerDialog(context,DatePickerDialog.OnDateSetListener(function = { view, year, month,day ->
                 val calendar = Calendar.getInstance()
+                calendar.set(Calendar.HOUR_OF_DAY,0)
+                calendar.set(Calendar.MINUTE,0)
+                calendar.set(Calendar.SECOND,0)
                 calendar.set(year,month,day)
                 datePar.time = calendar.time.time
                 when(component){

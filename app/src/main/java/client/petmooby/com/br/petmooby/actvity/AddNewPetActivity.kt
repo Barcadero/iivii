@@ -1,5 +1,6 @@
 package client.petmooby.com.br.petmooby.actvity
 
+
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
@@ -24,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
-import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.CollectionsName
@@ -43,12 +43,10 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import id.zelory.compressor.Compressor
+//import io.grpc.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
-//import org.parceler.Parcels
-//import org.parceler.Parcel
-//import org.parceler.Parcels
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -66,6 +64,7 @@ class AddNewPetActivity : AppCompatActivity() {
     var enumSelectedBreed: EnumBreedBase?=null
     var storage             = FirebaseStorage.getInstance().reference
     private var mCurrentPhotoBitmap: Bitmap?=null
+//    private var mFile: File?=null
 //    var animal :Animal?=null
     var isForUpdate         = false
     var fromOtherScreen     = false
@@ -146,7 +145,7 @@ class AddNewPetActivity : AppCompatActivity() {
     private fun loadProfilePicture() {
         val imgPath = VariablesUtil.gbSelectedAnimal?.photo
         if(imgPath?.isEmpty()!!){
-            ivProfileMyPet.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_identidade_de_cachorro_90))
+            ivProfileMyPet.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.no_image))
             ivProfileMyPet.visibility         = VISIBLE
             return
         }
@@ -412,6 +411,7 @@ class AddNewPetActivity : AppCompatActivity() {
         val ref   = storage.child("animal/${VariablesUtil.gbSelectedAnimal?.id}.jpg")
         val baos = ByteArrayOutputStream()
         mCurrentPhotoBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
         val data = baos.toByteArray()
 //        var uploadTask  = ref.putFile(file)
         var uploadTask  = ref.putBytes(data)
@@ -440,11 +440,11 @@ class AddNewPetActivity : AppCompatActivity() {
         startActivityForResult(camera.open(this, photoName), TAKE_PICTURE)
     }
 
-    fun onResultActivityForGallery(requestCode: Int, resultCode: Int, data: Intent?){
+    private fun onResultActivityForGallery(requestCode: Int, resultCode: Int, data: Intent?){
         if(resultCode == Activity.RESULT_OK){
-            var bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
+            val bitmapOriginal      = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
             val imagePathFromResult = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data)
-            var matrix: Matrix? = null
+            var matrix: Matrix?     = null
             try {
                 val exif = ExifInterface(imagePathFromResult)
                 val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
@@ -457,14 +457,11 @@ class AddNewPetActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            //Se a camera retornou vamos mostar o arquivo da foto
-            //val bitmap = camera.getBitmap(600,600)
-            if(bitmap != null) {
-                bitmap = ImageUtil.rotate(bitmap,matrix)
-                ivProfileMyPet.setImageBitmap(bitmap)
+            val bitmap = ImageUtil.resizeImage(bitmapOriginal!!,300f)
+            ivProfileMyPet.setImageBitmap(bitmapOriginal)
                 mCurrentPhotoBitmap = bitmap
-                //mCurrentPhotoPath = imagePathFromResult
-            }
+            LogUtil.logDebug("Width: ${mCurrentPhotoBitmap?.width}")
+            LogUtil.logDebug("Height: ${mCurrentPhotoBitmap?.height}")
         }
     }
 
@@ -492,9 +489,11 @@ class AddNewPetActivity : AppCompatActivity() {
             toast(getString(R.string.cantGetFileImage))
         }
         try{
-            var bitmap = compress(f,bitmapOrigin)
+//            var bitmap = ImageUtil.compress(this,f,bitmapOrigin)
+            val bitmap = ImageUtil.resizeImage(bitmapOrigin,250f)
             ivProfileMyPet.setImageBitmap(bitmap)
             mCurrentPhotoBitmap = bitmap
+//            mFile = f
             //mCurrentPhotoPath =  f.absolutePath
             //postImageProfile(bitmap!!)
 
@@ -503,44 +502,44 @@ class AddNewPetActivity : AppCompatActivity() {
         }
     }
 
-    private fun compress(f: File, bitmapOrigin: Bitmap): Bitmap? {
+//    private fun compress(f: File, bitmapOrigin: Bitmap): Bitmap? {
+//
+//        val width   = bitmapOrigin.width.toDouble()
+//        val height  = bitmapOrigin.height.toDouble()
+//        val base = 200
+//        val margin = 10
+//
+//        val scale = if (width > height) {
+//            ((base * 100) / width)
+//        } else
+//            ((base * 100) / height)
+//
+//        val maxWidth: Int
+//        val maxHeight: Int
+//        if (width > height) {
+//            val led = getRelativeProportion(height,scale)
+//            maxWidth = base
+//            maxHeight = led + margin
+//        } else {
+//            val led = getRelativeProportion(width, scale)
+//            maxWidth = led + margin
+//            maxHeight = base
+//        }
+//
+//        val bitmap = Compressor(this)
+//                .setMaxHeight(maxHeight)
+//                .setMaxWidth(maxWidth)
+//                .setQuality(100)
+//                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+//                .compressToBitmap(f)
+//        return bitmap
+//    }
 
-        val width   = bitmapOrigin.width.toDouble()
-        val height  = bitmapOrigin.height.toDouble()
-        val base = 200
-        val margin = 10
-
-        val scale = if (width > height) {
-            ((base * 100) / width)
-        } else
-            ((base * 100) / height)
-
-        val maxWidth: Int
-        val maxHeight: Int
-        if (width > height) {
-            val led = getRelativeProportion(height,scale)
-            maxWidth = base
-            maxHeight = led + margin
-        } else {
-            val led = getRelativeProportion(width, scale)
-            maxWidth = led + margin
-            maxHeight = base
-        }
-
-        val bitmap = Compressor(this)
-                .setMaxHeight(maxHeight)
-                .setMaxWidth(maxWidth)
-                .setQuality(60)
-                .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                .compressToBitmap(f)
-        return bitmap
-    }
-
-    private fun getRelativeProportion(width: Double, scale: Double): Int {
-        var set = (width * (scale / 100))
-        var led = BigDecimal(set).setScale(1, BigDecimal.ROUND_HALF_UP).toInt()
-        return led
-    }
+//    private fun getRelativeProportion(width: Double, scale: Double): Int {
+//        var set = (width * (scale / 100))
+//        var led = BigDecimal(set).setScale(1, BigDecimal.ROUND_HALF_UP).toInt()
+//        return led
+//    }
 
     private fun remove(){
         alert(R.string.areYouSure,R.string.removingPet){

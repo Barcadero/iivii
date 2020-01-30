@@ -35,7 +35,8 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import client.petmooby.com.br.petmooby.android.receiver.NotificationAlarmReceiver
 import client.petmooby.com.br.petmooby.android.service.NotificationAlarmService
 import com.annimon.stream.operator.IntArray
-
+import org.jetbrains.anko.doAsync
+import java.lang.Exception
 
 
 class MainActivity : BaseActivity() {
@@ -151,11 +152,50 @@ class MainActivity : BaseActivity() {
                 saveCurrenteUser()
             }else {
                 FireStoreReference.docRefUser = task.result?.documents!![0].reference
+                doAsync {saveUnknowUserInformation(task) }
                 //NOTE: Set home fragment as the main content
                 switchFragment(HomeFragment())
             }
         }
 
+    }
+
+    private fun saveUnknowUserInformation(task: Task<QuerySnapshot>) {
+        try {
+           var userNeedsUpdate = false
+           val documents = task.result?.documents
+           //val user = User()
+           if (documents?.size == 1) {
+               val id = documents[0].id
+               val currentUser = documents[0].toObject(User::class.java)
+               if (currentUser?.name == null) {
+                   userNeedsUpdate = true
+                   currentUser?.name = Preference.getUserName(baseContext)
+               }
+               if (currentUser?.email == null || currentUser.email?.isEmpty()!!) {
+                   userNeedsUpdate = true
+                   currentUser?.email = Preference.getUserEmail(baseContext)
+               }
+               if (currentUser?.type == null) {
+                   userNeedsUpdate = true
+                   currentUser?.type = TypeUserEnum.values()[Preference.getUserType(baseContext)]
+               }
+
+               if (userNeedsUpdate) {
+                   docRefUser.document(id)
+                           .set(currentUser!!)
+                           .addOnSuccessListener {
+                               LogUtil.logDebug("FACE: user updated!!")
+                           }
+                           .addOnFailureListener {
+                               it.printStackTrace()
+                           }
+               }
+           }
+       }catch (e:Exception){
+           LogUtil.logDebug("Fail to save unknown user information")
+           e.printStackTrace()
+       }
     }
 
     fun getUserFromDataBase(){

@@ -24,6 +24,6 @@ class User {
     var password:String?=null
     var email:String?=null
     var type: TypeUserEnum?=null
-    var registerDate: Date?= Date()
+    var registerDate: Date?= null
 
 }

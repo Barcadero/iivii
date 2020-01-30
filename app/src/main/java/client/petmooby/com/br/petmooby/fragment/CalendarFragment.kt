@@ -68,6 +68,7 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDayClickListener { eventDay ->
             showEventCards(eventDay)
         }
+        loadCalender()
 
 
     }
@@ -193,8 +194,12 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+//    override fun onResume() {
+//        super.onResume()
+//        loadCalender()
+//    }
+
+    private fun loadCalender() {
         val dialog = showLoadingDialog()
         try {
             doAsync {
@@ -207,7 +212,7 @@ class CalendarFragment : Fragment() {
                 }
             }
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
             dialog.dismiss()
             e.printStackTrace()
         }

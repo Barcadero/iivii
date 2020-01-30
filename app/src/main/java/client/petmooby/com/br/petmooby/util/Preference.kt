@@ -16,6 +16,7 @@ object Preference {
     val USER_ID     = "user.id"
     val USER_TYPE   = "user.type"
     val LOGIN_MSN   = "login.message"
+    val USER_EMAIL  = "user.email"
 
     fun getUserName(context: Context): String?{
         return get(context, USER_NAME)
@@ -23,6 +24,14 @@ object Preference {
 
     fun setUserName(context: Context,key: String, value:String): Boolean{
         return set(context,key,value)
+    }
+
+    fun getUserEmail(context: Context): String?{
+        return get(context, USER_EMAIL)
+    }
+
+    fun setUserEmail(context: Context, value:String): Boolean{
+        return set(context, USER_EMAIL,value)
     }
 
 
@@ -75,7 +84,7 @@ object Preference {
         return "1825747277526491"
     }
 
-    fun getUserType(context: Context): Int?{
+    fun getUserType(context: Context): Int{
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return preferences.getInt(USER_TYPE,-1)
     }

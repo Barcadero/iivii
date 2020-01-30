@@ -3,10 +3,8 @@ package client.petmooby.com.br.petmooby
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.actvity.BaseActivity
 import client.petmooby.com.br.petmooby.actvity.RegisterUserActivity
-import client.petmooby.com.br.petmooby.application.Application
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
@@ -16,10 +14,11 @@ import client.petmooby.com.br.petmooby.util.EncryptUtil
 import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
+import com.facebook.Profile.setCurrentProfile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.toast
+
 
 /**
  * A login screen that offers login via email/password.
@@ -37,19 +36,33 @@ class LoginActivity : BaseActivity() {
         checkLoginin()
         with(btnLoginFace) {
             setPermissions("email","public_profile")
-
             LoginManager.getInstance().registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
+                override fun onSuccess(loginResult: LoginResult?) {
+                    GraphRequest.newMeRequest(
+                            loginResult?.accessToken) { me, response ->
+                        if (response.error != null) {
+                            // handle error
+                        } else {
+                            // get email and id of the user
+                            val email = me.optString("email")
+                            Preference.setUserEmail(baseContext,email)
+
+                        }
+                    }.executeAsync()
                     val profile = Profile.getCurrentProfile()
-                    val name = "${profile?.firstName}  ${profile?.lastName}"
-                    val accessToken = loginResult.accessToken
-                    val userIdFB = profile.id
-                    Preference.set(this@LoginActivity, Preference.USER_NAME,name)
-                    Preference.set(this@LoginActivity,Preference.USER_TOKEN,accessToken.token)
-                    Preference.set(this@LoginActivity,Preference.USER_ID,userIdFB)
-                    Preference.setUserType(this@LoginActivity,TypeUserEnum.FACEBOOK.ordinal)
-                    startMainActivity()
-                    finish()
+                    if(profile == null){
+                        val profileTracker = object : ProfileTracker() {
+                            override fun onCurrentProfileChanged(oldProfile: Profile?, currentProfile: Profile?) {
+                                this.stopTracking()
+                                setCurrentProfile(currentProfile)
+                                setProfileAndCallMainActivity(currentProfile, loginResult!!)
+
+                            }
+                        }
+                        profileTracker.startTracking()
+                    }else {
+                        setProfileAndCallMainActivity(profile, loginResult!!)
+                    }
                 }
 
                 override fun onCancel() {
@@ -59,7 +72,9 @@ class LoginActivity : BaseActivity() {
                 override fun onError(exception: FacebookException) {
                     // App code
                     Log.d("FACE",exception.message)
+                    exception.printStackTrace()
                 }
+
             })
         }
 
@@ -72,6 +87,18 @@ class LoginActivity : BaseActivity() {
         }
 
 
+    }
+
+    private fun setProfileAndCallMainActivity(profile: Profile?, loginResult: LoginResult?) {
+        val name = "${profile?.firstName}  ${profile?.lastName}"
+        val accessToken = loginResult?.accessToken
+        val userIdFB = profile?.id
+        Preference.set(this@LoginActivity, Preference.USER_NAME, name)
+        Preference.set(this@LoginActivity, Preference.USER_TOKEN, accessToken?.token)
+        Preference.set(this@LoginActivity, Preference.USER_ID, userIdFB)
+        Preference.setUserType(this@LoginActivity, TypeUserEnum.FACEBOOK.ordinal)
+        startMainActivity()
+        finish()
     }
 
     private fun checkLoginin() {
@@ -119,6 +146,7 @@ class LoginActivity : BaseActivity() {
                 .get()
                 .addOnSuccessListener {
                     if(it.documents.isNotEmpty()){
+                        Preference.setUserEmail(baseContext,edtLoginEmail.text.toString())
                         FireStoreReference.docRefUser = it.documents[0].reference
                         Preference.setUserDatabaseId(this, FireStoreReference.docRefUser!!.id!!)
                         Preference.setUserId(this,FireStoreReference.docRefUser!!.id!!)

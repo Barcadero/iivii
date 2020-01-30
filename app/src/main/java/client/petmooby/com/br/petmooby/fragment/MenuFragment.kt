@@ -32,12 +32,16 @@ import org.jetbrains.anko.yesButton
 class MenuFragment : Fragment() {
 
     var tokenTrace = object : AccessTokenTracker() {
-        override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken,
+        override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?,
                                                  currentAccessToken: AccessToken?) {
             if (currentAccessToken == null) {
                 //TODO clear preferences data , call login activity and close the main screen.
-                startActivity(Intent(activity,LoginActivity::class.java))
-                activity!!.finish()
+                try {
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                    activity!!.finish()
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }
