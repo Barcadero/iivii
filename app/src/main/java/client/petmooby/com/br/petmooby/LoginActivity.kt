@@ -12,12 +12,20 @@ import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import client.petmooby.com.br.petmooby.util.EncryptUtil
 import client.petmooby.com.br.petmooby.util.FireStoreReference
+import client.petmooby.com.br.petmooby.util.KeyFileGen
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
 import com.facebook.Profile.setCurrentProfile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.activity_login.*
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.annimon.stream.operator.IntArray
+
+
 
 
 /**
@@ -32,13 +40,14 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         callBackManager = CallbackManager.Factory.create()
-        //KeyFileGen.genSH1Base64(this)
+//        KeyFileGen.genSH1Base64(this)
         checkLoginin()
         with(btnLoginFace) {
             setPermissions("email","public_profile")
+//            setReadPermissions("public_profile, email")
             LoginManager.getInstance().registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult?) {
-                    GraphRequest.newMeRequest(
+                    val request = GraphRequest.newMeRequest(
                             loginResult?.accessToken) { me, response ->
                         if (response.error != null) {
                             // handle error
@@ -48,7 +57,11 @@ class LoginActivity : BaseActivity() {
                             Preference.setUserEmail(baseContext,email)
 
                         }
-                    }.executeAsync()
+                    }
+                    val parameters = Bundle()
+                    parameters.putString("fields", "id,name,email,birthday")
+                    request.parameters = parameters
+                    request.executeAsync()
                     val profile = Profile.getCurrentProfile()
                     if(profile == null){
                         val profileTracker = object : ProfileTracker() {
