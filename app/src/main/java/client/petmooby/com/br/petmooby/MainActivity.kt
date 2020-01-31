@@ -108,7 +108,7 @@ class MainActivity : BaseActivity() {
         false
     }
 
-    fun saveCurrenteUser(){
+    private fun saveCurrenteUser(){
         var dialog = showLoadingDialog(getString(R.string.savingUser))
         var accessToken = AccessToken.getCurrentAccessToken()
         var isLoggedIn = accessToken != null && !accessToken.isExpired
@@ -118,7 +118,10 @@ class MainActivity : BaseActivity() {
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
             user.userIdFB       = Preference.getUserId(this)//Preference.get(this,Preference.USER_ID)
             user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]//TypeUserEnum.FACEBOOK
+            user.email          = Preference.getUserEmail(this)
             user.registerDate   = Date()
+            LogUtil.logDebug("FACE user name: ${user.name}")
+            LogUtil.logDebug("FACE user email: ${user.email}")
             docRefUser.add(user)
                     .addOnSuccessListener {
                         documentReference -> FireStoreReference.docRefUser = documentReference;switchFragment(HomeFragment());dialog.dismiss()

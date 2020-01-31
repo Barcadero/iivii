@@ -19,17 +19,17 @@ import org.jetbrains.anko.Android
 
 
 object NotificationUtil {
-    private fun create(context: Context, id:Int, intent: Intent, @StringRes contentTitle:Int,@StringRes contentText:Int){
+    private fun create(context: Context, id:Int, intent: Intent, @StringRes contentTitle:Int,@StringRes contentText:Int,subText:String?){
         val title = context.getString(contentTitle)
         val text  = context.getString(contentText)
-        buildMessage(context, intent, title, text, id)
+        buildMessage(context, intent, title, text, id,subText)
     }
 
-    private fun create(context: Context, id:Int, intent: Intent, contentTitle:String,contentText:String){
-        buildMessage(context, intent, contentTitle, contentText, id)
+    private fun create(context: Context, id:Int, intent: Intent, contentTitle:String,contentText:String, subText:String?){
+        buildMessage(context, intent, contentTitle, contentText, id,subText)
     }
 
-    private fun buildMessage(context: Context, intent: Intent, title: String, text: String, id: Int) {
+    private fun buildMessage(context: Context, intent: Intent, title: String, text: String, id: Int, subText: String?) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val p = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val builder = NotificationCompat.Builder(context,"${id + 1}")
@@ -39,10 +39,12 @@ object NotificationUtil {
                 //.setSmallIcon(R.mipmap.logo)
                 .setLargeIcon(BitmapFactory.decodeResource(context.resources,
                         R.mipmap.logo))
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-
+        if(subText != null && subText.isNotBlank()){
+            builder.setSubText(subText)
+        }
         if (Build.VERSION.SDK_INT >= O) {
             val channelId = "${id + 1}"
             val channel = NotificationChannel(
@@ -62,12 +64,14 @@ object NotificationUtil {
     fun notify(context: Context, param:ParametersEvent){
         var message:String
         var title:String
+        var subText = ""
         when(param.type){
             EnumTypeEvent.VACCINE ->{
                 title = "${context.getString(R.string.vaccine)} - ${param.animalName}"
                 val builder = StringBuilder()
-                builder.append(context.getString(R.string.vaccineTextNotification,param.animalName,param.vaccineType,param.dateString))
+                builder.append(context.getString(R.string.vaccineTextNotification,param.animalName))
                 message = builder.toString()
+                subText = context.getString(R.string.vaccineTextFor,param.vaccineType,param.dateString)
             }
             else ->{
                 title = "${context.getString(R.string.treatment)} - ${param.animalName}"
@@ -81,7 +85,9 @@ object NotificationUtil {
                 message = builder.toString()
             }
         }
-        create(context, Random(5000).nextInt(),Intent(context, MainActivity::class.java),title,message)
+//        val intValue = Random(5000).nextInt()
+        val intValue = param.id.toInt()
+        create(context,intValue ,Intent(context, MainActivity::class.java),title,message,subText)
     }
 
 

@@ -22,6 +22,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <!-- For Facebook application -->
         <meta-data
@@ -60,17 +61,15 @@
         -->
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
-            android:noHistory="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:noHistory="false"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".actvity.VeterinaryPartnersListActivity" />
+        <activity android:name=".actvity.VeterinaryPartnersListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".actvity.VeterinaryPartnerDetailActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_veterinary_partner_detail"
             android:theme="@style/AppTheme" />
         <activity android:name=".actvity.AddNewPetActivity"
@@ -78,12 +77,25 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".actvity.VaccineActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".actvity.VaccineLitsActivity" />
-        <activity android:name=".actvity.TreatmentListActivity" />
-        <activity android:name=".actvity.TreatmentActivity" />
-        <activity android:name=".actvity.RegisterUserActivity" />
-        <activity android:name=".actvity.SplashActivity"></activity>
+        <activity android:name=".actvity.VaccineLitsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".actvity.TreatmentListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".actvity.TreatmentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".actvity.RegisterUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".actvity.SplashActivity"
+            android:theme="@style/AppCompat.FullScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".android.receiver.NotificationAlarmReceiver"

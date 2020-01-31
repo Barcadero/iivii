@@ -6,7 +6,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.view.View.VISIBLE
+import android.view.View.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
@@ -138,6 +138,11 @@ class HomeFragment : Fragment() {
 
     private fun updateAdapter() {
         rcMyAnimalsList?.adapter = AnimalAdapter(VariablesUtil.gbAnimals!!) { animal -> animalDetail(animal) }
+        if(VariablesUtil.gbAnimals != null && VariablesUtil.gbAnimals?.isNotEmpty()!!){
+            llHomeNoPetYet.visibility = GONE
+        }else{
+            llHomeNoPetYet.visibility = VISIBLE
+        }
     }
 
     private fun animalDetail(animal: Animal){
@@ -155,19 +160,16 @@ class HomeFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == CODE_RESULT_FOR_ADD_PET) {
-            if (resultCode == ResultCodes.RESULT_FOR_DELETE) {
-//                val animal = data?.getSerializableExtra(Parameters.ANIMAL_PARAMETER)
-//                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-                VariablesUtil.gbAnimals?.remove(VariablesUtil.gbSelectedAnimal)
-                updateAdapter()
-            }else if(resultCode == Activity.RESULT_OK){
-//                val animal = data?.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
-//                val animal = Parcels.unwrap<Animal>(data?.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-//                VariablesUtil.gbAnimals?.add(VariablesUtil.gbSelectedAnimal!!)
-                VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
-                updateAdapter()
-            }else{
-                updateAdapter()
+            when (resultCode) {
+                ResultCodes.RESULT_FOR_DELETE -> {
+                    VariablesUtil.gbAnimals?.remove(VariablesUtil.gbSelectedAnimal)
+                    updateAdapter()
+                }
+                RESULT_OK -> {
+                    VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
+                    updateAdapter()
+                }
+                else -> updateAdapter()
             }
         }
 

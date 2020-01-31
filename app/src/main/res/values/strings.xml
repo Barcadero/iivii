@@ -184,9 +184,11 @@
         <item>DOG</item>
         <item>CAT</item>
     </string-array>
-    <string name="vaccineTextNotification">%1$s needs to be vaccinated for %2$s in day: %3$s.</string>
+    <string name="vaccineTextNotification">%1$s needs to be vaccinated </string>
     <string name="takeAPicture">Take a picture</string>
     <string name="gallery">Gallery</string>
     <string name="hitoricWasRemoved">Historic was removed</string>
     <string name="areYouSureDeleteHistoric">Are you sure to delete this historic?</string>
+    <string name="vaccineTextFor">for %1$s in day: %2$s.</string>
+    <string name="copyright">Copyright \u00A9 2018 Petmooby. All rights reserved.</string>
 </resources>

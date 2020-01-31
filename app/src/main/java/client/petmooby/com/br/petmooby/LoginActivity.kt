@@ -12,20 +12,12 @@ import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import client.petmooby.com.br.petmooby.util.EncryptUtil
 import client.petmooby.com.br.petmooby.util.FireStoreReference
-import client.petmooby.com.br.petmooby.util.KeyFileGen
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
 import com.facebook.Profile.setCurrentProfile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.activity_login.*
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.annimon.stream.operator.IntArray
-
-
 
 
 /**
@@ -103,7 +95,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun setProfileAndCallMainActivity(profile: Profile?, loginResult: LoginResult?) {
-        val name = "${profile?.firstName}  ${profile?.lastName}"
+        val name = "${profile?.firstName} ${profile?.lastName}"
         val accessToken = loginResult?.accessToken
         val userIdFB = profile?.id
         Preference.set(this@LoginActivity, Preference.USER_NAME, name)
