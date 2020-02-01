@@ -32,18 +32,22 @@ object NotificationUtil {
     private fun buildMessage(context: Context, intent: Intent, title: String, text: String, id: Int, subText: String?) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val p = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val bigTextStyle = NotificationCompat.BigTextStyle().bigText(text+subText)
         val builder = NotificationCompat.Builder(context,"${id + 1}")
                 .setContentIntent(p)
                 .setContentTitle(title)
-                .setContentText(text)
-                //.setSmallIcon(R.mipmap.logo)
                 .setLargeIcon(BitmapFactory.decodeResource(context.resources,
                         R.mipmap.logo))
-                .setAutoCancel(false)
+                .setAutoCancel(true)
+                .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-        if(subText != null && subText.isNotBlank()){
-            builder.setSubText(subText)
+        if (Build.VERSION.SDK_INT < O) {
+            if(subText != null && subText.isNotBlank()) {
+                builder.setSubText(subText)
+            }
+        }else{
+            builder.setStyle(bigTextStyle)
         }
         if (Build.VERSION.SDK_INT >= O) {
             val channelId = "${id + 1}"

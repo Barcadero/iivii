@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.util
 import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForBirds
 import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForCats
 import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForDogs
+import client.petmooby.com.br.petmooby.model.enums.EnumTypeAnimal
 
 /**
  * Created by Rafael Rocha on 22/07/2019.
@@ -9,6 +10,21 @@ import client.petmooby.com.br.petmooby.model.enums.EnumBreedsForDogs
 class BreedNamesResolverUtil {
 
     companion object {
+
+        fun resolverName(type: EnumTypeAnimal, breedValue: String) : String?{
+           return when(type){
+                EnumTypeAnimal.DOG ->{
+                    getByValueForDogs(breedValue)?.label
+                }
+                EnumTypeAnimal.CAT ->{
+                    getByValueForCats(breedValue)?.label
+                }
+                EnumTypeAnimal.BIRD ->{
+                    getByValueForBirds(breedValue)?.label
+                }
+                else -> getByValueForDogs("")?.label
+            }
+        }
 
         fun getByValueForDogs(value:String): EnumBreedsForDogs?{
             var breed:EnumBreedsForDogs?=null

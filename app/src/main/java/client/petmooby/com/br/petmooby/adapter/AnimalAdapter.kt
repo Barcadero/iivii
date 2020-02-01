@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.model.Animal
+import client.petmooby.com.br.petmooby.model.enums.EnumTypeAnimal
+import client.petmooby.com.br.petmooby.util.BreedNamesResolverUtil
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
@@ -29,7 +31,9 @@ class AnimalAdapter (
         val animal = animals[position]
         val context = holder.itemView.context
         holder.txtPetName.text              = animal.name
-        holder.txtKind.text                 = animal.breed
+        val type = animal.type.toString()
+        val breedDescription = BreedNamesResolverUtil.resolverName(animal.type!!,animal.breed!!)
+        holder.txtKind.text = "$type - $breedDescription"
         holder.ivProfile.visibility         = INVISIBLE
         if(animal.photo == null)animal.photo = ""
         if(animal.photo!!.isEmpty()){
