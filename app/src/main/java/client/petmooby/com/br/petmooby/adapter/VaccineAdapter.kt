@@ -21,7 +21,7 @@ class VaccineAdapter (val vaccines: List<Animal.VaccineCards>,
     override fun onBindViewHolder(holder: VaccineHolder, position: Int) {
         val vaccine = vaccines[position]
         holder.vaccineName.text = vaccine.vaccine_type
-        holder.dateNext.text = DateTimeUtil.formatDateTime(vaccine.nextRemember)
+        holder.dateNext.text = "${holder.itemView.context.getString(R.string.Next)}: ${DateTimeUtil.formatDateTime(vaccine.nextRemember)}"
         if(position == itemCount - 1){
             holder.viewSeparator.visibility = GONE
         }else{

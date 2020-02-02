@@ -176,4 +176,6 @@
     <string name="areYouSureDeleteHistoric">Tem certeza que deseja deletar esse histórico?</string>
     <string name="vaccineTextFor">por %1$s no dia: %2$s.</string>
     <string name="copyright">Copyright \u00A9 2018 Petmooby. Todos os direitos reservados.</string>
+    <string name="next">next</string>
+    <string name="Next">Next</string>
 </resources>

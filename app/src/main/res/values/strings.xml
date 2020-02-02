@@ -76,7 +76,7 @@
     <string name="errorOnUploadingImage">Erro on uploaad image.</string>
     <string name="selectAPicture">Select your image:</string>
     <string name="cantGetFileImage">Can\'t get image file.Sorry!</string>
-    <string name="formatDate">dd/MM/yyyy</string>
+    <string name="formatDate">MM-dd-yyyy</string>
     <string name="savingImage">Saving Image ...</string>
     <string name="errorWhileCapturingImage">Error while capturing image</string>
     <string name="youCanOnlyHaveSomeAnimals">You can have just 8 pets.</string>
@@ -191,4 +191,6 @@
     <string name="areYouSureDeleteHistoric">Are you sure to delete this historic?</string>
     <string name="vaccineTextFor">for %1$s in day: %2$s.</string>
     <string name="copyright">Copyright \u00A9 2018 Petmooby. All rights reserved.</string>
+    <string name="next">next</string>
+    <string name="Next">Next</string>
 </resources>
