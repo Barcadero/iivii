@@ -178,4 +178,23 @@
     <string name="copyright">Copyright \u00A9 2018 Petmooby. Todos os direitos reservados.</string>
     <string name="next">next</string>
     <string name="Next">Next</string>
+    <string name="veterinaryAttendance">Veterinary Attendance</string>
+    <string name="addNewAttendance">Nova Consulta</string>
+    <string name="veterinary">veterinario</string>
+    <string name="clinic">clínica</string>
+    <string name="rating">avaliação</string>
+    <string name="dates">datas</string>
+    <string name="returnDate">retorno</string>
+    <string name="attendance">consulta</string>
+    <string name="noteAttendanceAdvice">Anote aqui as informações sobre o atendimento do seu PET.</string>
+    <string name="upload">upload</string>
+    <string name="see">ver</string>
+    <string name="saveAPhotoAdvice">Você pode salvar uma foto de um exame ou prescrição do seu veterinário.</string>
+    <string name="attendances">Attendances</string>
+    <string name="youDontHaveAttendances">Você ainda não cadastrou nenhum atendimento.</string>
+    <string name="youCanOnlyHaveSomeAttendances">You can only have %1d vaccines registered.</string>
+    <string name="wasNotPossibleSave">Não foi possível salvar o registro.</string>
+    <string name="attendanceSaved">Atendimento registrado</string>
+    <string name="errorOnSaveAttendance">Erro no sistema. Não é possível salvar o atendimento.</string>
+    <string name="seeYourDoc">See this document</string>
 </resources>

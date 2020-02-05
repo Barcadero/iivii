@@ -35,7 +35,7 @@ class TreatmentActivity : BaseActivity() {
     var mDateInitial:Date?          = Date()
     var mDateFinal:Date?            = Date()
     var currentTreatment: Animal.TreatmentCard?=null
-    var isForUpdate                 = false
+//    var isForUpdate                 = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_treatment)

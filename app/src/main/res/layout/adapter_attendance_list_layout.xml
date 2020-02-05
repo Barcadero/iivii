@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvVetPartnersList"
+    android:layout_height="100dp"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:padding="5dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/purple"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+            <ImageView
+                android:id="@+id/ivVetAttendanceListIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icons8_doctor_30"
+                android:layout_marginStart="5dp"
+
+                />
+            <TextView
+                android:id="@+id/txtAttendanceListDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="80"
+                android:layout_toEndOf="@+id/ivVetAttendanceListIcon"
+                android:singleLine="true"
+                android:textColor="@color/primaryTextColor"
+                android:text="@string/veterinary"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+            <ImageView
+                android:id="@+id/ivVetAttendanceListClinicIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icons8_hospital_3_60"
+                android:layout_marginStart="5dp"
+
+                />
+            <TextView
+                android:id="@+id/txtAttendanceListClinic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="80"
+                android:layout_centerInParent="true"
+                android:textColor="@color/primaryTextColor"
+                android:layout_toEndOf="@+id/ivVetAttendanceListClinicIcon"
+                android:text="@string/clinic"
+                />
+
+            <TextView
+                android:id="@+id/txtAttendanceListDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="80"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:text="@string/date"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginEnd="14dp"
+                />
+
+        </RelativeLayout>
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/chevronRight"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_chevron_right_white" />
+
+        <View
+            android:id="@+id/viewAttendanceList"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_alignParentBottom="true"
+            android:paddingStart="8dp"
+            android:paddingEnd="2dp"
+            android:layout_marginStart="55dp"
+
+            />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

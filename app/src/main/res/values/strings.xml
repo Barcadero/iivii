@@ -193,4 +193,23 @@
     <string name="copyright">Copyright \u00A9 2018 Petmooby. All rights reserved.</string>
     <string name="next">next</string>
     <string name="Next">Next</string>
+    <string name="veterinaryAttendance">Veterinary Attendance</string>
+    <string name="addNewAttendance">New Attendance</string>
+    <string name="veterinary">veterinary</string>
+    <string name="clinic">clinic</string>
+    <string name="rating">rating</string>
+    <string name="dates">dates</string>
+    <string name="returnDate">return</string>
+    <string name="attendance">attendance</string>
+    <string name="noteAttendanceAdvice">Write down the information about the care of your PET</string>
+    <string name="upload">upload</string>
+    <string name="see">see</string>
+    <string name="saveAPhotoAdvice">You can save a photo from an exam or prescription from your vet.</string>
+    <string name="attendances">Attendances</string>
+    <string name="youDontHaveAttendances">You haven\'t registered any attendance yet.</string>
+    <string name="youCanOnlyHaveSomeAttendances">You can only have %1d vaccines registered.</string>
+    <string name="wasNotPossibleSave">Was not possible to save this register.</string>
+    <string name="attendanceSaved">Attendance registred</string>
+    <string name="errorOnSaveAttendance">System error. Can\'t save the attendance.</string>
+    <string name="seeYourDoc">This attendance has a doc. Click here to see.</string>
 </resources>

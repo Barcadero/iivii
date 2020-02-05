@@ -28,7 +28,7 @@ class VaccineActivity : BaseActivity() {
     var dateVaccineApp      = Date()
     var action              = 0
     var historyLastIndex    = 0
-    var isForUpdate         = false
+//    var isForUpdate         = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccine)
@@ -184,17 +184,17 @@ class VaccineActivity : BaseActivity() {
                 }
     }
 
-    private fun saveAnimal(dialog: ProgressDialog, onSuccess: () -> Unit) {
-        animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
-                .set(VariablesUtil.gbSelectedAnimal!!)
-                .addOnSuccessListener {
-                    dialog.dismiss()
-                    runOnUiThread(onSuccess)
-                }.addOnFailureListener {
-                    dialog.dismiss()
-                    showAlert(R.string.wasNotPossibleSaveVaccine)
-                }
-    }
+//    private fun saveAnimal(dialog: ProgressDialog, onSuccess: () -> Unit) {
+//        animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
+//                .set(VariablesUtil.gbSelectedAnimal!!)
+//                .addOnSuccessListener {
+//                    dialog.dismiss()
+//                    runOnUiThread(onSuccess)
+//                }.addOnFailureListener {
+//                    dialog.dismiss()
+//                    showAlert(R.string.wasNotPossibleSaveVaccine)
+//                }
+//    }
 
     private fun getCurrentVaccineInfo() {
         validateFields()
@@ -378,7 +378,7 @@ class VaccineActivity : BaseActivity() {
 //                    vaccine!!.historic?.remove(historic)
 //                }
             }
-            saveAnimal(dialog) {notifyHistoricDataDelete()}
+            saveAnimal {notifyHistoricDataDelete()}
         }else{
             dialog.dismiss()
         }

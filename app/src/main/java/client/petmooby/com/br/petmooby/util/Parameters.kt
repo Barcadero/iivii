@@ -12,6 +12,8 @@ object Parameters {
     val VACCINE_CARD     = "animal.vaccine"
     val ACTION           = "action"
     val TREATMENT        = "animal.treatmentCard"
+    val ATTENDANCE       = "animal.attendance"
+    val IDENTITY        = "identity"
 
 
 }
