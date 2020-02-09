@@ -39,16 +39,17 @@
                 android:textAllCaps="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
+                android:textStyle="bold"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 >
                 <ImageView
                     android:id="@+id/ivVeterinaryIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/btnHeight"
                     android:src="@drawable/icons8_doctor_30"
                     android:layout_marginStart="5dp"
 
@@ -68,12 +69,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 >
                 <ImageView
                     android:id="@+id/ivVeterinaryClinicIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
                     android:src="@drawable/icons8_hospital_3_60"
                     android:layout_marginStart="5dp"
 
@@ -92,13 +93,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 >
 
                 <ImageView
                     android:id="@+id/ivVeterinaryPriceIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
                     android:src="@drawable/icons8_cash_in_hand_60"
                     android:layout_marginStart="5dp"
                     />
@@ -119,13 +120,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 >
 
                 <ImageView
                     android:id="@+id/ivVeterinaryRateIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
                     android:src="@drawable/icons8_start_30"
                     android:layout_marginStart="5dp"
                     />
@@ -145,14 +146,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dates"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:textAllCaps="true"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 >
 
                 <TextView
@@ -163,7 +165,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/attendance"
                     android:textSize="@dimen/txtMedium"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_marginStart="5dp"
                     />
 
@@ -182,7 +184,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 >
 
                 <TextView
@@ -193,7 +195,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/returnDate"
                     android:textSize="@dimen/txtMedium"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_marginStart="5dp"
                     />
 
@@ -216,6 +218,7 @@
                 android:layout_marginTop="25dp"
                 android:textAllCaps="true"
                 android:layout_marginLeft="5dp"
+                android:textStyle="bold"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -224,8 +227,8 @@
                 >
                 <ImageView
                     android:id="@+id/ivAttendanceNotes"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
                     android:src="@drawable/icons8_compose_60"
                     android:layout_marginLeft="5dp"
                     />
@@ -331,6 +334,7 @@
                     android:paddingEnd="10dp"
                     android:layout_weight="4"
                     android:maxLines="2"
+                    android:visibility="gone"
                     />
             </LinearLayout>
         </LinearLayout>

@@ -1,5 +1,6 @@
 package client.petmooby.com.br.petmooby.actvity
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,6 +8,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
@@ -31,14 +34,17 @@ class AddAttendanceActivity : BaseActivity() {
     private var dateAttendance = Date()
     private var dateOfReturn = Date()
     private var identity     = 0L
-    private val adapterValues = ArrayAdapter<Int>(this, LayoutResourceUtil.getSpinnerDropDown(), listOf(1,2,3,4,5,6,7,8,9,10))
+    private var adapterValues:ArrayAdapter<Int>? = null
     private var mCurrentPhotoBitmap: Bitmap?=null
+    private var selectedVerConsultation:Animal.VetConsultation?=null
+    private var imagePath:String?=null
 
     var action              = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_attendance)
         setupToolbar(R.id.toolbarAttendanceAdd, R.string.addNewAttendance)
+        adapterValues = ArrayAdapter<Int>(this, LayoutResourceUtil.getSpinnerDropDown(), listOf(1,2,3,4,5,6,7,8,9,10))
         edtAttendancePrice.addTextChangedListener(CurrencyMaskTextWatch(edtAttendancePrice,this) )
         edtAttendanceDate.setOnClickListener {
             DateTimePickerDialog.showDatePicker(this,it,dateAttendance)
@@ -61,8 +67,19 @@ class AddAttendanceActivity : BaseActivity() {
         btnTakeAPictureAttendance.setOnClickListener {
             startsCameraActivityForResult()
         }
-        btnTakeAPictureAttendance.setOnClickListener {
+        btnUploadAttendance.setOnClickListener {
             showImagePicker()
+        }
+        btnSeeAttendance.setOnClickListener {
+            val intent = Intent(this,PhotoViewActivity::class.java)
+            if(mCurrentPhotoBitmap != null){
+                intent.putExtra(Parameters.PATH_IMAGE,currentImageFilePath)
+            }else {
+                if(selectedVerConsultation != null){
+                    intent.putExtra(Parameters.URL_IMAGE, selectedVerConsultation?.photo1)
+                }
+            }
+            startActivityForResult(intent,ResultCodes.PHOTO_VIEW_REQUEST)
         }
     }
 
@@ -101,6 +118,7 @@ class AddAttendanceActivity : BaseActivity() {
         try {
             getCurrentAttendanceInfo()
             saveAnimal{
+                uploadImageAndSaveOrUpdatePet()
                 dialog.dismiss()
                 toast(getString(R.string.attendanceSaved))
             }
@@ -123,6 +141,7 @@ class AddAttendanceActivity : BaseActivity() {
             }
 
             VariablesUtil.gbSelectedAnimal?.vetConsultation?.add(attendance)
+            selectedVerConsultation = attendance
 
         }
         with(VariablesUtil.gbSelectedAnimal?.vetConsultation?.filter { it.identity == identity }!![0]){
@@ -148,6 +167,7 @@ class AddAttendanceActivity : BaseActivity() {
             }
             //VaccineUtil().cancelEvent(this,vaccine!!)
             saveAnimal{
+                uploadImageAndSaveOrUpdatePet()
                 dialog.dismiss()
                 this.finish()
             }
@@ -158,21 +178,80 @@ class AddAttendanceActivity : BaseActivity() {
 
     private  fun initFields(identity:Long){
         with(VariablesUtil.gbSelectedAnimal?.vetConsultation?.filter { it.identity == identity }!![0]){
-            edtVetAttendanceDescription.setText(this.nameClinic)
-            edtClinicVeterinary.setText(this.nameVet)
-            edtAttendanceNotes.setText(this.notes)
-            edtAttendancePrice.setText(this.price)
-            spAttendanceRate.setSelection(adapterValues.getPosition(rank))
-            dateAttendance = this.date!!
-            dateOfReturn = this.dateReturn!!
+            setFieldsOfTheActivity(this)
+        }
+    }
+
+    private fun Animal.VetConsultation.setFieldsOfTheActivity(vetCon:Animal.VetConsultation) {
+        selectedVerConsultation = vetCon
+        edtVetAttendanceDescription.setText(vetCon.nameClinic)
+        edtClinicVeterinary.setText(vetCon.nameVet)
+        edtAttendanceNotes.setText(vetCon.notes)
+        edtAttendancePrice.setText(vetCon.price)
+        spAttendanceRate.setSelection(adapterValues?.getPosition(rank)!!)
+        dateAttendance = vetCon.date!!
+        dateOfReturn = vetCon.dateReturn!!
+        edtReturnDate.setText(DateTimeUtil.formatDateTime(vetCon.dateReturn))
+        edtAttendanceDate.setText(DateTimeUtil.formatDateTime(vetCon.date))
+        if (vetCon.photo1 != null && vetCon.photo1?.isNotBlank()!!) {
+            enableBtnSeePhoto(true)
+        }
+        edtPhotoDescriptionAttendance.setText(vetCon.descPhoto1)
+    }
+
+    private fun enableBtnSeePhoto(enable: Boolean) {
+        if(enable) {
+            btnSeeAttendance.visibility = VISIBLE
+        }else{
+            btnSeeAttendance.visibility = GONE
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(resultCode == Activity.RESULT_CANCELED){
+            return
+        }
         if(requestCode == PICK_IMAGE) {
             mCurrentPhotoBitmap = onResultActivityForGallery(requestCode, resultCode, data,null)
         }else if(requestCode == TAKE_PICTURE){
             mCurrentPhotoBitmap = onResultActivityForCamera(requestCode,resultCode,data,null)
+        }else if(requestCode == ResultCodes.PHOTO_VIEW_REQUEST){
+            val isDelete = data?.getBooleanExtra(Parameters.DELETE,false)!!
+            if(isDelete){
+                if(selectedVerConsultation != null) {
+                    val ref = storage.child("document/vet_care/${VariablesUtil.gbSelectedAnimal?.id}.jpg")
+                    ref.delete()
+                            .addOnSuccessListener {
+                                with(VariablesUtil.gbSelectedAnimal?.vetConsultation?.filter { it.identity == identity }!![0]){
+                                    this.photo1 = ""
+                                }
+
+                                saveAnimal {
+                                    showAlert(getString(R.string.fileDeleted))
+                                    enableBtnSeePhoto(false)
+                                }
+//                                animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
+//                                        .update("photo1","")
+//                                        .addOnSuccessListener {
+//
+//                                        }.addOnFailureListener {
+//                                            showAlert(getString(R.string.wasNotPossibleToSaveAnimal))
+//                                        }
+
+                            }
+                            .addOnFailureListener {
+                                showAlert(getString(R.string.wasNotPossibleToDeleteFile))
+                            }
+                }else{
+                    if(mCurrentPhotoBitmap != null){
+                        mCurrentPhotoBitmap = null
+                        enableBtnSeePhoto(false)
+                    }
+                }
+            }
+        }
+        if(mCurrentPhotoBitmap != null){
+            enableBtnSeePhoto(true)
         }
     }
 
@@ -181,7 +260,7 @@ class AddAttendanceActivity : BaseActivity() {
         if(mCurrentPhotoBitmap == null) return
         val dialog      = showLoadingDialog(message = getString(R.string.savingImage))
         //var file        = Uri.fromFile(File(mCurrentPhotoPath))
-        val ref   = storage.child("animal/${VariablesUtil.gbSelectedAnimal?.id}.jpg")
+        val ref   = storage.child("document/vet_care/${VariablesUtil.gbSelectedAnimal?.id}.jpg")
         val baos = ByteArrayOutputStream()
         mCurrentPhotoBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
@@ -198,8 +277,10 @@ class AddAttendanceActivity : BaseActivity() {
         }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                VariablesUtil.gbSelectedAnimal?.photo = downloadUri?.toString()//riversRef.downloadUrl.toString()
+                //VariablesUtil.gbSelectedAnimal?.photo = downloadUri?.toString()//riversRef.downloadUrl.toString()
+                selectedVerConsultation?.photo1 = downloadUri?.toString()
                 callFireStoreServiceToUpdateTheAnimal(dialog,false)
+                mCurrentPhotoBitmap = null
             } else {
                 // Handle failures
                 // ...
@@ -220,6 +301,8 @@ class AddAttendanceActivity : BaseActivity() {
                     dialog.dismiss()
                 }
     }
+
+
 
 
 

@@ -11,5 +11,6 @@ object ResultCodes {
     val REQUEST_UPDATE          = 46
     val REQUEST_INSERT          = 47
     val REQUEST_DELETE          = 48
+    val PHOTO_VIEW_REQUEST      = 447
 
 }

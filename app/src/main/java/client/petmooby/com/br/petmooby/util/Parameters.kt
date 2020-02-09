@@ -13,7 +13,10 @@ object Parameters {
     val ACTION           = "action"
     val TREATMENT        = "animal.treatmentCard"
     val ATTENDANCE       = "animal.attendance"
-    val IDENTITY        = "identity"
+    val IDENTITY         = "identity"
+    val URL_IMAGE        = "url.image"
+    val PATH_IMAGE       = "path.image"
+    val DELETE           = "delete"
 
 
 }

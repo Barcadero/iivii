@@ -1,7 +1,6 @@
 package client.petmooby.com.br.petmooby.actvity
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import client.petmooby.com.br.petmooby.MainActivity
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.showAlert
-import client.petmooby.com.br.petmooby.interfaces.ICallBack
-import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.util.CameraUtil
 import client.petmooby.com.br.petmooby.util.ImageUtil
@@ -24,7 +21,6 @@ import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mvc.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.IOException
@@ -41,6 +37,7 @@ open class BaseActivity: AppCompatActivity() {
     protected val TAKE_PICTURE        = 130
     protected val PICK_IMAGE                    = 125
     protected val photoName   = "photoProfile.jpg"
+    protected var currentImageFilePath:String?=null
     var storage             = FirebaseStorage.getInstance().reference
 
     protected fun startMainActivity() {
@@ -66,6 +63,7 @@ open class BaseActivity: AppCompatActivity() {
         if(resultCode == Activity.RESULT_OK){
             val bitmapOriginal      = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
             val imagePathFromResult = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data)
+            currentImageFilePath = imagePathFromResult
             var matrix: Matrix?     = null
             try {
                 val exif = ExifInterface(imagePathFromResult)
@@ -79,7 +77,7 @@ open class BaseActivity: AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            val bitmap = ImageUtil.resizeImage(bitmapOriginal!!,300f)
+            val bitmap = ImageUtil.resizeImage(bitmapOriginal!!,350f)
             imageView?.setImageBitmap(bitmapOriginal)
 //            mCurrentPhotoBitmap = bitmap
             LogUtil.logDebug("Width: ${bitmap?.width}")
@@ -108,12 +106,13 @@ open class BaseActivity: AppCompatActivity() {
             return null
 
         }
+        currentImageFilePath = f.absolutePath
         var bitmapOrigin = BitmapFactory.decodeFile(f.absolutePath)
         if(bitmapOrigin == null){
             toast(getString(R.string.cantGetFileImage))
         }
         return try{
-            val bitmap = ImageUtil.resizeImage(bitmapOrigin,250f)
+            val bitmap = ImageUtil.resizeImage(bitmapOrigin,350f)
             imageView?.setImageBitmap(bitmap)
             bitmap
 

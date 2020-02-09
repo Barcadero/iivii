@@ -212,4 +212,10 @@
     <string name="attendanceSaved">Attendance registred</string>
     <string name="errorOnSaveAttendance">System error. Can\'t save the attendance.</string>
     <string name="seeYourDoc">This attendance has a doc. Click here to see.</string>
+    <string name="image">Image</string>
+    <string name="fileNotFound">File not found!</string>
+    <string name="cancel">cancel</string>
+    <string name="fileDeleted">File deleted!</string>
+    <string name="wasNotPossibleToDeleteFile">Was not possible to delete thos file.</string>
+    <string name="wasNotPossibleToSaveAnimal">Sorry! Was not possible to update your pet</string>
 </resources>

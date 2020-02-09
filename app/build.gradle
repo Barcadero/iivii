@@ -101,5 +101,7 @@ dependencies {
     //To compress images
 //    implementation 'id.zelory:compressor:3.0.0'
     implementation "androidx.work:work-runtime-ktx:$work_version"
+    //For image zoom and gestures
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
 }

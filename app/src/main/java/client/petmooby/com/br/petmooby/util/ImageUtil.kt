@@ -16,7 +16,14 @@ import java.math.BigDecimal
 import java.util.*
 import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
-
+import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
+import client.petmooby.com.br.petmooby.R
+import com.squareup.picasso.Callback
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 
 
 /**
@@ -168,4 +175,55 @@ object ImageUtil {
         return Bitmap.createScaledBitmap(bitmapOrigin, newWidth.toInt(), newHeight.toInt(), false)
 
     }
+
+    fun loadImageFromUrl(context: Context, url: String, view: ImageView, progress: ProgressBar?) {
+        Picasso.with(context)
+                .load(url)
+                .fit()
+                .centerCrop()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                .into(view, object : Callback {
+                    override fun onSuccess() {
+                        if (progress != null) {
+                            progress.visibility = View.GONE
+                        }
+                        view.visibility = View.VISIBLE
+                    }
+
+                    override fun onError() {
+                        if (progress != null) {
+                            progress.visibility = View.GONE
+                        }
+                        view.visibility = View.VISIBLE
+                        view.setImageResource(R.drawable.no_image)
+                    }
+                })
+    }
+
+    fun loadImageFromFile(context: Context, file: File, view: ImageView, progress: ProgressBar?) {
+        Picasso.with(context)
+                .load(file)
+                .fit()
+                .centerCrop()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                .into(view, object : Callback {
+                    override fun onSuccess() {
+                        if (progress != null) {
+                            progress.visibility = View.GONE
+                        }
+                        view.visibility = View.VISIBLE
+                    }
+
+                    override fun onError() {
+                        if (progress != null) {
+                            progress.visibility = View.GONE
+                        }
+                        view.visibility = View.VISIBLE
+                        view.setImageResource(R.drawable.no_image)
+                    }
+                })
+    }
+
 }
