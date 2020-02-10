@@ -178,7 +178,7 @@
     <string name="copyright">Copyright \u00A9 2018 Petmooby. Todos os direitos reservados.</string>
     <string name="next">next</string>
     <string name="Next">Next</string>
-    <string name="veterinaryAttendance">Veterinary Attendance</string>
+    <string name="veterinaryAttendance">Consulta Veterinária</string>
     <string name="addNewAttendance">Nova Consulta</string>
     <string name="veterinary">veterinario</string>
     <string name="clinic">clínica</string>
@@ -190,7 +190,7 @@
     <string name="upload">upload</string>
     <string name="see">ver</string>
     <string name="saveAPhotoAdvice">Você pode salvar uma foto de um exame ou prescrição do seu veterinário.</string>
-    <string name="attendances">Attendances</string>
+    <string name="attendances">Consultas</string>
     <string name="youDontHaveAttendances">Você ainda não cadastrou nenhum atendimento.</string>
     <string name="youCanOnlyHaveSomeAttendances">You can only have %1d vaccines registered.</string>
     <string name="wasNotPossibleSave">Não foi possível salvar o registro.</string>
@@ -203,4 +203,6 @@
     <string name="fileDeleted">Arquivo excluído!</string>
     <string name="wasNotPossibleToDeleteFile">Não foi possível excluir o arquivo.</string>
     <string name="wasNotPossibleToSaveAnimal">Sorry! Was not possible to update your pet</string>
+    <string name="adviceRotateScreen">Se você está tendo problemas em visualizar a imagem, por favor tente por o celular na horizontal.</string>
+    <string name="adviceForBestCameraPhoto">Se você optar por tirar uma foto do documento, tente por favor tirar com o celular em pé para melhorar o enquadramento da imagem.</string>
 </resources>

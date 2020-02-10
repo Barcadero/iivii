@@ -3,6 +3,10 @@ package client.petmooby.com.br.petmooby.actvity
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,10 +16,12 @@ import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.util.ImageUtil
+import client.petmooby.com.br.petmooby.util.LogUtil
 import client.petmooby.com.br.petmooby.util.Parameters
 import com.github.chrisbanes.photoview.PhotoView
 import kotlinx.android.synthetic.main.activity_photo_view.*
 import java.io.File
+
 
 class PhotoViewActivity : BaseActivity() {
 
@@ -40,7 +46,33 @@ class PhotoViewActivity : BaseActivity() {
         if (!image.exists()) {
             showAlert(R.string.fileNotFound)
         } else {
-            ImageUtil.loadImageFromFile(this, image, photoView, progressPhotoView)
+
+            val originBitmap = BitmapFactory.decodeFile(image.absolutePath)
+            LogUtil.logDebug("originBitmap width: ${originBitmap.width}")
+            LogUtil.logDebug("originBitmap height: ${originBitmap.height}")
+//            val bitmap = ImageUtil.resizeImage(originBitmap!!,400f)
+//            LogUtil.logDebug("bitmap width: ${bitmap.width}")
+//            LogUtil.logDebug("bitmap height: ${bitmap.height}")
+//            val bit = ImageUtil.rotate(originBitmap,path)
+//            LogUtil.logDebug("bit width: ${bit.width}")
+//            LogUtil.logDebug("bit height: ${bit.height}")
+            val orientation = ImageUtil.getCameraPhotoOrientation(path)
+            if(orientation == ExifInterface.ORIENTATION_UNDEFINED){
+                if(originBitmap.width > originBitmap.height){
+                    val matrix = Matrix()
+                    matrix.postRotate(90f)
+                    val rotatedBitmap = Bitmap.createBitmap(originBitmap, 0, 0, originBitmap.width, originBitmap.height, matrix, true)
+                    photoView.setImageBitmap(rotatedBitmap)
+                }else{
+                    photoView.setImageBitmap(originBitmap)
+                }
+            }else{
+                photoView.setImageBitmap(originBitmap)
+            }
+//            photoView?.setImageBitmap(originBitmap)
+//            val myBitmap = ImageUtil.rotate(originBitmap,image.absolutePath)
+
+//            ImageUtil.loadImageFromFile(this, image, photoView, progressPhotoView)
         }
     }
 

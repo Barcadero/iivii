@@ -20,19 +20,18 @@
         <LinearLayout
             android:id="@+id/llPhotoView"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="450dp">
+                android:layout_height="500dp">
                 <com.github.chrisbanes.photoview.PhotoView
                     android:id="@+id/photoView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible"
-                    android:scaleType="fitCenter"
                     />
 
 
@@ -48,7 +47,15 @@
             </FrameLayout>
 
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:drawableStart="@drawable/ic_alert_circle"
+            android:text="@string/adviceRotateScreen"
+            android:layout_margin="5dp"
+            android:drawablePadding="5dp"
+            />
         </LinearLayout>
     </ScrollView>
 

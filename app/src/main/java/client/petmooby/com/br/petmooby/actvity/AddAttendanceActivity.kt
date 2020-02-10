@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_add_attendance.*
-import kotlinx.android.synthetic.main.activity_vaccine.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.toast
@@ -212,7 +211,7 @@ class AddAttendanceActivity : BaseActivity() {
             return
         }
         if(requestCode == PICK_IMAGE) {
-            mCurrentPhotoBitmap = onResultActivityForGallery(requestCode, resultCode, data,null)
+            mCurrentPhotoBitmap = onResultActivityForGallery(requestCode, resultCode, data,null,withQuality = true)
         }else if(requestCode == TAKE_PICTURE){
             mCurrentPhotoBitmap = onResultActivityForCamera(requestCode,resultCode,data,null)
         }else if(requestCode == ResultCodes.PHOTO_VIEW_REQUEST){

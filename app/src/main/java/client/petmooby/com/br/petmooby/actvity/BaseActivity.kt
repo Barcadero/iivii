@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
 import android.os.Environment
 import android.widget.ImageView
 import android.widget.Toast
@@ -22,8 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mvc.imagepicker.ImagePicker
 import org.jetbrains.anko.toast
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
+
 
 /**
  * Created by idoctor on 06/08/2019.
@@ -59,30 +59,26 @@ open class BaseActivity: AppCompatActivity() {
         startActivityForResult(camera.open(this, photoName), TAKE_PICTURE)
     }
 
-    protected fun onResultActivityForGallery(requestCode: Int, resultCode: Int, data: Intent?, imageView:ImageView?): Bitmap?{
+    protected fun onResultActivityForGallery(requestCode: Int, resultCode: Int, data: Intent?, imageView:ImageView?, withQuality:Boolean = false): Bitmap?{
         if(resultCode == Activity.RESULT_OK){
             val bitmapOriginal      = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
             val imagePathFromResult = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data)
             currentImageFilePath = imagePathFromResult
-            var matrix: Matrix?     = null
-            try {
-                val exif = ExifInterface(imagePathFromResult)
-                val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-                val rotationInDegrees = ImageUtil.exifToDegrees(rotation)
-                matrix = Matrix()
-                if (rotation.toFloat() != 0f) {
-                    matrix.preRotate(rotationInDegrees.toFloat())
-                }
-
-            } catch (e: IOException) {
-                e.printStackTrace()
+            LogUtil.logDebug("Width: ${bitmapOriginal?.width}")
+            LogUtil.logDebug("Height: ${bitmapOriginal?.height}")
+            return if(withQuality){
+                val out = ByteArrayOutputStream()
+                bitmapOriginal?.compress(Bitmap.CompressFormat.PNG, 100, out)
+                val decoded = BitmapFactory.decodeStream(ByteArrayInputStream(out.toByteArray()))
+                decoded
+            }else {
+                val bitmap = ImageUtil.resizeImage(bitmapOriginal!!, 400f)
+                imageView?.setImageBitmap(bitmapOriginal)
+                LogUtil.logDebug("Width: ${bitmap?.width}")
+                LogUtil.logDebug("Height: ${bitmap?.height}")
+                bitmap
             }
-            val bitmap = ImageUtil.resizeImage(bitmapOriginal!!,350f)
-            imageView?.setImageBitmap(bitmapOriginal)
-//            mCurrentPhotoBitmap = bitmap
-            LogUtil.logDebug("Width: ${bitmap?.width}")
-            LogUtil.logDebug("Height: ${bitmap?.height}")
-            return bitmap
+
         }
         return null
     }
