@@ -12,6 +12,10 @@ object VariablesUtil {
     var gbSelectedAnimal:Animal?=null
     var gbCurrentUser:User?=null
 
+    const val maxRegisteredAttendances  = 8
+    const val maxRegisteredVaccines     = 8
+    const val maxRegisteredTreatments   = 8
+
     fun clear(){
         gbAnimals           = null
         gbCurrentUser       = null

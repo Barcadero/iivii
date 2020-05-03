@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="client.petmooby.com.br.petmooby">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -20,23 +18,23 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".actvity.PhotoViewActivity"></activity>
+        <activity android:name=".actvity.AddAttendanceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".actvity.AttendanceListActivity" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" />
-        <!-- For Facebook application -->
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" /> <!-- For Facebook application -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
-        <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
-            android:value="true"/>
-
-        <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
-            android:value="false"/>
-
-
-
+        <meta-data
+            android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+            android:value="true" />
+        <meta-data
+            android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
+            android:value="false" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -61,35 +59,41 @@
         -->
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
-            android:noHistory="false"/>
-
-        <activity android:name=".actvity.VeterinaryPartnersListActivity"
-            android:screenOrientation="portrait"/>
+            android:noHistory="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".actvity.VeterinaryPartnersListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".actvity.VeterinaryPartnerDetailActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_veterinary_partner_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".actvity.AddNewPetActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+        <activity
+            android:name=".actvity.AddNewPetActivity"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".actvity.VaccineActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".actvity.VaccineActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".actvity.VaccineLitsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".actvity.TreatmentListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".actvity.TreatmentActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".actvity.RegisterUserActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".actvity.SplashActivity"
-            android:theme="@style/AppCompat.FullScreen"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".actvity.VaccineLitsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".actvity.TreatmentListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".actvity.TreatmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".actvity.RegisterUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".actvity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppCompat.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -99,8 +103,7 @@
 
         <receiver
             android:name=".android.receiver.NotificationAlarmReceiver"
-            android:process=":remote" >
-        </receiver>
+            android:process=":remote" />
 
         <service
             android:name=".android.service.NotificationAlarmService"

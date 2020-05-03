@@ -54,22 +54,22 @@ import java.math.BigDecimal
 import java.util.*
 
 
-class AddNewPetActivity : AppCompatActivity() {
+class AddNewPetActivity : BaseActivity() {
 
-    val PICK_IMAGE          = 125
-    val TAKE_PICTURE        = 130
+//    val PICK_IMAGE          = 125
+//    val TAKE_PICTURE        = 130
     var bithDate            = Date()
     var mRef                = FirebaseFirestore.getInstance()
-    var animalRef           = mRef.collection(CollectionsName.ANIMAL)
+    //var animalRef           = mRef.collection(CollectionsName.ANIMAL)
     var enumSelectedBreed: EnumBreedBase?=null
-    var storage             = FirebaseStorage.getInstance().reference
+
     private var mCurrentPhotoBitmap: Bitmap?=null
 //    private var mFile: File?=null
 //    var animal :Animal?=null
-    var isForUpdate         = false
+//    var isForUpdate         = false
     var fromOtherScreen     = false
-    private val camera      = CameraUtil()
-    private val photoName   = "photoProfile.jpg"
+//    private val camera      = CameraUtil()
+//    private val photoName   = "photoProfile.jpg"
     private var enableButtons = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +106,10 @@ class AddNewPetActivity : AppCompatActivity() {
         btnAddMedicinalTreatment.setOnClickListener {
             val intent = Intent(this,TreatmentListActivity::class.java)
             startActivity(intent)
+        }
+
+        btnAddAttendance.setOnClickListener {
+            startActivity(Intent(this,AttendanceListActivity::class.java))
         }
 
 
@@ -171,9 +175,9 @@ class AddNewPetActivity : AppCompatActivity() {
                 })
     }
 
-    private fun showImagePicker() {
-        ImagePicker.pickImage(this, getString(R.string.selectAPicture), PICK_IMAGE, true)
-    }
+//    private fun showImagePicker() {
+//        ImagePicker.pickImage(this, getString(R.string.selectAPicture), PICK_IMAGE, true)
+//    }
 
     private fun enableSpinnerBreed(enable:Boolean){
         if(enable) {
@@ -397,9 +401,9 @@ class AddNewPetActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == PICK_IMAGE) {
-            onResultActivityForGallery(requestCode, resultCode, data)
+            mCurrentPhotoBitmap = onResultActivityForGallery(requestCode, resultCode, data,ivProfileMyPet)
         }else if(requestCode == TAKE_PICTURE){
-            onResultActivityForCamera(requestCode,resultCode,data)
+            mCurrentPhotoBitmap = onResultActivityForCamera(requestCode,resultCode,data,ivProfileMyPet)
         }
     }
 
@@ -436,71 +440,71 @@ class AddNewPetActivity : AppCompatActivity() {
 
 
 
-    private fun startsCameraActivityForResult() {
-        startActivityForResult(camera.open(this, photoName), TAKE_PICTURE)
-    }
 
-    private fun onResultActivityForGallery(requestCode: Int, resultCode: Int, data: Intent?){
-        if(resultCode == Activity.RESULT_OK){
-            val bitmapOriginal      = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
-            val imagePathFromResult = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data)
-            var matrix: Matrix?     = null
-            try {
-                val exif = ExifInterface(imagePathFromResult)
-                val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-                val rotationInDegrees = ImageUtil.exifToDegrees(rotation)
-                matrix = Matrix()
-                if (rotation.toFloat() != 0f) {
-                    matrix.preRotate(rotationInDegrees.toFloat())
-                }
 
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            val bitmap = ImageUtil.resizeImage(bitmapOriginal!!,300f)
-            ivProfileMyPet.setImageBitmap(bitmapOriginal)
-                mCurrentPhotoBitmap = bitmap
-            LogUtil.logDebug("Width: ${mCurrentPhotoBitmap?.width}")
-            LogUtil.logDebug("Height: ${mCurrentPhotoBitmap?.height}")
-        }
-    }
+//    private fun onResultActivityForGallery(requestCode: Int, resultCode: Int, data: Intent?): Bitmap?{
+//        if(resultCode == Activity.RESULT_OK){
+//            val bitmapOriginal      = ImagePicker.getImageFromResult(this, requestCode, resultCode, data)
+//            val imagePathFromResult = ImagePicker.getImagePathFromResult(this, requestCode, resultCode, data)
+//            var matrix: Matrix?     = null
+//            try {
+//                val exif = ExifInterface(imagePathFromResult)
+//                val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+//                val rotationInDegrees = ImageUtil.exifToDegrees(rotation)
+//                matrix = Matrix()
+//                if (rotation.toFloat() != 0f) {
+//                    matrix.preRotate(rotationInDegrees.toFloat())
+//                }
+//
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            }
+//            val bitmap = ImageUtil.resizeImage(bitmapOriginal!!,300f)
+//            ivProfileMyPet.setImageBitmap(bitmapOriginal)
+////            mCurrentPhotoBitmap = bitmap
+//            LogUtil.logDebug("Width: ${mCurrentPhotoBitmap?.width}")
+//            LogUtil.logDebug("Height: ${mCurrentPhotoBitmap?.height}")
+//            return bitmap
+//        }
+//        return null
+//    }
 
-    private fun onResultActivityForCamera(requestCode: Int, resultCode: Int, data: Intent?){
-        if(resultCode != Activity.RESULT_OK){
-            return
-        }
-        var f = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                .toString())
-        for (temp : File in f.listFiles()) {
-            if (temp.name == photoName) {
-                f = temp
-                break
-            }
-        }
-        if (!f.exists()) {
-            Toast.makeText(this,
-                    getString(R.string.errorWhileCapturingImage), Toast.LENGTH_LONG)
-                    .show()
-            return
-
-        }
-        var bitmapOrigin = BitmapFactory.decodeFile(f.absolutePath)
-        if(bitmapOrigin == null){
-            toast(getString(R.string.cantGetFileImage))
-        }
-        try{
-//            var bitmap = ImageUtil.compress(this,f,bitmapOrigin)
-            val bitmap = ImageUtil.resizeImage(bitmapOrigin,250f)
-            ivProfileMyPet.setImageBitmap(bitmap)
-            mCurrentPhotoBitmap = bitmap
-//            mFile = f
-            //mCurrentPhotoPath =  f.absolutePath
-            //postImageProfile(bitmap!!)
-
-        } catch (e:Exception ) {
-            e.printStackTrace()
-        }
-    }
+//    private fun onResultActivityForCamera(requestCode: Int, resultCode: Int, data: Intent?){
+//        if(resultCode != Activity.RESULT_OK){
+//            return
+//        }
+//        var f = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//                .toString())
+//        for (temp : File in f.listFiles()) {
+//            if (temp.name == photoName) {
+//                f = temp
+//                break
+//            }
+//        }
+//        if (!f.exists()) {
+//            Toast.makeText(this,
+//                    getString(R.string.errorWhileCapturingImage), Toast.LENGTH_LONG)
+//                    .show()
+//            return
+//
+//        }
+//        var bitmapOrigin = BitmapFactory.decodeFile(f.absolutePath)
+//        if(bitmapOrigin == null){
+//            toast(getString(R.string.cantGetFileImage))
+//        }
+//        try{
+////            var bitmap = ImageUtil.compress(this,f,bitmapOrigin)
+//            val bitmap = ImageUtil.resizeImage(bitmapOrigin,250f)
+//            ivProfileMyPet.setImageBitmap(bitmap)
+//            mCurrentPhotoBitmap = bitmap
+////            mFile = f
+//            //mCurrentPhotoPath =  f.absolutePath
+//            //postImageProfile(bitmap!!)
+//
+//        } catch (e:Exception ) {
+//            e.printStackTrace()
+//        }
+//    }
 
 //    private fun compress(f: File, bitmapOrigin: Bitmap): Bitmap? {
 //
