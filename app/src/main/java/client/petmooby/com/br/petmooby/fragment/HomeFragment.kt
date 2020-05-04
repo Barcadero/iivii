@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
             getMyAnimals()
         }
 
-
+        fabAddNewPet.setOnClickListener { startNewAnimalActivity() }
 
     }
 

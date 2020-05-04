@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
+import client.petmooby.com.br.petmooby.util.LogUtil
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.okButton
@@ -33,13 +34,20 @@ inline fun Activity.defaultRecycleView(view: Activity, resId:Int): RecyclerView 
     return recycleView
 }
 //@Deprecated("Please replace with setupToolbar(@IdRes id: Int, @IdRes idString: Int, upNavigation: Boolean = false) : ActionBar")
-inline fun AppCompatActivity.setupToolbar(@IdRes id: Int,title:String?= null,upNavigation: Boolean = false) : ActionBar {
+inline fun AppCompatActivity.setupToolbar(@IdRes id: Int,title:String?= null,upNavigation: Boolean = false, listener: View.OnClickListener? = null ) : ActionBar {
     val toolbar = findViewById<Toolbar>(id)
+
+    LogUtil.logDebug("Set support Action Bar")
     setSupportActionBar(toolbar)
+    if(listener != null) {
+        LogUtil.logDebug("Has event to call")
+        toolbar.setNavigationOnClickListener(listener)
+    }
     if(title != null){
         supportActionBar?.title = title
     }
     supportActionBar?.setDisplayHomeAsUpEnabled(upNavigation)
+    supportActionBar?.setDisplayShowHomeEnabled(upNavigation)
     return supportActionBar!!
 }
 
