@@ -41,17 +41,12 @@ import java.lang.Exception
 
 class MainActivity : BaseActivity() {
 
-//    private var docRefUser = FirebaseFirestore.getInstance().collection(CollectionsName.USER)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-//        scheduleAlarm()
-//    startServiceNotification()
-
         val userType = Preference.getUserType(this)
-        if(userType!! > -1){
-//            checkIfUserExistsAndSave()
+        if(userType > -1){
             when(TypeUserEnum.values()[userType]){
                 TypeUserEnum.FACEBOOK ->{
                     checkIfUserExistsAndSave()
@@ -65,11 +60,6 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-    //For test
-//    val calendar = Calendar.getInstance()
-//    calendar.set(2019,8,19,0,58,15)
-//    NotificationWorkerUtil().scheduleEvent(calendar.time,this)
-//    NotificationWorkerUtil().scheduleEventPeriodic(Date(),this,"vaccine",225544,NotificationWorkerVaccine::class.java)
         if(!PermissionUtil.checkPersmission(this))PermissionUtil.requestPermission(this)
 
     }
@@ -116,8 +106,8 @@ class MainActivity : BaseActivity() {
             var user = User()
             user.name           = Preference.get<String>(this,Preference.USER_NAME)
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
-            user.userIdFB       = Preference.getUserId(this)//Preference.get(this,Preference.USER_ID)
-            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]//TypeUserEnum.FACEBOOK
+            user.userIdFB       = Preference.getUserId(this)
+            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]
             user.email          = Preference.getUserEmail(this)
             user.registerDate   = Date()
             LogUtil.logDebug("FACE user name: ${user.name}")
@@ -234,21 +224,6 @@ class MainActivity : BaseActivity() {
         startService(i)
     }
 
-    /*fun scheduleAlarm() {
-        // Construct an intent that will execute the AlarmReceiver
-        val intent = Intent(applicationContext, NotificationAlarmReceiver::class.java)
-        intent.putExtra("name","first intent")
-        // Create a PendingIntent to be triggered when the alarm goes off
-        val pIntent = PendingIntent.getBroadcast(this, 100,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        // Setup periodic alarm every every half hour from this point onwards
-        val firstMillis = System.currentTimeMillis() // alarm is set right away
-        val alarm = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pIntent)
-    }*/
 }
 
 

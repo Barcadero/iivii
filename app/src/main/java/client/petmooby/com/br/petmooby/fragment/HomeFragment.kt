@@ -1,29 +1,30 @@
 package client.petmooby.com.br.petmooby.fragment
 
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.AddNewPetActivity
 import client.petmooby.com.br.petmooby.adapter.AnimalAdapter
-import client.petmooby.com.br.petmooby.extensions.*
+import client.petmooby.com.br.petmooby.extensions.defaultRecycleView
+import client.petmooby.com.br.petmooby.extensions.setupToolbar
+import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.model.Animal
-import client.petmooby.com.br.petmooby.model.CollectionsName
+import client.petmooby.com.br.petmooby.ui.repository.AnimalRepository
+import client.petmooby.com.br.petmooby.ui.viewmodel.AnimalViewModel
 import client.petmooby.com.br.petmooby.util.*
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
 import org.jetbrains.anko.okButton
-import org.jetbrains.anko.yesButton
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -34,9 +35,9 @@ class HomeFragment : Fragment() {
 
 
     var rcMyAnimalsList: RecyclerView?=null
+    private val viewModel: AnimalViewModel by viewModel()
 
 
-    private var docRefVet = FirebaseFirestore.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -49,21 +50,29 @@ class HomeFragment : Fragment() {
 
         rcMyAnimalsList = defaultRecycleView(activity!!,R.id.rcMyAnimalsList)
         val showMessage = Preference.getShowMessageLogin(activity!!)
+
+        viewModel.animalLiveData.observe(viewLifecycleOwner, Observer {animals ->
+            loadAnimalRCView(animals)
+        })
         if(showMessage) {
             activity!!.alert(R.string.loginMessage, R.string.Advice) {
-                okButton { Preference.setShowMessageLogin(activity!!,false); getMyAnimals() }
-                onCancelled { Preference.setShowMessageLogin(activity!!,false);getMyAnimals() }
+                okButton { Preference.setShowMessageLogin(activity!!,false); getMyAnimals(savedInstanceState) }
+                onCancelled { Preference.setShowMessageLogin(activity!!,false);getMyAnimals(savedInstanceState) }
             }.show()
         }else{
-            getMyAnimals()
+            getMyAnimals(savedInstanceState)
         }
-
-
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_add,menu)
+    private fun getMyAnimals(savedInstanceState: Bundle?) {
+        if(savedInstanceState == null) {
+            viewModel.getAnimals()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_add,menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -86,36 +95,16 @@ class HomeFragment : Fragment() {
         startActivityForResult(Intent(activity, AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
     }
 
-    private fun getMyAnimals(){
-        if(VariablesUtil.gbAnimals  != null && VariablesUtil.gbAnimals?.size!! > 0){
-            updateAdapter()
-        }else {
-            var dialog = showLoadingDialog(getString(R.string.gettingMyPets))
-            docRefVet.collection(CollectionsName.ANIMAL)
-                    .whereEqualTo("user", FireStoreReference.docRefUser)
-                    .get()
-                    .addOnSuccessListener { querySnapshot ->
-                        loadAnimalRCView(querySnapshot)
-                        dialog.dismiss()
-                    }.addOnFailureListener { exception ->
-                onFailedQueryReturn(dialog, exception.message!!)
-            }
-        }
-    }
-
-    private fun loadAnimalRCView(querySnapshot: QuerySnapshot){
-        if(querySnapshot.isEmpty){
+    private fun loadAnimalRCView(animals: List<Animal>){
+        if(animals.isEmpty()){
             llHomeNoPetYet.visibility = VISIBLE
         }else{
-            //VariablesUtil.gbAnimals = mutableListOf<Animal>()
-            querySnapshot.documents.forEach{
-                var animal = it.toObject(Animal::class.java)
-                if(animal?.id == null || animal.id!!.isEmpty()){
-                    animal?.id = it.id
-
+            if(animals.size != VariablesUtil.gbAnimals?.size) {
+                VariablesUtil.gbAnimals?.clear()
+                animals.forEach { animal ->
+                    VariablesUtil.addAnimal(animal)
+                    scheduleAllEvents(animal)
                 }
-                VariablesUtil.addAnimal(animal!!)
-                scheduleAllEvents(animal)
             }
             updateAdapter()
         }
@@ -150,9 +139,6 @@ class HomeFragment : Fragment() {
         VariablesUtil.gbSelectedAnimal = animal
         var intent = Intent(activity,AddNewPetActivity::class.java)
         intent.putExtra(Parameters.IS_FOR_UPDATE,true)
-
-//        intent.putExtra(Parameters.ANIMAL_PARAMETER,animal)
-//        intent.putExtra(Parameters.ANIMAL_PARAMETER,Parcels.wrap(animal))
         startActivityForResult(intent,CODE_RESULT_FOR_ADD_PET)
 
     }

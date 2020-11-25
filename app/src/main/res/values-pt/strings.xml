@@ -205,4 +205,6 @@
     <string name="wasNotPossibleToSaveAnimal">Sorry! Was not possible to update your pet</string>
     <string name="adviceRotateScreen">Se você está tendo problemas em visualizar a imagem, por favor tente por o celular na horizontal.</string>
     <string name="adviceForBestCameraPhoto">Se você optar por tirar uma foto do documento, tente por favor tirar com o celular em pé para melhorar o enquadramento da imagem.</string>
+    <string name="animal_age">Idade: %s ano</string>
+    <string name="animal_ages">Idade: %s anos</string>
 </resources>

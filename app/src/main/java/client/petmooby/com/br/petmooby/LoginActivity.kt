@@ -32,11 +32,9 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         callBackManager = CallbackManager.Factory.create()
-//        KeyFileGen.genSH1Base64(this)
         checkLoginin()
         with(btnLoginFace) {
             setPermissions("email","public_profile")
-//            setReadPermissions("public_profile, email")
             LoginManager.getInstance().registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult?) {
                     val request = GraphRequest.newMeRequest(
@@ -107,11 +105,11 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkLoginin() {
-        var type =  Preference.getUserType(this)
-        when(type){
+
+        when(Preference.getUserType(this)){
             TypeUserEnum.FACEBOOK.ordinal ->{
-                var accessToken = AccessToken.getCurrentAccessToken()
-                var isLoggedIn = accessToken != null && !accessToken.isExpired
+                val accessToken = AccessToken.getCurrentAccessToken()
+                val isLoggedIn = accessToken != null && !accessToken.isExpired
                 if (isLoggedIn) {
                     startMainActivity()
                     finish()

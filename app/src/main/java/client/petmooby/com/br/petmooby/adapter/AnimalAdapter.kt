@@ -1,6 +1,7 @@
 package client.petmooby.com.br.petmooby.adapter
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -14,6 +15,7 @@ import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.enums.EnumTypeAnimal
 import client.petmooby.com.br.petmooby.util.BreedNamesResolverUtil
+import client.petmooby.com.br.petmooby.util.DateUtil
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
@@ -27,6 +29,8 @@ class AnimalAdapter (
         val animals: List<Animal>,
         val onClick: (Animal) -> Unit) : RecyclerView.Adapter<AnimalAdapter.AnimalHolder>(){
 
+    var context:Context?=null
+
     override fun onBindViewHolder(holder: AnimalHolder, position:  Int) {
         val animal = animals[position]
         val context = holder.itemView.context
@@ -35,6 +39,13 @@ class AnimalAdapter (
         val breedDescription = BreedNamesResolverUtil.resolverName(animal.type!!,animal.breed!!)
         holder.txtKind.text = "$type - $breedDescription"
         holder.ivProfile.visibility         = INVISIBLE
+        val age = DateUtil.getAge(animal.dateOfBirthday!!)
+        if(age!! > 1){
+            holder.age.text = context.getString(R.string.animal_ages,age.toString())
+        }else{
+            holder.age.text = context.getString(R.string.animal_age,age.toString())
+        }
+
         if(animal.photo == null)animal.photo = ""
         if(animal.photo!!.isEmpty()){
             holder.ivProfile.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.no_image))
@@ -75,15 +86,17 @@ class AnimalAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): AnimalHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_my_animal_list,parent,false)
+        this.context = view.context
         return AnimalHolder(view)
     }
 
 
     class AnimalHolder(view: View) : RecyclerView.ViewHolder(view){
-        var txtPetName = view.findViewById<TextView>(R.id.txtNamePet)
-        var txtKind     = view.findViewById<TextView>(R.id.txtMyPetKind)
-        var ivProfile = view.findViewById<ImageView>(R.id.ivProfileMyPet)
-        var progressMyAnimal = view.findViewById<ProgressBar>(R.id.progressMyAnimal)
-        val viewSeparator = view.viewAnimalList
+        var txtPetName          = view.findViewById<TextView>(R.id.txtNamePet)
+        var txtKind             = view.findViewById<TextView>(R.id.txtMyPetKind)
+        var ivProfile           = view.findViewById<ImageView>(R.id.ivProfileMyPet)
+        var progressMyAnimal    = view.findViewById<ProgressBar>(R.id.progressMyAnimal)
+        val viewSeparator       = view.viewAnimalList
+        val age                 = view.findViewById<TextView>(R.id.txtAnimalAge)
     }
 }
