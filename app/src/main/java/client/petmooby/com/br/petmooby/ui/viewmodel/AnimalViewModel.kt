@@ -16,10 +16,12 @@ class AnimalViewModel(
     init {
         Log.i("viewmodel","init view model $this")
     }
-    val animalLiveData = MutableLiveData<List<Animal>>()
+    val animalLiveData  = MutableLiveData<List<Animal>>()
+    val progress        = MutableLiveData<Boolean>()
     fun getAnimals(){
         animalService.getAnimals {animals ->
-            animalLiveData.value = animals
+            progress.value          = false;
+            animalLiveData.value    = animals
         }
     }
 

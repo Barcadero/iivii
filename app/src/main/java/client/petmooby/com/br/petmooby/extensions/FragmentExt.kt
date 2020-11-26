@@ -93,12 +93,12 @@ fun Fragment.backToFragment(fragment: Fragment){
         setProgressStyle(ProgressDialog.STYLE_SPINNER)
         setCancelable(false)
         //ProgressLoadDialog(activity)
-        setOnDismissListener({
-             Handler().postDelayed({
-                 dismiss()
-             },3000)
-        })
-        show()
+        setOnDismissListener {
+            Handler().postDelayed({
+                dismiss()
+            },3000)
+        }
+         show()
     }
     return dialog!!
 

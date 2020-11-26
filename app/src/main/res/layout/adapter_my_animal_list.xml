@@ -74,12 +74,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="85dp"
         android:background="@color/white"
+
         android:paddingStart="8dp"
         android:paddingEnd="2dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="60dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtAnimalAge"

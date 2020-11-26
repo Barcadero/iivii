@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvVetPartnersList"
     android:layout_height="70dp"
     android:layout_width="match_parent"
@@ -9,7 +10,7 @@
     app:cardElevation="3dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false">
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -22,11 +23,17 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/ivVaccineImage"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="180dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
             android:text="Animal Name"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivVaccineImage"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivVaccineImage"
@@ -34,20 +41,28 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/vaccine"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtDateNext"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/txtVaccineName"
             android:layout_below="@+id/txtVaccineName"
+            android:layout_alignStart="@+id/txtVaccineName"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:text="Kind of animal"
             android:textColor="@color/primaryTextColor"
             android:textStyle="bold"
-            android:text="Kind of animal" />
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivVaccineImage"
+            app:layout_constraintTop_toBottomOf="@+id/txtVaccineName" />
 
         <ImageView
             android:id="@+id/chevronRight"
@@ -55,20 +70,25 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="14dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_chevron_right_white" />
 
         <View
             android:id="@+id/viewVaccineList"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/white"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="90dp"
+            android:background="@color/white"
             android:paddingStart="8dp"
-            android:paddingEnd="2dp"
-            android:layout_marginStart="55dp"
 
-            />
-    </RelativeLayout>
+            android:paddingEnd="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

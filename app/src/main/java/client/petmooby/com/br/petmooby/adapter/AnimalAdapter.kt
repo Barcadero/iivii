@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.adapter
 
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -39,11 +40,17 @@ class AnimalAdapter (
         val breedDescription = BreedNamesResolverUtil.resolverName(animal.type!!,animal.breed!!)
         holder.txtKind.text = "$type - $breedDescription"
         holder.ivProfile.visibility         = INVISIBLE
-        val age = DateUtil.getAge(animal.dateOfBirthday!!)
-        if(age!! > 1){
-            holder.age.text = context.getString(R.string.animal_ages,age.toString())
-        }else{
-            holder.age.text = context.getString(R.string.animal_age,age.toString())
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val birthDate = DateUtil.getAgeWithMonths(animal.dateOfBirthday!!)
+            holder.age.text = context.getString(R.string.animal_age_with_month,birthDate.year.toString(),birthDate.month.toString())
+        } else {
+            val age = DateUtil.getAge(animal.dateOfBirthday!!)
+            if(age!! > 1){
+                holder.age.text = context.getString(R.string.animal_ages,age.toString())
+            }else{
+                holder.age.text = context.getString(R.string.animal_age,age.toString())
+            }
         }
 
         if(animal.photo == null)animal.photo = ""

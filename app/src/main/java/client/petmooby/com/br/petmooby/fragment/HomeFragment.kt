@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.fragment
 
 
 import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -17,6 +18,7 @@ import client.petmooby.com.br.petmooby.adapter.AnimalAdapter
 import client.petmooby.com.br.petmooby.extensions.defaultRecycleView
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
+import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.ui.repository.AnimalRepository
 import client.petmooby.com.br.petmooby.ui.viewmodel.AnimalViewModel
@@ -36,6 +38,7 @@ class HomeFragment : Fragment() {
 
     var rcMyAnimalsList: RecyclerView?=null
     private val viewModel: AnimalViewModel by viewModel()
+    var currentProgress: ProgressDialog?=null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +57,15 @@ class HomeFragment : Fragment() {
         viewModel.animalLiveData.observe(viewLifecycleOwner, Observer {animals ->
             loadAnimalRCView(animals)
         })
+        viewModel.progress.observe(viewLifecycleOwner, Observer {showProgress ->
+            if(showProgress){
+                currentProgress = showLoadingDialog()
+            }else{
+                if(currentProgress != null){
+                    currentProgress!!.dismiss()
+                }
+            }
+        })
         if(showMessage) {
             activity!!.alert(R.string.loginMessage, R.string.Advice) {
                 okButton { Preference.setShowMessageLogin(activity!!,false); getMyAnimals(savedInstanceState) }
@@ -67,6 +79,7 @@ class HomeFragment : Fragment() {
 
     private fun getMyAnimals(savedInstanceState: Bundle?) {
         if(savedInstanceState == null) {
+            currentProgress = showLoadingDialog()
             viewModel.getAnimals()
         }
     }

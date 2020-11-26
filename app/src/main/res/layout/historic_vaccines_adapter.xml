@@ -47,10 +47,11 @@
             android:id="@+id/edtHistoricNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="false"
             android:layout_toEndOf="@+id/imageView5"
             android:layout_below="@id/imageView5"
             android:layout_alignTop="@id/imageView5"
+            android:layout_marginBottom="10dp"
             android:text="hbhsd sdhbisdb dc sdh chs dhs dchus dhchsudshdbcisbd sdcibsdhbcisd njnn nniniun niuniun niuniun n niunuin bcisbdicbsd sdcibsdic sibsidbsibdciusbdc sdicsd cuisdc usidc uisd cs dcui sdiuc suid ciusd cius dciu sdic iusd ciusd cuis dciu sduic sd uc"
             android:textColor="@color/white" />
 

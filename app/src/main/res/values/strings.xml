@@ -222,4 +222,5 @@
     <string name="adviceForBestCameraPhoto">If you choose to take a picture of the document, please try taking it with the phone upright to improve the framing of the image.</string>
     <string name="animal_age">Age: %s year</string>
     <string name="animal_ages">Age: %s years</string>
+    <string name="animal_age_with_month">Age: %s year(s) and %s month(s)</string>
 </resources>

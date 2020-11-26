@@ -207,4 +207,5 @@
     <string name="adviceForBestCameraPhoto">Se você optar por tirar uma foto do documento, tente por favor tirar com o celular em pé para melhorar o enquadramento da imagem.</string>
     <string name="animal_age">Idade: %s ano</string>
     <string name="animal_ages">Idade: %s anos</string>
+    <string name="animal_age_with_month">Idade: %s ano(s) e %s mês(s)</string>
 </resources>
