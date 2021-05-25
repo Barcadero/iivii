@@ -143,28 +143,10 @@ object ImageUtil {
     }
 
     fun rotate(original: Bitmap, filePath:String?): Bitmap {
-
-//            Bitmap.createBitmap(original, 0, 0, original.width, original.height, matrix, true)
-//            val exif: ExifInterface
             try {
-//                exif = ExifInterface(filePath)
-//
-//                val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-//
-//                val matrix = Matrix()
-//                if (orientation == 6) {
-//                    matrix.postRotate(90f)
-//
-//                } else if (orientation == 3) {
-//                    matrix.postRotate(180f)
-//
-//                } else if (orientation == 8) {
-//                    matrix.postRotate(270f)
-//
-//                }
                 var matrix: Matrix?     = null
                 try {
-                    val exif = ExifInterface(filePath)
+                    val exif = ExifInterface(filePath!!)
                     val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
                     val rotationInDegrees = exifToDegrees(rotation)
                     matrix = Matrix()
@@ -249,9 +231,11 @@ object ImageUtil {
         try {
 
             val exif = ExifInterface(imageFilePath)
-            val exifOrientation:String  = exif
+            val exifOrientation: String? = exif
                     .getAttribute(ExifInterface.TAG_ORIENTATION)
-            Log.d("exifOrientation", exifOrientation)
+            if (exifOrientation != null) {
+                Log.d("exifOrientation", exifOrientation)
+            }
             val orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION,
             ExifInterface.ORIENTATION_NORMAL)

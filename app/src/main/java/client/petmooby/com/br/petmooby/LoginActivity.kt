@@ -74,7 +74,7 @@ class LoginActivity : BaseActivity() {
 
                 override fun onError(exception: FacebookException) {
                     // App code
-                    Log.d("FACE",exception.message)
+                    Log.d("FACE",exception.message!!)
                     exception.printStackTrace()
                 }
 
@@ -142,7 +142,7 @@ class LoginActivity : BaseActivity() {
             showAlert(R.string.pleaseEnterAPassWord)
             return
         }
-        var dialog = showLoadingDialog()
+//        var dialog = showLoadingDialog()
         docRefUser
                 .whereEqualTo(User.USER_EMAIL,edtLoginEmail.text.toString().trim())
                 .whereEqualTo(User.USER_PASSWORD,EncryptUtil.encryptPWD(edtLoginPwd.text.toString().trim()))
@@ -154,16 +154,16 @@ class LoginActivity : BaseActivity() {
                         Preference.setUserDatabaseId(this, FireStoreReference.docRefUser!!.id!!)
                         Preference.setUserId(this,FireStoreReference.docRefUser!!.id!!)
                         Preference.setUserType(this,TypeUserEnum.USER_SYSTEM.ordinal)
-                        dialog.dismiss()
+//                        dialog.dismiss()
                         startMainActivity()
                         finish()
                     }else{
-                        dialog.dismiss()
+//                        dialog.dismiss()
                         showAlert(R.string.invalidCredentials)
                     }
                 }
                 .addOnFailureListener {
-                    exception -> onFailedQueryReturn(dialog,exception.message!!)
+                    exception -> onFailedQueryReturn(message = exception.message!!)
                 }
 
     }

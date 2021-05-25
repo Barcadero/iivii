@@ -6,7 +6,7 @@ class Resource<RETURN, ENUM : Enum<*>>(): IDTO {
         this.status = status
     }
 
-    constructor(status: ENUM, error: String?) : this() {
+    constructor(status: ENUM, error: String? = null) : this() {
         this.status = status
         this.error = error
     }

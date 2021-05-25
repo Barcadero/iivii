@@ -51,6 +51,7 @@
         android:background="@color/purple"
         app:itemIconTint="@drawable/selector_item_nav"
         app:itemTextColor="@drawable/selector_item_nav"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation"
+        android:focusable="true" />
 
 </RelativeLayout>

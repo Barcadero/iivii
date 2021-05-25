@@ -25,5 +25,6 @@ class User {
     var email:String?=null
     var type: TypeUserEnum?=null
     var registerDate: Date?= null
+    var document: String? = null
 
 }

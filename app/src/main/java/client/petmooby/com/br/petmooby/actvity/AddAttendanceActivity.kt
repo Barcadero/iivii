@@ -87,7 +87,7 @@ class AddAttendanceActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
             R.id.menuSave ->{
                 when(action){
@@ -207,6 +207,7 @@ class AddAttendanceActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_CANCELED){
             return
         }

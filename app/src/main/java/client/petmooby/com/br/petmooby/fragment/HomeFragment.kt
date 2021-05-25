@@ -9,8 +9,8 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.AddNewPetActivity
@@ -20,13 +20,11 @@ import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
-import client.petmooby.com.br.petmooby.ui.repository.AnimalRepository
 import client.petmooby.com.br.petmooby.ui.viewmodel.AnimalViewModel
 import client.petmooby.com.br.petmooby.util.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.okButton
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -37,7 +35,7 @@ class HomeFragment : Fragment() {
 
 
     var rcMyAnimalsList: RecyclerView?=null
-    private val viewModel: AnimalViewModel by viewModel()
+    private val viewModel: AnimalViewModel by viewModels()
     var currentProgress: ProgressDialog?=null
 
 
@@ -51,8 +49,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar(R.id.toolbar,getString(R.string.Home))
 
-        rcMyAnimalsList = defaultRecycleView(activity!!,R.id.rcMyAnimalsList)
-        val showMessage = Preference.getShowMessageLogin(activity!!)
+        rcMyAnimalsList = defaultRecycleView(requireActivity(),R.id.rcMyAnimalsList)
+        val showMessage = Preference.getShowMessageLogin(requireActivity())
 
         viewModel.animalLiveData.observe(viewLifecycleOwner, Observer {animals ->
             loadAnimalRCView(animals)
@@ -67,9 +65,9 @@ class HomeFragment : Fragment() {
             }
         })
         if(showMessage) {
-            activity!!.alert(R.string.loginMessage, R.string.Advice) {
-                okButton { Preference.setShowMessageLogin(activity!!,false); getMyAnimals(savedInstanceState) }
-                onCancelled { Preference.setShowMessageLogin(activity!!,false);getMyAnimals(savedInstanceState) }
+            requireActivity().alert(R.string.loginMessage, R.string.Advice) {
+                okButton { Preference.setShowMessageLogin(requireActivity(),false); getMyAnimals(savedInstanceState) }
+                onCancelled { Preference.setShowMessageLogin(requireActivity(),false);getMyAnimals(savedInstanceState) }
             }.show()
         }else{
             getMyAnimals(savedInstanceState)
@@ -128,12 +126,12 @@ class HomeFragment : Fragment() {
         val vaccineUtil = VaccineUtil()
         if(animal?.vaccineCards != null) {
             for (vaccine in animal.vaccineCards!!) {
-                vaccineUtil.scheduleEvent(activity!!, vaccine, animal.name!!,false)
+                vaccineUtil.scheduleEvent(requireActivity(), vaccine, animal.name!!,false)
             }
         }
         if(animal?.treatmentCard != null) {
             for (treatment in animal.treatmentCard!!) {
-                TreatmentUtil.generateTreatmentAlarm(activity!!, animal.name!!, treatment,false)
+                TreatmentUtil.generateTreatmentAlarm(requireActivity(), animal.name!!, treatment,false)
             }
         }
     }

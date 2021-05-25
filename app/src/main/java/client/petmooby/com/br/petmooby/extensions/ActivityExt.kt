@@ -112,8 +112,8 @@ fun Activity.showAlertError(@StringRes idResource: Int){
     showAlertError(getString(idResource))
 }
 
-fun Activity.onFailedQueryReturn(dialog: ProgressDialog,message:String){
-    dialog.dismiss()
+fun Activity.onFailedQueryReturn(dialog: ProgressDialog? = null ,message:String = ""){
+    dialog?.dismiss()
     Log.d("FACE",message)
 }
 
@@ -166,7 +166,7 @@ fun Activity.setLinkSpanOnView(texto: String?, textView: TextView, inicio: Int, 
 
 fun Activity.invokeExternalAction(packageApp: String?) {
     try {
-        var launchIntent = packageManager.getLaunchIntentForPackage(packageApp)
+        var launchIntent = packageManager.getLaunchIntentForPackage(packageApp!!)
         if (launchIntent == null) {
             launchIntent = Intent(Intent.ACTION_VIEW)
             launchIntent.data = Uri.parse(packageApp)

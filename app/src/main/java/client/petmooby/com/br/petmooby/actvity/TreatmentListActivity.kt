@@ -34,8 +34,8 @@ class TreatmentListActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when(item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
             R.id.menuAdd ->{
                 if(VariablesUtil.gbSelectedAnimal?.treatmentCard?.size!! > 7){
                     showAlert(R.string.youCanOnlyHaveSomeTreatments)

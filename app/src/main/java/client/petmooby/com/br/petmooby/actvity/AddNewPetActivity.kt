@@ -175,7 +175,7 @@ class AddNewPetActivity : BaseActivity() {
                         //DOGS
                         enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
-                        val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context!!, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(VariablesUtil.gbSelectedAnimal?.breed != null){
@@ -188,7 +188,7 @@ class AddNewPetActivity : BaseActivity() {
                         //CATS
                         enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
-                        val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context!!, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(VariablesUtil.gbSelectedAnimal?.breed != null){
@@ -200,7 +200,7 @@ class AddNewPetActivity : BaseActivity() {
                         //Birds
                         enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
-                        val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context!!, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(VariablesUtil.gbSelectedAnimal?.breed != null){
