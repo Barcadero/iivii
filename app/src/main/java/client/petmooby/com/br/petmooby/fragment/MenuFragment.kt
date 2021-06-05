@@ -28,7 +28,11 @@ import org.jetbrains.anko.yesButton
 
 /**
  * A simple [Fragment] subclass.
+ * Email account for heroku: pwd: 88petymoo22&&
+ * email: petmooby.heroku@gmail.com
  */
+const val URL = "https://petmooby.herokuapp.com"
+const val TERMS = "/pages/terms"
 class MenuFragment : Fragment() {
 
     var tokenTrace = object : AccessTokenTracker() {
@@ -57,12 +61,12 @@ class MenuFragment : Fragment() {
         btnMenuLogout.setOnClickListener{logout()}
         btnMenuVeterinaryPartners.setOnClickListener { startActivity(Intent(activity,VeterinaryPartnersListActivity::class.java)) }
         btnMenuAppName.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://petmooby.com.br"))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(URL))
             startActivity(browserIntent)
         }
         btnMenuRateApp.setOnClickListener { AppRate.with(activity).showRateDialog(activity) }
         btnMenuTermsOfUse.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://petmooby.com.br/pages/terms.html"))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(URL+ TERMS))
             startActivity(browserIntent)
         }
         btnMenuContactUs.setOnClickListener {

@@ -76,7 +76,7 @@ class LoginActivity : BaseActivity() {
 
                 override fun onError(exception: FacebookException) {
                     // App code
-                    Log.d("FACE",exception.message)
+                    Log.d("FACE",exception.message!!)
                     exception.printStackTrace()
                 }
 

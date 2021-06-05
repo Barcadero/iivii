@@ -35,7 +35,7 @@ class PhotoViewActivity : BaseActivity() {
             ImageUtil.loadImageFromUrl(this, url, photoView, progressPhotoView)
         }else{
             val path = intent.getStringExtra(Parameters.PATH_IMAGE)
-            loadImageByPath(photoView, progressPhotoView,path)
+            loadImageByPath(photoView, progressPhotoView,path!!)
         }
 
     }
@@ -81,8 +81,8 @@ class PhotoViewActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
             R.id.menuDeleteIcon ->{
                 dialogForDeleteFile()
             }

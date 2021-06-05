@@ -164,7 +164,7 @@ object ImageUtil {
 //                }
                 var matrix: Matrix?     = null
                 try {
-                    val exif = ExifInterface(filePath)
+                    val exif = ExifInterface(filePath!!)
                     val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
                     val rotationInDegrees = exifToDegrees(rotation)
                     matrix = Matrix()
@@ -250,7 +250,7 @@ object ImageUtil {
 
             val exif = ExifInterface(imageFilePath)
             val exifOrientation:String  = exif
-                    .getAttribute(ExifInterface.TAG_ORIENTATION)
+                    .getAttribute(ExifInterface.TAG_ORIENTATION)!!
             Log.d("exifOrientation", exifOrientation)
             val orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION,
