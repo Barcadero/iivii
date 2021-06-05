@@ -1,16 +1,13 @@
 package client.petmooby.com.br.petmooby.actvity
 
 
+//import io.grpc.Compressor
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -19,15 +16,12 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.annotation.UiThread
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
-import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.comparator.EnumBreedComparator
 import client.petmooby.com.br.petmooby.model.enums.*
 import client.petmooby.com.br.petmooby.util.*
@@ -35,22 +29,14 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
-import com.mvc.imagepicker.ImagePicker
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import id.zelory.compressor.Compressor
-//import io.grpc.Compressor
 import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.IOException
-import java.math.BigDecimal
 import java.util.*
 
 
@@ -80,9 +66,15 @@ class AddNewPetActivity : BaseActivity() {
         edtNewPetBirthday.addTextChangedListener(DateMaskTextWatcher(edtNewPetBirthday))
         isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
         if(isForUpdate) {
-            setupToolbar(R.id.toolbarNewPet, VariablesUtil.gbSelectedAnimal?.name)
+            setupToolbar(R.id.toolbarNewPet, VariablesUtil.gbSelectedAnimal?.name,true, View.OnClickListener {
+                LogUtil.logDebug("Call back pressed")
+                finish()
+            })
         }else {
-            setupToolbar(R.id.toolbarNewPet, R.string.addPet)
+            setupToolbar(R.id.toolbarNewPet, getString(R.string.addPet) ,true,View.OnClickListener {
+                LogUtil.logDebug("Call back pressed")
+                finish()
+            })
         }
         initSpinners()
         ivProfileMyPet.setOnClickListener {
@@ -208,7 +200,7 @@ class AddNewPetActivity : BaseActivity() {
                         //DOGS
                         enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
-                        val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForDogs>(view?.context!!, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForDogs.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(VariablesUtil.gbSelectedAnimal?.breed != null){
@@ -221,7 +213,7 @@ class AddNewPetActivity : BaseActivity() {
                         //CATS
                         enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
-                        val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForCats>(view?.context!!, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForCats.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(VariablesUtil.gbSelectedAnimal?.breed != null){
@@ -233,7 +225,7 @@ class AddNewPetActivity : BaseActivity() {
                         //Birds
                         enableSpinnerBreed(true)
                         spNewPetBreed.isEnabled = true
-                        val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
+                        val adapterValue = ArrayAdapter<EnumBreedsForBirds>(view?.context!!, LayoutResourceUtil.getSpinnerDropDown(), EnumBreedsForBirds.values())
                         adapterValue.sort(EnumBreedComparator())
                         spNewPetBreed.adapter = adapterValue
                         if(VariablesUtil.gbSelectedAnimal?.breed != null){
