@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.UiThread
 import client.petmooby.com.br.petmooby.R
+import client.petmooby.com.br.petmooby.databinding.ActivityTreatmentBinding
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
@@ -20,8 +21,6 @@ import client.petmooby.com.br.petmooby.model.enums.EnumTypeInterval
 import client.petmooby.com.br.petmooby.model.enums.EnumTypePeriod
 import client.petmooby.com.br.petmooby.model.enums.EnumTypeTreatment
 import client.petmooby.com.br.petmooby.util.*
-import com.facebook.login.LoginManager
-import kotlinx.android.synthetic.main.activity_treatment.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.toast
@@ -31,33 +30,33 @@ import java.util.*
 
 class TreatmentActivity : BaseActivity() {
 
-//    var dateInformed         = Date()
+    private lateinit var binding: ActivityTreatmentBinding
     var mDateInitial:Date?          = Date()
     var mDateFinal:Date?            = Date()
     var currentTreatment: Animal.TreatmentCard?=null
-//    var isForUpdate                 = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_treatment)
+        binding = ActivityTreatmentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupToolbar(R.id.toolbarTreatment,R.string.treatment)
         initSpinners()
 
-        edtTreatmentDateInitial.setOnClickListener {
+        binding.edtTreatmentDateInitial.setOnClickListener {
             DateTimePickerDialog.showDatePicker(this,it,mDateInitial!!)
         }
 
-        edtTreatmentDateInitial.setOnFocusChangeListener { view, hasFocus -> if(hasFocus)
+        binding.edtTreatmentDateInitial.setOnFocusChangeListener { view, hasFocus -> if(hasFocus)
             DateTimePickerDialog.showDatePicker(this,view,mDateInitial!!)
         }
-        edtTreatmentDateFinal.setOnClickListener {
+        binding.edtTreatmentDateFinal.setOnClickListener {
             DateTimePickerDialog.showDatePicker(this,it,mDateFinal!!)
         }
 
-        edtTreatmentDateFinal.setOnFocusChangeListener { view, hasFocus -> if(hasFocus)
+        binding.edtTreatmentDateFinal.setOnFocusChangeListener { view, hasFocus -> if(hasFocus)
             DateTimePickerDialog.showDatePicker(this,view,mDateFinal!!)
         }
 
-        var treatmentID = intent.getLongExtra(Parameters.TREATMENT,0L)
+        val treatmentID = intent.getLongExtra(Parameters.TREATMENT,0L)
         if(treatmentID != 0L){
             currentTreatment = try {
                 VariablesUtil.gbSelectedAnimal?.treatmentCard!!.filter { it.identity == treatmentID }[0]
@@ -72,42 +71,31 @@ class TreatmentActivity : BaseActivity() {
         if (currentTreatment != null) {
             if(currentTreatment?.dateFinal != null) {
                 mDateFinal = currentTreatment?.dateFinal!!
-                edtTreatmentDateFinal.setText(DateTimeUtil.formatDateTime(currentTreatment?.dateFinal,"dd/MM/yyyy"))
+                binding.edtTreatmentDateFinal.setText(DateTimeUtil.formatDateTime(currentTreatment?.dateFinal,"dd/MM/yyyy"))
             }
             if(currentTreatment?.dateInitial != null){
                 mDateInitial = currentTreatment?.dateInitial!!
-                edtTreatmentDateInitial.setText(DateTimeUtil.formatDateTime(currentTreatment?.dateInitial,"dd/MM/yyyy"))
+                binding.edtTreatmentDateInitial.setText(DateTimeUtil.formatDateTime(currentTreatment?.dateInitial,"dd/MM/yyyy"))
             }
-            edtTreatmentDesc.setText(currentTreatment?.name)
-            swtTreatmentAlarm.isChecked = currentTreatment?.isIsActive!!
-            edtTreatmentNote.setText(currentTreatment?.notes)
+            binding.edtTreatmentDesc.setText(currentTreatment?.name)
+            binding.swtTreatmentAlarm.isChecked = currentTreatment?.isIsActive!!
+            binding.edtTreatmentNote.setText(currentTreatment?.notes)
             //spTreatmentInterval.setSelection((currentTreatment?.timeInterval!! - 1).toInt())
-            spTreatmentTypeInterval.setSelection(currentTreatment?.typeInterval?.ordinal!!)
-            spTreatmentPeriod.setSelection(currentTreatment?.typePeriod?.ordinal!!)
-            spTreatmentType.setSelection(currentTreatment?.typeTreatment?.ordinal!!)
-            spTreatmentType.isEnabled = false
-            edtTreatmentInterval.setText(currentTreatment?.timeInterval!!.toString())
+            binding.spTreatmentTypeInterval.setSelection(currentTreatment?.typeInterval?.ordinal!!)
+            binding.spTreatmentPeriod.setSelection(currentTreatment?.typePeriod?.ordinal!!)
+            binding.spTreatmentType.setSelection(currentTreatment?.typeTreatment?.ordinal!!)
+            binding.spTreatmentType.isEnabled = false
+            binding.edtTreatmentInterval.setText(currentTreatment?.timeInterval!!.toString())
 
         }
     }
 
     private fun initSpinners(){
-        spTreatmentType.adapter = ArrayAdapter<EnumTypeTreatment>(this, LayoutResourceUtil.getSpinnerDropDown(),EnumTypeTreatment.values())
-//        spTreatmentType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//
-//            }
-//
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//
-//            }
-//
-//        }
-        //spTreatmentInterval.adapter     = ArrayAdapter<Int>(this,LayoutResourceUtil.getSpinnerDropDown(), listOf(1,2,3,4,5,6,7,8,9,10))
-        spTreatmentPeriod.adapter       = ArrayAdapter<EnumTypePeriod>(this,LayoutResourceUtil.getSpinnerDropDown(),EnumTypePeriod.values())
-        spTreatmentPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spTreatmentType.adapter = ArrayAdapter<EnumTypeTreatment>(this, LayoutResourceUtil.getSpinnerDropDown(),EnumTypeTreatment.values())
+        binding.spTreatmentPeriod.adapter       = ArrayAdapter<EnumTypePeriod>(this,LayoutResourceUtil.getSpinnerDropDown(),EnumTypePeriod.values())
+        binding.spTreatmentPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                //NOTE do nothing
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -123,47 +111,36 @@ class TreatmentActivity : BaseActivity() {
             }
 
         }
-        spTreatmentTypeInterval.adapter = ArrayAdapter<EnumTypeInterval>(this,LayoutResourceUtil.getSpinnerDropDown(), EnumTypeInterval.values())
+        binding.spTreatmentTypeInterval.adapter = ArrayAdapter<EnumTypeInterval>(this,LayoutResourceUtil.getSpinnerDropDown(), EnumTypeInterval.values())
 
     }
 
     private fun validate() : Boolean{
-//        if(dateFinal == null){
-//            edtTreatmentDateFinal.error = getString(R.string.pleaseGiveADate)
-//            edtTreatmentDateFinal.requestFocus()
-//            return false
-//        }
-//        if(dateInformed == null){
-//            edtTreatmentDate.error = getString(R.string.pleaseGiveADate)
-//            edtTreatmentDate.requestFocus()
-//            return false
-//        }
-
-        if(spTreatmentType.selectedItem == null){
+        if(binding.spTreatmentType.selectedItem == null){
             showAlert(R.string.pleaseSelectATreatmentType)
             return false
         }
-        if(edtTreatmentInterval.text.toString().isEmpty()){
+        if(binding.edtTreatmentInterval.text.toString().isEmpty()){
             showAlert(R.string.pleaseSelectATreatmentInterval)
             return false
         }else{
-            val interval = edtTreatmentInterval.text.toString().toLong()
+            val interval = binding.edtTreatmentInterval.text.toString().toLong()
             if(interval <= 0){
                 showAlert(R.string.pleaseIntervalShouldGreatThenZero)
             }
         }
 
-        if(spTreatmentPeriod.selectedItem == null){
+        if(binding.spTreatmentPeriod.selectedItem == null){
             showAlert(R.string.pleaseSelectATreatmentPeriod)
         }
 
-        if(edtTreatmentDesc.text.toString().isEmpty()){
-            edtTreatmentDesc.error = getString(R.string.pleaseGiveATreatmentName)
-            edtTreatmentDesc.requestFocus()
+        if(binding.edtTreatmentDesc.text.toString().isEmpty()){
+            binding.edtTreatmentDesc.error = getString(R.string.pleaseGiveATreatmentName)
+            binding.edtTreatmentDesc.requestFocus()
             return false
         }
 
-        when(spTreatmentPeriod.selectedItem as EnumTypePeriod){
+        when(binding.spTreatmentPeriod.selectedItem as EnumTypePeriod){
             EnumTypePeriod.INFORMED ->{
                 if(!mDateFinal!!.after(mDateInitial)){
                     showAlert(R.string.pleaseFinalDateShoulBeGreateThanInitial)
@@ -179,7 +156,7 @@ class TreatmentActivity : BaseActivity() {
     }
 
     private fun save(){
-        var dialog = showLoadingDialog()
+        val dialog = showLoadingDialog()
         if(!validate())return
         if(currentTreatment == null){
             //Save a treatment
@@ -188,14 +165,14 @@ class TreatmentActivity : BaseActivity() {
             with(currentTreatment!!){
                 dateFinal      = mDateFinal
                 dateInitial    = mDateInitial
-                name                = edtTreatmentDesc.text.toString()
+                name                = binding.edtTreatmentDesc.text.toString()
                 identity            = Random().nextInt(1000000000).toLong()
-                isIsActive            = swtTreatmentAlarm.isChecked
-                notes               = edtTreatmentNote.text.toString()
-                timeInterval        = edtTreatmentInterval.text.toString().toLong()
-                typeInterval        = spTreatmentTypeInterval.selectedItem as EnumTypeInterval
-                typePeriod          = spTreatmentPeriod.selectedItem as EnumTypePeriod
-                typeTreatment       = spTreatmentType.selectedItem as EnumTypeTreatment
+                isIsActive          = binding.swtTreatmentAlarm.isChecked
+                notes               = binding.edtTreatmentNote.text.toString()
+                timeInterval        = binding.edtTreatmentInterval.text.toString().toLong()
+                typeInterval        = binding.spTreatmentTypeInterval.selectedItem as EnumTypeInterval
+                typePeriod          = binding.spTreatmentPeriod.selectedItem as EnumTypePeriod
+                typeTreatment       = binding.spTreatmentType.selectedItem as EnumTypeTreatment
             }
             VariablesUtil.gbSelectedAnimal?.treatmentCard?.add(currentTreatment!!)
             saveAnimal(dialog)
@@ -205,13 +182,13 @@ class TreatmentActivity : BaseActivity() {
             with(VariablesUtil.gbSelectedAnimal?.treatmentCard?.filter { it.identity == currentTreatment?.identity }!![0]){
                 dateFinal     = mDateFinal
                 dateInitial   = mDateInitial
-                name               = edtTreatmentDesc.text.toString()
-                isIsActive           = swtTreatmentAlarm.isChecked
-                notes           = edtTreatmentNote.text.toString()
-                timeInterval    = edtTreatmentInterval.text.toString().toLong()
-                typeInterval    = spTreatmentTypeInterval.selectedItem as EnumTypeInterval
-                typePeriod      = spTreatmentPeriod.selectedItem as EnumTypePeriod
-                typeTreatment   = spTreatmentType.selectedItem as EnumTypeTreatment
+                name          = binding.edtTreatmentDesc.text.toString()
+                isIsActive    = binding.swtTreatmentAlarm.isChecked
+                notes         = binding.edtTreatmentNote.text.toString()
+                timeInterval  = binding.edtTreatmentInterval.text.toString().toLong()
+                typeInterval  = binding.spTreatmentTypeInterval.selectedItem as EnumTypeInterval
+                typePeriod    = binding.spTreatmentPeriod.selectedItem as EnumTypePeriod
+                typeTreatment = binding.spTreatmentType.selectedItem as EnumTypeTreatment
                 saveAnimal(dialog)
             }
         }
@@ -223,13 +200,13 @@ class TreatmentActivity : BaseActivity() {
                 .addOnSuccessListener {
                     if(isDelete){
                         toast(R.string.treatmentDeleted)
-                        var intent = Intent()
+                        val intent = Intent()
                         //intent.putExtra()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
                     }else {
                         saveAndSetResult(dialog)
-                        spTreatmentType.isEnabled = false
+                        binding.spTreatmentType.isEnabled = false
                         val animal = VariablesUtil.gbSelectedAnimal
                         if(animal != null){
                             if(isForUpdate){
@@ -291,13 +268,13 @@ class TreatmentActivity : BaseActivity() {
     @UiThread
     fun setFinalDateVisibility(isVisible: Boolean){
         if(isVisible){
-            edtTreatmentDateFinal.isEnabled     = true
-            edtTreatmentDateFinal.visibility    = VISIBLE
-            ivTreatment6.visibility             = VISIBLE
+            binding.edtTreatmentDateFinal.isEnabled     = true
+            binding.edtTreatmentDateFinal.visibility    = VISIBLE
+            binding.ivTreatment6.visibility             = VISIBLE
         }else {
-            edtTreatmentDateFinal.isEnabled     = false
-            edtTreatmentDateFinal.visibility    = INVISIBLE
-            ivTreatment6.visibility             = INVISIBLE
+            binding.edtTreatmentDateFinal.isEnabled     = false
+            binding.edtTreatmentDateFinal.visibility    = INVISIBLE
+            binding.ivTreatment6.visibility             = INVISIBLE
         }
     }
 }

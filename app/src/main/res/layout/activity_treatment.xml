@@ -47,6 +47,8 @@
                     android:layout_width="@dimen/iconTreatmentSize"
                     android:layout_height="@dimen/iconTreatmentSize"
                     android:id="@+id/imageView"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
                     android:src="@drawable/icons8_pills_60"/>
 
                 <Spinner
@@ -79,12 +81,14 @@
                     android:layout_height="@dimen/iconTreatmentSize"
                     android:id="@+id/imageView2"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="6dp"
                     android:src="@drawable/icons8_doctors_bag_60"/>
                 <EditText
                     android:id="@+id/edtTreatmentDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:maxLength="180"
                     android:layout_toEndOf="@+id/imageView2" />
 
             </RelativeLayout>
@@ -145,6 +149,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:inputType="number"
+                    android:maxLength="3"
+                    android:hint="@string/frequency"
                     android:layout_toEndOf="@+id/ivTreatment4"
                     />
 
@@ -211,7 +217,7 @@
                     android:id="@+id/ivTreatment5"
                     android:layout_width="@dimen/iconTreatmentSize"
                     android:layout_height="@dimen/iconTreatmentSize"
-
+                    android:layout_marginTop="6dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="0dp"
                     android:src="@drawable/icons8_schedule_30" />
@@ -220,6 +226,7 @@
                     android:id="@+id/spTreatmentPeriod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/ivTreatment5" />
             </RelativeLayout>
@@ -236,6 +243,7 @@
                     android:layout_width="@dimen/iconTreatmentSize"
                     android:layout_height="@dimen/iconTreatmentSize"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/icons8calendar60" />
 
                 <EditText
@@ -258,6 +266,7 @@
                     android:layout_width="@dimen/iconTreatmentSize"
                     android:layout_height="@dimen/iconTreatmentSize"
                     android:src="@drawable/icons8calendar60"
+                    android:layout_marginTop="8dp"
                     android:layout_marginStart="8dp"/>
 
                 <EditText

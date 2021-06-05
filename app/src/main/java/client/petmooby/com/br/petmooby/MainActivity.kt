@@ -116,8 +116,8 @@ class MainActivity : BaseActivity() {
             var user = User()
             user.name           = Preference.get<String>(this,Preference.USER_NAME)
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
-            user.userIdFB       = Preference.getUserId(this)//Preference.get(this,Preference.USER_ID)
-            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]//TypeUserEnum.FACEBOOK
+            user.userIdFB       = Preference.getUserId(this)
+            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]
             user.email          = Preference.getUserEmail(this)
             user.registerDate   = Date()
             LogUtil.logDebug("FACE user name: ${user.name}")
@@ -167,7 +167,6 @@ class MainActivity : BaseActivity() {
         try {
            var userNeedsUpdate = false
            val documents = task.result?.documents
-           //val user = User()
            if (documents?.size == 1) {
                val id = documents[0].id
                val currentUser = documents[0].toObject(User::class.java)

@@ -220,4 +220,5 @@
     <string name="wasNotPossibleToSaveAnimal">Sorry! Was not possible to update your pet</string>
     <string name="adviceRotateScreen">If you are having trouble viewing the image, please try placing your phone horizontally.</string>
     <string name="adviceForBestCameraPhoto">If you choose to take a picture of the document, please try taking it with the phone upright to improve the framing of the image.</string>
+    <string name="frequency">frequency</string>
 </resources>
