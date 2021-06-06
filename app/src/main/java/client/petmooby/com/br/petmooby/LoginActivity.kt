@@ -1,32 +1,38 @@
 package client.petmooby.com.br.petmooby
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import client.petmooby.com.br.petmooby.actvity.BaseActivity
 import client.petmooby.com.br.petmooby.actvity.RegisterUserActivity
 import client.petmooby.com.br.petmooby.databinding.ActivityLoginBinding
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
-import client.petmooby.com.br.petmooby.model.User
+import client.petmooby.com.br.petmooby.model.enums.StatusLogin
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
-import client.petmooby.com.br.petmooby.util.EncryptUtil
-import client.petmooby.com.br.petmooby.util.FireStoreReference
+import client.petmooby.com.br.petmooby.ui.viewmodel.LoginViewModel
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
 import com.facebook.Profile.setCurrentProfile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
  * A login screen that offers login via email/password.
  */
+@AndroidEntryPoint
 class LoginActivity : BaseActivity() {
 
+    private var dialog : ProgressDialog? = null
     private var callBackManager:CallbackManager?=null
     private lateinit var binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +97,7 @@ class LoginActivity : BaseActivity() {
             doLoginSystem()
         }
 
-
+        initObservers()
     }
 
     private fun setProfileAndCallMainActivity(profile: Profile?, loginResult: LoginResult?) {
@@ -142,29 +148,28 @@ class LoginActivity : BaseActivity() {
             showAlert(R.string.pleaseEnterAPassWord)
             return
         }
-        val dialog = showLoadingDialog()
-        docRefUser
-                .whereEqualTo(User.USER_EMAIL,binding.edtLoginEmail.text.toString().trim())
-                .whereEqualTo(User.USER_PASSWORD,EncryptUtil.encryptPWD(binding.edtLoginPwd.text.toString().trim()))
-                .get()
-                .addOnSuccessListener {
-                    if(it.documents.isNotEmpty()){
-                        Preference.setUserEmail(baseContext,binding.edtLoginEmail.text.toString())
-                        FireStoreReference.docRefUser = it.documents[0].reference
-                        Preference.setUserDatabaseId(this, FireStoreReference.docRefUser!!.id)
-                        Preference.setUserId(this,FireStoreReference.docRefUser!!.id)
-                        Preference.setUserType(this,TypeUserEnum.USER_SYSTEM.ordinal)
-                        dialog.dismiss()
-                        startMainActivity()
-                        finish()
-                    }else{
-                        dialog.dismiss()
-                        showAlert(R.string.invalidCredentials)
-                    }
-                }
-                .addOnFailureListener {
-                    exception -> onFailedQueryReturn(dialog,exception.message!!)
-                }
+        dialog = showLoadingDialog()
+        viewModel.doLoginSystem(
+                email =  binding.edtLoginEmail.text.toString().trim(),
+                pwd   =  binding.edtLoginPwd.text.toString().trim()
+        )
+    }
 
+    private fun initObservers(){
+        viewModel.loginLiveData.observe(this, Observer {
+            dialog?.dismiss()
+            when(it.status()){
+                StatusLogin.SUCCESS -> {
+                    viewModel.setPreference(this,it.data()!!)
+                    startMainActivity()
+                    finish()
+                }
+                StatusLogin.EMPTY ->{
+                    showAlert(R.string.invalidCredentials)
+                }else -> {
+                    onFailedQueryReturn(dialog!!,getString(R.string.login_fail))
+                }
+            }
+        })
     }
 }

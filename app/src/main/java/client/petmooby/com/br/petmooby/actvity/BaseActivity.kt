@@ -19,6 +19,7 @@ import client.petmooby.com.br.petmooby.util.VariablesUtil
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mvc.imagepicker.ImagePicker
+import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

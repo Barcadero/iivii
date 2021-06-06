@@ -62,8 +62,8 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_add,menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_add,menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
