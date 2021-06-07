@@ -305,7 +305,7 @@ class AddNewPetActivity : BaseActivity() {
             breed           = enumSelectedBreed?.getValue(enumSelectedBreed!!.getIndex(enumSelectedBreed!!))
             type            = EnumTypeAnimal.values()[spNewPetKindAnimal.selectedItemPosition]
             gender          = EnumGender.values()[spNewPetGender.selectedItemPosition].value
-            user            = FireStoreReference.docRefUser
+//            user            = FireStoreReference.docRefUser
         }
         if(validateFields(VariablesUtil.gbSelectedAnimal!!)) {
             if(!isForUpdate) {

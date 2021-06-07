@@ -31,6 +31,7 @@ class LoginViewModel  @Inject constructor(
         Preference.setUserDatabaseId(context, userLogin.docId)
         Preference.setUserId(context,userLogin.docId)
         Preference.setUserType(context,userLogin.type.ordinal)
+        Preference.setUserPath(context, userLogin.docRef)
     }
 
 }

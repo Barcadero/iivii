@@ -5,9 +5,10 @@ import com.google.firebase.firestore.DocumentReference
 /**
  * Created by Rafael Rocha on 15/07/2019.
  */
+const val TAG_READ_FIREBASE = "FIREBASE_READ"
 class FireStoreReference {
     companion object {
-        var docRefUser  : DocumentReference?=null
+//        var docRefUser  : DocumentReference?=null
         var docRefMyPets: MutableList<DocumentReference>?=null
 
         fun saveAnimalReference(documentReference: DocumentReference){

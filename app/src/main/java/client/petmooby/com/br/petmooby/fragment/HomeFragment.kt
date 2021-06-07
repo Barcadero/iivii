@@ -1,15 +1,15 @@
 package client.petmooby.com.br.petmooby.fragment
 
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.AddNewPetActivity
 import client.petmooby.com.br.petmooby.adapter.AnimalAdapter
@@ -21,9 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
 import org.jetbrains.anko.okButton
-import org.jetbrains.anko.yesButton
 
 
 /**
@@ -47,12 +45,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar(R.id.toolbar,getString(R.string.Home))
 
-        rcMyAnimalsList = defaultRecycleView(activity!!,R.id.rcMyAnimalsList)
-        val showMessage = Preference.getShowMessageLogin(activity!!)
+        rcMyAnimalsList = defaultRecycleView(requireActivity(),R.id.rcMyAnimalsList)
+        val showMessage = Preference.getShowMessageLogin(requireActivity())
         if(showMessage) {
-            activity!!.alert(R.string.loginMessage, R.string.Advice) {
-                okButton { Preference.setShowMessageLogin(activity!!,false); getMyAnimals() }
-                onCancelled { Preference.setShowMessageLogin(activity!!,false);getMyAnimals() }
+            requireActivity().alert(R.string.loginMessage, R.string.Advice) {
+                okButton { Preference.setShowMessageLogin(requireActivity(),false); getMyAnimals() }
+                onCancelled { Preference.setShowMessageLogin(requireActivity(),false);getMyAnimals() }
             }.show()
         }else{
             getMyAnimals()
@@ -90,9 +88,13 @@ class HomeFragment : Fragment() {
         if(VariablesUtil.gbAnimals  != null && VariablesUtil.gbAnimals?.size!! > 0){
             updateAdapter()
         }else {
-            var dialog = showLoadingDialog(getString(R.string.gettingMyPets))
+            val dialog = showLoadingDialog(getString(R.string.gettingMyPets))
+            //TODO test if we can use the user id from preferences
+            val userPath = Preference.getUserPath(requireContext())
+            val userRef = docRefVet.document(userPath!!)
+            Log.d(TAG_READ_FIREBASE,"Get Animals")
             docRefVet.collection(CollectionsName.ANIMAL)
-                    .whereEqualTo("user", FireStoreReference.docRefUser)
+                    .whereEqualTo("user", userRef)
                     .get()
                     .addOnSuccessListener { querySnapshot ->
                         loadAnimalRCView(querySnapshot)
@@ -126,12 +128,12 @@ class HomeFragment : Fragment() {
         val vaccineUtil = VaccineUtil()
         if(animal?.vaccineCards != null) {
             for (vaccine in animal.vaccineCards!!) {
-                vaccineUtil.scheduleEvent(activity!!, vaccine, animal.name!!,false)
+                vaccineUtil.scheduleEvent(requireActivity(), vaccine, animal.name!!,false)
             }
         }
         if(animal?.treatmentCard != null) {
             for (treatment in animal.treatmentCard!!) {
-                TreatmentUtil.generateTreatmentAlarm(activity!!, animal.name!!, treatment,false)
+                TreatmentUtil.generateTreatmentAlarm(requireActivity(), animal.name!!, treatment,false)
             }
         }
     }
