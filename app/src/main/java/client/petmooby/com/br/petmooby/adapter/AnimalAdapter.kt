@@ -19,12 +19,13 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_my_animal_list.view.*
+import java.util.*
 
 /**
  * Created by Rafael Rocha on 15/07/2019.
  */
 class AnimalAdapter (
-        val animals: List<Animal>,
+        private val animals: MutableList<Animal>,
         val onClick: (Animal) -> Unit) : RecyclerView.Adapter<AnimalAdapter.AnimalHolder>(){
 
     override fun onBindViewHolder(holder: AnimalHolder, position:  Int) {
@@ -86,4 +87,19 @@ class AnimalAdapter (
         var progressMyAnimal = view.findViewById<ProgressBar>(R.id.progressMyAnimal)
         val viewSeparator = view.viewAnimalList
     }
+
+    fun removeAnimal(animal: Animal){
+        val indexOf = animals.indexOf(animal)
+        if(animals.remove(animal)) {
+            notifyItemRemoved(indexOf)
+        }
+    }
+
+    fun addAnimal(animal: Animal){
+        if(animals.add(animal)){
+            notifyDataSetChanged()
+        }
+    }
+
+
 }

@@ -31,7 +31,7 @@ import java.util.*
 
 
     //    @ParcelPropertyConverter(DocumentReferenceConverter::class)
-    var user: DocumentReference?=null
+//    var user: DocumentReference?=null
 
 
     //    @Parcel
