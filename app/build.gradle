@@ -145,5 +145,9 @@ dependencies {
     // Below is used to run the easypermissions library to manage location permissions
     // EasyPermissions is needed to help us request for permission to access location
     implementation 'pub.devrel:easypermissions:3.0.0'
+    //For Retrofit
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingVersion"
 
 }
