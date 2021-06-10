@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.actvity.AddNewPetActivity
 import client.petmooby.com.br.petmooby.adapter.AnimalAdapter
+import client.petmooby.com.br.petmooby.databinding.FragmentHomeBinding
 import client.petmooby.com.br.petmooby.extensions.*
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.enums.StatusAnimal
 import client.petmooby.com.br.petmooby.ui.viewmodel.HomeViewModel
 import client.petmooby.com.br.petmooby.util.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
+//import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.okButton
 
@@ -29,10 +30,10 @@ import org.jetbrains.anko.okButton
 /**
  * A simple [Fragment] subclass.
  */
-const val CODE_RESULT_FOR_ADD_PET = 122
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
+    private var _binding : FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private var dialog : ProgressDialog? = null
     var rcMyAnimalsList: RecyclerView?=null
     private val homeViewModel : HomeViewModel by viewModels()
@@ -51,7 +52,9 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +69,7 @@ class HomeFragment : Fragment() {
             getMyAnimals()
         }
 
-        fabAddNewPet.setOnClickListener { startNewAnimalActivity() }
+//        fabAddNewPet.setOnClickListener { startNewAnimalActivity() }
         initObservers()
     }
 
@@ -98,52 +101,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun startNewAnimalActivity() {
-//        startActivityForResult(Intent(activity, AddNewPetActivity::class.java), CODE_RESULT_FOR_ADD_PET)
         resultForAddPet.launch(Intent(activity, AddNewPetActivity::class.java))
     }
 
     private fun getMyAnimals(){
         dialog = showLoadingDialog(getString(R.string.gettingMyPets))
         homeViewModel.getAnimalList(requireContext())
-//        if(VariablesUtil.gbAnimals  != null && VariablesUtil.gbAnimals?.size!! > 0){
-//
-//            updateAdapter(VariablesUtil.gbAnimals!!)
-//        }else {
-//            dialog = showLoadingDialog(getString(R.string.gettingMyPets))
-//            homeViewModel.getAnimalList(requireContext())
-//            val userPath = Preference.getUserPath(requireContext())
-//            val userRef = docRefVet.document(userPath!!)
-//            Log.d(TAG_READ_FIREBASE,"Get Animals")
-//            docRefVet.collection(CollectionsName.ANIMAL)
-//                    .whereEqualTo("user", userRef)
-//                    .get()
-//                    .addOnSuccessListener { querySnapshot ->
-//                        loadAnimalRCView(querySnapshot)
-//                        dialog.dismiss()
-//                    }.addOnFailureListener { exception ->
-//                onFailedQueryReturn(dialog, exception.message!!)
-//            }
-//        }
     }
-
-//    private fun loadAnimalRCView(animalList: List<Animal>){
-//        if(querySnapshot.isEmpty){
-//            llHomeNoPetYet.visibility = VISIBLE
-//        }else{
-//            //VariablesUtil.gbAnimals = mutableListOf<Animal>()
-//            querySnapshot.documents.forEach{
-//                var animal = it.toObject(Animal::class.java)
-//                if(animal?.id == null || animal.id!!.isEmpty()){
-//                    animal?.id = it.id
-//
-//                }
-//                VariablesUtil.addAnimal(animal!!)
-//                scheduleAllEvents(animal)
-//            }
-//            updateAdapter()
-//        }
-//        updateAdapter(animalList)
-//    }
 
     private fun scheduleAllEvents(animal: Animal?) {
         //Schedule all alarms for each animal
@@ -165,41 +129,14 @@ class HomeFragment : Fragment() {
         animalList.forEach {
             scheduleAllEvents(it)
         }
-//        if(VariablesUtil.gbAnimals != null && VariablesUtil.gbAnimals?.isNotEmpty()!!){
-//            llHomeNoPetYet.visibility = GONE
-//        }else{
-//            llHomeNoPetYet.visibility = VISIBLE
-//        }
     }
 
     private fun animalDetail(animal: Animal){
         VariablesUtil.gbSelectedAnimal = animal
         val intent = Intent(activity,AddNewPetActivity::class.java)
         intent.putExtra(Parameters.IS_FOR_UPDATE,true)
-        startActivityForResult(intent,CODE_RESULT_FOR_ADD_PET)
-
+        resultForAddPet.launch(intent)
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if(requestCode == CODE_RESULT_FOR_ADD_PET) {
-//            when (resultCode) {
-//                ResultCodes.RESULT_FOR_DELETE -> {
-//                    //TODO Change for the local database
-////                    VariablesUtil.gbAnimals?.remove(VariablesUtil.gbSelectedAnimal)
-//                    (rcMyAnimalsList?.adapter as AnimalAdapter).removeAnimal(VariablesUtil.gbSelectedAnimal!!)
-////                    updateAdapter(VariablesUtil.gbAnimals!!)
-//                }
-//                RESULT_OK -> {
-//                    //TODO Change for the local database
-////                    VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
-////                    updateAdapter(VariablesUtil.gbAnimals!!)
-//                    (rcMyAnimalsList?.adapter as AnimalAdapter).addAnimal(VariablesUtil.gbSelectedAnimal!!)
-//                }
-//                else -> updateAdapter(VariablesUtil.gbAnimals!!)
-//            }
-//        }
-//    }
 
     private fun initObservers(){
         homeViewModel.animalListData.observe(viewLifecycleOwner, Observer { resource ->
@@ -208,10 +145,15 @@ class HomeFragment : Fragment() {
                 StatusAnimal.SUCCESS ->{
                     updateAdapter(resource.data()!!)
                 }else ->{
-                    llHomeNoPetYet.visibility = VISIBLE
+                    binding.llHomeNoPetYet.visibility = VISIBLE
                 }
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

@@ -27,14 +27,9 @@ import java.util.*
       var type:EnumTypeAnimal?=null
       var vaccineCards:MutableList<VaccineCards>?=mutableListOf()
       var vetConsultation:MutableList<VetConsultation>?=mutableListOf()
+      @Transient
+      var user: DocumentReference?=null
 
-
-
-    //    @ParcelPropertyConverter(DocumentReferenceConverter::class)
-//    var user: DocumentReference?=null
-
-
-    //    @Parcel
     class VaccineCards(
             var identity: Int? = 0
             , var historic: MutableList<Historic>? = mutableListOf()

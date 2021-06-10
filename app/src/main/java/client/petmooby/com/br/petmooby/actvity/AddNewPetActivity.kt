@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.databinding.ActivityAddNewPetBinding
 import client.petmooby.com.br.petmooby.extensions.setupToolbar
+import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.model.Animal
 import client.petmooby.com.br.petmooby.model.comparator.EnumBreedComparator
@@ -29,14 +30,12 @@ import client.petmooby.com.br.petmooby.ui.viewmodel.AddNewPetViewModel
 import client.petmooby.com.br.petmooby.util.*
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-//import kotlinx.android.synthetic.main.activity_add_new_pet.*
 import org.jetbrains.anko.alert
 import java.io.ByteArrayOutputStream
 import java.util.Date
@@ -49,15 +48,14 @@ import java.util.Date
 @AndroidEntryPoint
 class AddNewPetActivity : BaseActivity() {
 
-
+    private var dialog:ProgressDialog? = null
     var bithDate            = Date()
-//    var mRef                = FirebaseFirestore.getInstance()
     var enumSelectedBreed: EnumBreedBase?   = null
     private var mCurrentPhotoBitmap: Bitmap?= null
     var fromOtherScreen         = false
     private val addPetViewModel : AddNewPetViewModel by viewModels()
     private lateinit var binding: ActivityAddNewPetBinding
-//    private var enableButtons   = false
+    private var isToUploadImage : Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNewPetBinding.inflate(layoutInflater)
@@ -125,10 +123,6 @@ class AddNewPetActivity : BaseActivity() {
     private fun getAnimalSentByOtherView() {
         isForUpdate = intent.getBooleanExtra(Parameters.IS_FOR_UPDATE, false)
         if (isForUpdate) {
-//            animal= intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER) ?: return
-//            animal= intent.getSerializableExtra(Parameters.ANIMAL_PARAMETER) as Animal
-//            animal= Parcels.unwrap(intent.getParcelableExtra(Parameters.ANIMAL_PARAMETER))
-//            animal?.user  = mRef.document(animal?.userPath!!)
             binding.edtNewPetName.setText(VariablesUtil.gbSelectedAnimal?.name)
             binding.edtNewPetBirthday.setText(DateTimeUtil.formatDateTime(VariablesUtil.gbSelectedAnimal?.dateOfBirthday))
             binding.spNewPetGender.setSelection(EnumGender.valueOf(VariablesUtil.gbSelectedAnimal?.gender!!).ordinal)
@@ -141,7 +135,6 @@ class AddNewPetActivity : BaseActivity() {
                 loadProfilePicture()
             }
             bithDate = VariablesUtil.gbSelectedAnimal?.dateOfBirthday!!
-
         }
     }
 
@@ -167,7 +160,7 @@ class AddNewPetActivity : BaseActivity() {
                     }
 
                     override fun onError() {
-                        binding.progressAddPet.visibility = View.GONE
+                        binding.progressAddPet.visibility = GONE
                         binding.ivProfileMyPet.visibility = VISIBLE
                     }
 
@@ -187,7 +180,7 @@ class AddNewPetActivity : BaseActivity() {
     private fun initSpinners() {
         binding.spNewPetKindAnimal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                //DO Nothing
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -242,7 +235,7 @@ class AddNewPetActivity : BaseActivity() {
         }
         binding.spNewPetBreed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                //DO Nothing
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -253,8 +246,6 @@ class AddNewPetActivity : BaseActivity() {
                     }
                     1 -> {
                         //DOGS
-                        //enumSelectedBreed = EnumBreedsForDogs.values()[position]
-                        //enumSelectedBreed = selectedI
                         Log.d("ADD_NEW_PET",enumSelectedBreed.toString())
                         Log.d("ID",id.toString())
                         Log.d("SELECTED ID",parent?.selectedItemId!!.toString())
@@ -297,7 +288,7 @@ class AddNewPetActivity : BaseActivity() {
     }
 
     private fun savePet(){
-        val dialog = showLoadingDialog()
+        dialog = showLoadingDialog()
         if(!isForUpdate) {
             VariablesUtil.gbSelectedAnimal = Animal()
         }
@@ -308,48 +299,34 @@ class AddNewPetActivity : BaseActivity() {
             breed           = enumSelectedBreed?.getValue(enumSelectedBreed!!.getIndex(enumSelectedBreed!!))
             type            = EnumTypeAnimal.values()[binding.spNewPetKindAnimal.selectedItemPosition]
             gender          = EnumGender.values()[binding.spNewPetGender.selectedItemPosition].value
-//            user            = FireStoreReference.docRefUser
+            user            = FireStoreReference.docRefUser
         }
         if(validateFields(VariablesUtil.gbSelectedAnimal!!)) {
             if(!isForUpdate) {
-                callFireStoreServiceToSaveTheAnimal( dialog)
+                callFireStoreServiceToSaveTheAnimal()
             }else{
-                callFireStoreServiceToUpdateTheAnimal(dialog,true)
+                isToUploadImage = true
+                callFireStoreServiceToUpdateTheAnimal()
             }
         }
     }
 
-    private fun callFireStoreServiceToSaveTheAnimal(dialog: ProgressDialog) {
-        animalRef
-                .add(VariablesUtil.gbSelectedAnimal!!)
-                .addOnSuccessListener { documentReference ->
-                    dialog.dismiss()
-                    successSaved(documentReference)
-                }.addOnFailureListener {
-                    exception -> dialog.dismiss()
-                }
+    private fun callFireStoreServiceToSaveTheAnimal() {
+        addPetViewModel.addAnimalToFireStorageAndLocally(VariablesUtil.gbSelectedAnimal!!)
     }
 
-    private fun callFireStoreServiceToUpdateTheAnimal(dialog: ProgressDialog, uploadImage:Boolean) {
-        animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
-                .set(VariablesUtil.gbSelectedAnimal!!)
-                .addOnSuccessListener { documentReference ->
-                    dialog.dismiss()
-                    if(uploadImage) {
-                        uploadImageAndSaveOrUpdatePet()
-                    }
-                }.addOnFailureListener {
-                    dialog.dismiss()
-                }
+    private fun callFireStoreServiceToUpdateTheAnimal() {
+        addPetViewModel.updateAnimal(VariablesUtil.gbSelectedAnimal!!)
     }
 
-    private fun successSaved(documentReference: DocumentReference){
-        VariablesUtil.gbSelectedAnimal?.id = documentReference.id
+    private fun successSaved(animal: Animal){
+//        VariablesUtil.gbSelectedAnimal?.id = documentReference.id
+        VariablesUtil.gbSelectedAnimal = animal
         isForUpdate = true
         enableControlsButtons(true)
-        VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
-        addPetViewModel.insertAnimal(VariablesUtil.gbSelectedAnimal!!)
-        FireStoreReference.saveAnimalReference(documentReference)
+//        VariablesUtil.addAnimal(VariablesUtil.gbSelectedAnimal!!)
+//        addPetViewModel.insertAnimal(VariablesUtil.gbSelectedAnimal!!)
+//        FireStoreReference.saveAnimalReference(documentReference)
         if(mCurrentPhotoBitmap != null) {
             uploadImageAndSaveOrUpdatePet()
         }
@@ -365,25 +342,17 @@ class AddNewPetActivity : BaseActivity() {
         with(animal) {
             return when {
                 breed.isNullOrEmpty() -> {
-//                    showAlert(R.string.animalBreedIsMissing)
                     false
                 }
                 dateOfBirthday == null -> {
-//                    showAlert(R.id.bithDayIsMissing)
                     false
                 }
                 type == null -> {
-//                    showAlert(R.id.animalTypeIsMissing)
                     false
                 }
                 gender.isNullOrEmpty() -> {
-//                    showAlert(R.id.animalGenderIsMissing)
                     false
                 }
-//                user == null -> {
-////                    showAlert(R.id.animalGenderIsMissing)
-//                    false
-//                }
                 else -> true
             }
         }
@@ -399,18 +368,15 @@ class AddNewPetActivity : BaseActivity() {
     }
 
     private fun uploadImageAndSaveOrUpdatePet(){
-        //if(mCurrentPhotoPath == null) return
         if(mCurrentPhotoBitmap == null) return
-        val dialog      = showLoadingDialog(message = getString(R.string.savingImage))
-        //var file        = Uri.fromFile(File(mCurrentPhotoPath))
+        dialog    = showLoadingDialog(message = getString(R.string.savingImage))
         val ref   = storage.child("animal/${VariablesUtil.gbSelectedAnimal?.id}.jpg")
         val baos = ByteArrayOutputStream()
         mCurrentPhotoBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
         val data = baos.toByteArray()
-//        var uploadTask  = ref.putFile(file)
-        var uploadTask  = ref.putBytes(data)
-        val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+        val uploadTask  = ref.putBytes(data)
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
@@ -421,10 +387,8 @@ class AddNewPetActivity : BaseActivity() {
             if (task.isSuccessful) {
                 val downloadUri = task.result
                 VariablesUtil.gbSelectedAnimal?.photo = downloadUri?.toString()//riversRef.downloadUrl.toString()
-                 callFireStoreServiceToUpdateTheAnimal(dialog,false)
-            } else {
-                // Handle failures
-                // ...
+                isToUploadImage = false
+                callFireStoreServiceToUpdateTheAnimal()
             }
         }
     }
@@ -432,27 +396,14 @@ class AddNewPetActivity : BaseActivity() {
     private fun remove(){
         alert(R.string.areYouSure,R.string.removingPet){
             positiveButton(R.string.yes) {
-                animalRef.document(VariablesUtil.gbSelectedAnimal?.id!!)
-                        .delete()
-                        .addOnFailureListener {  }
-                        .addOnSuccessListener {
-                            val intent = Intent()
-                            setResult(ResultCodes.RESULT_FOR_DELETE,intent)
-                            removeEvents(VariablesUtil.gbSelectedAnimal!!)
-                            finish()
-                        }
+                dialog = showLoadingDialog()
+                addPetViewModel.deleteAnimal(VariablesUtil.gbSelectedAnimal?.id!!)
             }
-
             negativeButton(R.string.no) {
                 it.dismiss()
             }
         }.show()
 
-    }
-
-    private fun removeEvents(animal: Animal){
-        VaccineUtil().cancelEventVaccinesForAAnimal(this,animal)
-        TreatmentUtil.cancelEventTreatmentForAAnimal(this,animal)
     }
 
     override fun onBackPressed() {
@@ -462,13 +413,49 @@ class AddNewPetActivity : BaseActivity() {
 
     private fun initObservers(){
         addPetViewModel.insertAnimalData.observe(this, Observer {
-            if(it){
-                LogUtil.logDebug("OK animal was inserted on local database")
-            }else{
-                LogUtil.logDebug("ERROR animal was not saved on local database")
+            dialog?.dismiss()
+            when(it.status()){
+                StatusAnimal.SUCCESS ->{
+                    successSaved(it.data()!!)
+                }else ->{
+                    LogUtil.logDebug("ERROR animal was not saved on local database")
+                }
+            }
+        })
+
+        addPetViewModel.updateAnimalData.observe(this, Observer {
+            dialog?.dismiss()
+            when(it.status()){
+                StatusAnimalUpdate.SUCCESS -> {
+                    if(isToUploadImage) {
+                        uploadImageAndSaveOrUpdatePet()
+                    }
+                }else ->{
+                    LogUtil.logDebug("ERROR animal was not saved on local database and firebase")
+                }
+            }
+        })
+
+        addPetViewModel.deleteAnimalData.observe(this, Observer {
+            dialog?.dismiss()
+            when(it){
+                StatusAnimalDelete.SUCCESS -> {
+                    val intent = Intent()
+                    setResult(ResultCodes.RESULT_FOR_DELETE,intent)
+                    //TODO try to remove this VariablesUtil.gbSelectedAnimal later
+                    addPetViewModel.removeEvents(this, VariablesUtil.gbSelectedAnimal!!)
+                    finish()
+                }else ->{
+                    //TODO see other message here
+                    showAlert(R.string.errorDeleteAnimal)
+                }
             }
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        isToUploadImage = false
+    }
 
 }

@@ -7,9 +7,9 @@ import client.petmooby.com.br.petmooby.model.Resource
 import client.petmooby.com.br.petmooby.model.dao.AnimalDAO
 import client.petmooby.com.br.petmooby.model.entities.AnimalEntity
 import client.petmooby.com.br.petmooby.model.enums.StatusAnimal
-import client.petmooby.com.br.petmooby.util.DateTimeUtil
-import client.petmooby.com.br.petmooby.util.JsonUtil
-import client.petmooby.com.br.petmooby.util.TAG_READ_FIREBASE
+import client.petmooby.com.br.petmooby.model.enums.StatusAnimalDelete
+import client.petmooby.com.br.petmooby.model.enums.StatusAnimalUpdate
+import client.petmooby.com.br.petmooby.util.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
@@ -25,7 +25,7 @@ class AnimalRepository @Inject constructor(
     suspend fun getAnimalListFromFirebase(userPath : String) : Resource<List<Animal>, StatusAnimal> {
         val userRef = docRefVet.document(userPath)
         return try {
-            Log.d(TAG_READ_FIREBASE, "Get Animals")
+            logFB("Get Animals")
             val query = docRefVet.collection(CollectionsName.ANIMAL)
                     .whereEqualTo("user", userRef)
                     .get()
@@ -84,5 +84,61 @@ class AnimalRepository @Inject constructor(
 
     suspend fun clearLocalDataAnimals(){
         animalDAO.clear()
+    }
+
+    suspend fun insertAnimalInFirebase(animal: Animal) : Resource<Animal, StatusAnimal>{
+        return try {
+            logFB("Insert Animal on FireStore")
+            val query = docRefVet.collection(CollectionsName.ANIMAL)
+                    .add(VariablesUtil.gbSelectedAnimal!!)
+                    .await()
+            if(query.id.isNotEmpty()){
+                animal.id = query.id
+                logFB("OK - Success added with id --> ${animal.id}")
+                Resource(animal, StatusAnimal.SUCCESS)
+            }else{
+                logFB("Insert Error: id is empty")
+                Resource(null, StatusAnimal.FAIL)
+            }
+        }catch (e : Exception){
+            logFB("Exception ${e.message}")
+            e.printStackTrace()
+            Resource(null, StatusAnimal.FAIL)
+        }
+    }
+
+    suspend fun updateAnimalOnFireStorage(animal: Animal, isToUpdateLocal:Boolean): Resource<Animal, StatusAnimalUpdate>{
+        return try {
+            docRefVet.collection(CollectionsName.ANIMAL)
+                    .document(animal.id!!)
+                    .set(animal)
+                    .await()
+            if(isToUpdateLocal){
+                //TODO update animal on local database
+            }
+            Resource(animal, StatusAnimalUpdate.SUCCESS)
+        }catch (e : Exception){
+            Resource(null, StatusAnimalUpdate.FAIL)
+        }
+    }
+
+    suspend fun removeAnimal(animalId : String, isToRemoveLocal: Boolean) : StatusAnimalDelete{
+        return try {
+            docRefVet.collection(CollectionsName.ANIMAL)
+                 .document(animalId)
+                 .delete()
+                 .await()
+            if(isToRemoveLocal){
+                //TODO remove locally
+                animalDAO.delete(animalId)
+            }
+            StatusAnimalDelete.SUCCESS
+        }catch (e : Exception){
+            StatusAnimalDelete.FAIL
+        }
+    }
+
+    private fun logFB(message : String){
+        Log.d(TAG_READ_FIREBASE, message)
     }
 }

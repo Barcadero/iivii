@@ -105,8 +105,7 @@ class MainActivity : BaseActivity() {
             LogUtil.logDebug("FACE user email: ${user.email}")
             docRefUser.add(user)
                     .addOnSuccessListener { documentReference ->
-                        //TODO Why we need this referece?
-//                        FireStoreReference.docRefUser = documentReference;
+                        FireStoreReference.docRefUser = documentReference;
                         switchFragment(HomeFragment());
                         dialog.dismiss()
                     }
@@ -141,8 +140,7 @@ class MainActivity : BaseActivity() {
             if(task.result?.isEmpty!!){
                 saveCurrenteUser()
             }else {
-                //TODO describes why we get a document reference
-//                FireStoreReference.docRefUser = task.result?.documents!![0].reference
+                FireStoreReference.docRefUser = task.result?.documents!![0].reference
                 doAsync {saveUnknowUserInformation(task) }
                 //NOTE: Set home fragment as the main content
                 switchFragment(HomeFragment())

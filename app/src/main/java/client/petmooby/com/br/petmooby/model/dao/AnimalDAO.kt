@@ -17,4 +17,6 @@ interface AnimalDAO {
     suspend fun insert(animalEntity: AnimalEntity)
     @Query("DELETE FROM animal")
     suspend fun clear()
+    @Query("DELETE FROM animal WHERE id_firebase = :idFireStore")
+    suspend fun delete(idFireStore: String)
 }

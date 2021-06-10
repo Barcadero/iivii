@@ -62,9 +62,9 @@ class CalendarFragment : Fragment() {
 
         llCalender.visibility = View.VISIBLE
         rcListOfEvents.layoutManager = getDefaultLayoutManager()
-        rcListOfEvents.adapter = DayEventsAdapter(listForAdapter, activity!!)
+        rcListOfEvents.adapter = DayEventsAdapter(listForAdapter, requireActivity())
 
-        ivCalender.setImageDrawable(DrawableUtils.getThreeDots(activity!!))
+        ivCalender.setImageDrawable(DrawableUtils.getThreeDots(requireActivity()))
         calendarView.setOnDayClickListener { eventDay ->
             showEventCards(eventDay)
         }

@@ -207,4 +207,10 @@
     <string name="adviceForBestCameraPhoto">Se você optar por tirar uma foto do documento, tente por favor tirar com o celular em pé para melhorar o enquadramento da imagem.</string>
     <string name="frequency">frequency</string>
     <string name="login_fail">Falha no login! Tente novamente mais tarde</string>
+    <string name="errorDeleteAnimal">Ops! Não foi possível deletar seu pet. Por favor tente mais tarde.</string>
+    <string name="_map">Mapa</string>
+    <string name="location_permission_denied">Petmooby precisa de permissão para acessar  a sua localização. \nSe a permissão está negada de forma permanente, então vá as consfigurações do sistema.</string>
+    <string name="permission_required_toast">Permissão de localização é necessária para acessar o map.</string>
+    <string name="permission_rationale_location">Access to the location service is required to access the map, which shows your current location on the map.</string>
+    <string name="yourLocationIsNotEnable">Você tem que habilitar a localização. Verifique também se a permissão para localização foi concedida</string>
 </resources>

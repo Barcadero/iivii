@@ -5,3 +5,13 @@ enum class StatusAnimal {
     FAIL,
     EMPTY
 }
+
+enum class StatusAnimalUpdate {
+    SUCCESS,
+    FAIL
+}
+
+enum class StatusAnimalDelete {
+    SUCCESS,
+    FAIL
+}

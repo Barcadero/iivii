@@ -11,6 +11,7 @@ import client.petmooby.com.br.petmooby.model.UserLogin
 import client.petmooby.com.br.petmooby.model.enums.StatusLogin
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import client.petmooby.com.br.petmooby.util.EncryptUtil
+import client.petmooby.com.br.petmooby.util.FireStoreReference
 import client.petmooby.com.br.petmooby.util.TAG_READ_FIREBASE
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -36,6 +37,7 @@ class LoginRepository  @Inject constructor(): BaseRepo(){
                                docId =  query.documents[0].reference.id,
                                type = TypeUserEnum.USER_SYSTEM
                         )
+                    FireStoreReference.docRefUser = query.documents[0].reference
                     Resource(
                                 user,
                                 StatusLogin.SUCCESS

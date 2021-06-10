@@ -55,7 +55,7 @@ class RegisterUserActivity : BaseActivity() {
                 .addOnSuccessListener {
                     documentReference ->
                     //TODO check if docRefUser is necessary
-//                        FireStoreReference.docRefUser = documentReference
+                        FireStoreReference.docRefUser = documentReference
                         Preference.setUserType(this,currentUser?.type?.ordinal!!)
                         Preference.setUserId(this,documentReference.id)
                         dialog.dismiss()
