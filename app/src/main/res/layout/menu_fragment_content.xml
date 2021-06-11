@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
     android:orientation="vertical">
     <Button
         style="@style/MainMenuButton"
@@ -12,8 +14,6 @@
         android:background="@drawable/btn_corners"
 
         />
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,9 +56,9 @@
     <Button
         style="@style/MainMenuButton"
         android:id="@+id/btnMenuMap"
-        android:text="@string/_map"
+        android:text="@string/menuNearVets"
         android:drawableEnd="@drawable/ic_chevron_right_white"
-        android:drawableStart="@drawable/icons8_terms_use_30"
+        android:drawableStart="@drawable/icons8_location_marker_30"
         />
 
     <Button

@@ -6,13 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import client.petmooby.com.br.petmooby.consts.DATABASE_NAME
 import client.petmooby.com.br.petmooby.model.dao.AnimalDAO
+import client.petmooby.com.br.petmooby.model.dao.MapsDAO
 import client.petmooby.com.br.petmooby.model.entities.AnimalEntity
+import client.petmooby.com.br.petmooby.model.entities.NearbyVetsEntity
 
 
-@Database(version = 1, entities = [AnimalEntity::class])
+@Database(version = 2, entities = [AnimalEntity::class, NearbyVetsEntity::class])
 abstract class PetDatabase : RoomDatabase() {
 
     abstract fun animalDAO(): AnimalDAO
+    abstract fun mapsDAO(): MapsDAO
     companion object {
 
         // For Singleton instantiation

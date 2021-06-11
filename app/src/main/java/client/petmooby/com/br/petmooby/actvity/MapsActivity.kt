@@ -104,22 +104,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnRequestPermissio
 
     private fun setVetClinicsOnTheMap(response : MapsVetResponse){
         response.results.forEach {place ->
-            addMarkOnTheMap(LatLng(place.geometry.location.lat, place.geometry.location.lng), place.name)
+            addMarkOnTheMap(LatLng(place.geometry.location.lat, place.geometry.location.lng), place.name, place.vicinity)
         }
     }
 
-    private fun addMarkOnTheMap(latLng: LatLng, vetName : String){
+    private fun addMarkOnTheMap(latLng: LatLng, vetName : String, description : String){
         map.addMarker(MarkerOptions().apply {
             this.position(latLng)
             this.title(vetName)
-            this.snippet("See where this appears")
+            this.snippet(description)
         })
     }
 
     private fun setupMarkClick(){
-        map.setOnMarkerClickListener {
+        map.setOnInfoWindowClickListener {
             callMapGPSApp(LatLng(it.position.latitude,it.position.longitude))
-            false
         }
     }
 

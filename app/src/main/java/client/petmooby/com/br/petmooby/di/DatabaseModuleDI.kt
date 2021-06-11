@@ -2,6 +2,7 @@ package client.petmooby.com.br.petmooby.di
 
 import android.content.Context
 import client.petmooby.com.br.petmooby.model.dao.AnimalDAO
+import client.petmooby.com.br.petmooby.model.dao.MapsDAO
 import client.petmooby.com.br.petmooby.model.database.PetDatabase
 import dagger.Module
 import dagger.Provides
@@ -23,4 +24,10 @@ class DatabaseModuleDI  {
     fun provideAnimalDAO( petDatabase: PetDatabase) : AnimalDAO{
         return petDatabase.animalDAO()
     }
+
+    @Provides
+    fun provideMapsDAO( petDatabase: PetDatabase) : MapsDAO{
+        return petDatabase.mapsDAO()
+    }
+
 }

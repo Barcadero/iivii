@@ -213,6 +213,7 @@
     <string name="permission_rationale_location">É preciso fornecer permissão de acesso a localização para acessar o mapa</string>
     <string name="yourLocationIsNotEnable">You need to turn on your location. Check if the app has the location permission.</string>
     <string name="errorUpdateMapWithVets">Ops! We got an error. Try again please!</string>
+    <string name="menuNearVets">Nearby veterinarians</string>
     <string-array name="array_gender">
         <item>Select gender</item>
         <item>Female</item>
