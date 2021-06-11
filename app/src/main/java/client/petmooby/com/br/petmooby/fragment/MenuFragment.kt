@@ -45,7 +45,6 @@ class MenuFragment : Fragment() {
         override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?,
                                                  currentAccessToken: AccessToken?) {
             if (currentAccessToken == null) {
-                //TODO clear preferences data , call login activity and close the main screen.
                 try {
                     startActivity(Intent(activity, LoginActivity::class.java))
                     activity!!.finish()

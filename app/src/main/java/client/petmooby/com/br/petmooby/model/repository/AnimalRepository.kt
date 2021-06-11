@@ -129,7 +129,6 @@ class AnimalRepository @Inject constructor(
                  .delete()
                  .await()
             if(isToRemoveLocal){
-                //TODO remove locally
                 animalDAO.delete(animalId)
             }
             StatusAnimalDelete.SUCCESS

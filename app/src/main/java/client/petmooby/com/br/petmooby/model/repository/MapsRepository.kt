@@ -2,7 +2,6 @@ package client.petmooby.com.br.petmooby.model.repository
 
 
 import android.util.Log
-import client.petmooby.com.br.petmooby.BuildConfig
 import client.petmooby.com.br.petmooby.R
 import client.petmooby.com.br.petmooby.application.Application
 import client.petmooby.com.br.petmooby.model.Resource
@@ -13,8 +12,7 @@ import client.petmooby.com.br.petmooby.model.entities.NearbyVetsEntity
 import client.petmooby.com.br.petmooby.model.enums.StatusVetsMaps
 import client.petmooby.com.br.petmooby.util.DateTimeUtil
 import client.petmooby.com.br.petmooby.util.JsonUtil
-import java.lang.Exception
-import java.util.Date
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
