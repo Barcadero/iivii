@@ -54,6 +54,7 @@ class RegisterUserActivity : BaseActivity() {
         docRefUser.add(currentUser!!)
                 .addOnSuccessListener {
                     documentReference ->
+                    //TODO check if docRefUser is necessary
                         FireStoreReference.docRefUser = documentReference
                         Preference.setUserType(this,currentUser?.type?.ordinal!!)
                         Preference.setUserId(this,documentReference.id)

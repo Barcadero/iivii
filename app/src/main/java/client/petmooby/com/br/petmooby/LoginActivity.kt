@@ -1,42 +1,48 @@
 package client.petmooby.com.br.petmooby
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import client.petmooby.com.br.petmooby.actvity.BaseActivity
 import client.petmooby.com.br.petmooby.actvity.RegisterUserActivity
+import client.petmooby.com.br.petmooby.databinding.ActivityLoginBinding
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showAlert
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
-import client.petmooby.com.br.petmooby.model.User
+import client.petmooby.com.br.petmooby.model.enums.StatusLogin
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
-import client.petmooby.com.br.petmooby.util.EncryptUtil
-import client.petmooby.com.br.petmooby.util.FireStoreReference
+import client.petmooby.com.br.petmooby.ui.viewmodel.LoginViewModel
 import client.petmooby.com.br.petmooby.util.Preference
 import com.facebook.*
 import com.facebook.Profile.setCurrentProfile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import kotlinx.android.synthetic.main.activity_login.*
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
  * A login screen that offers login via email/password.
  */
+@AndroidEntryPoint
 class LoginActivity : BaseActivity() {
 
+    private var dialog : ProgressDialog? = null
     private var callBackManager:CallbackManager?=null
-
+    private lateinit var binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         callBackManager = CallbackManager.Factory.create()
 //        KeyFileGen.genSH1Base64(this)
         checkLoginin()
-        with(btnLoginFace) {
+        with(binding.btnLoginFace) {
             setPermissions("email","public_profile")
-//            setReadPermissions("public_profile, email")
             LoginManager.getInstance().registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult?) {
                     val request = GraphRequest.newMeRequest(
@@ -83,15 +89,15 @@ class LoginActivity : BaseActivity() {
             })
         }
 
-        btnRegister.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             startActivity(Intent(this,RegisterUserActivity::class.java))
         }
 
-        btnLogin.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             doLoginSystem()
         }
 
-
+        initObservers()
     }
 
     private fun setProfileAndCallMainActivity(profile: Profile?, loginResult: LoginResult?) {
@@ -107,11 +113,11 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkLoginin() {
-        var type =  Preference.getUserType(this)
+        val type =  Preference.getUserType(this)
         when(type){
             TypeUserEnum.FACEBOOK.ordinal ->{
-                var accessToken = AccessToken.getCurrentAccessToken()
-                var isLoggedIn = accessToken != null && !accessToken.isExpired
+                val accessToken = AccessToken.getCurrentAccessToken()
+                val isLoggedIn = accessToken != null && !accessToken.isExpired
                 if (isLoggedIn) {
                     startMainActivity()
                     finish()
@@ -128,47 +134,42 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callBackManager!!.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun doLoginSystem(){
-        if(edtLoginEmail.text.toString().trim().isEmpty()){
+        if(binding.edtLoginEmail.text.toString().trim().isEmpty()){
             showAlert(R.string.pleaseGiveAEmail)
             return
         }
-        if(edtLoginPwd.text.toString().trim().isEmpty()){
+        if(binding.edtLoginPwd.text.toString().trim().isEmpty()){
             showAlert(R.string.pleaseEnterAPassWord)
             return
         }
-        var dialog = showLoadingDialog()
-        docRefUser
-                .whereEqualTo(User.USER_EMAIL,edtLoginEmail.text.toString().trim())
-                .whereEqualTo(User.USER_PASSWORD,EncryptUtil.encryptPWD(edtLoginPwd.text.toString().trim()))
-                .get()
-                .addOnSuccessListener {
-                    if(it.documents.isNotEmpty()){
-                        Preference.setUserEmail(baseContext,edtLoginEmail.text.toString())
-                        FireStoreReference.docRefUser = it.documents[0].reference
-                        Preference.setUserDatabaseId(this, FireStoreReference.docRefUser!!.id!!)
-                        Preference.setUserId(this,FireStoreReference.docRefUser!!.id!!)
-                        Preference.setUserType(this,TypeUserEnum.USER_SYSTEM.ordinal)
-                        dialog.dismiss()
-                        startMainActivity()
-                        finish()
-                    }else{
-                        dialog.dismiss()
-                        showAlert(R.string.invalidCredentials)
-                    }
-                }
-                .addOnFailureListener {
-                    exception -> onFailedQueryReturn(dialog,exception.message!!)
-                }
-
+        dialog = showLoadingDialog()
+        viewModel.doLoginSystem(
+                email =  binding.edtLoginEmail.text.toString().trim(),
+                pwd   =  binding.edtLoginPwd.text.toString().trim()
+        )
     }
 
-
+    private fun initObservers(){
+        viewModel.loginLiveData.observe(this, Observer {
+            dialog?.dismiss()
+            when(it.status()){
+                StatusLogin.SUCCESS -> {
+                    viewModel.setPreference(this,it.data()!!)
+                    startMainActivity()
+                    finish()
+                }
+                StatusLogin.EMPTY ->{
+                    showAlert(R.string.invalidCredentials)
+                }else -> {
+                    onFailedQueryReturn(dialog!!,getString(R.string.login_fail))
+                }
+            }
+        })
+    }
 }

@@ -17,6 +17,7 @@ object Preference {
     val USER_TYPE   = "user.type"
     val LOGIN_MSN   = "login.message"
     val USER_EMAIL  = "user.email"
+    val USER_PATH   = "user.path"
 
     fun getUserName(context: Context): String?{
         return get(context, USER_NAME)
@@ -123,6 +124,15 @@ object Preference {
     fun getShowMessageLogin(context: Context): Boolean{
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return preferences.getBoolean(LOGIN_MSN,true)
+    }
+
+    fun setUserPath(context: Context, value:String ) : Boolean{
+        return set(context, USER_PATH ,value)
+    }
+
+    fun getUserPath(context: Context): String?{
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return preferences.getString(USER_PATH,"")
     }
 
 

@@ -4,11 +4,13 @@ package client.petmooby.com.br.petmooby.application
 import androidx.annotation.StringRes
 import androidx.multidex.MultiDexApplication
 import client.petmooby.com.br.petmooby.BuildConfig
+import dagger.hilt.android.HiltAndroidApp
 import java.util.*
 
 /**
  * Created by Rafael Rocha on 11/07/2019.
  */
+@HiltAndroidApp
 class Application : MultiDexApplication() {
 
     override fun onCreate() {

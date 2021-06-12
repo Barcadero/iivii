@@ -1,77 +1,55 @@
 package client.petmooby.com.br.petmooby
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.fragment.app.Fragment
 import client.petmooby.com.br.petmooby.actvity.BaseActivity
+import client.petmooby.com.br.petmooby.android.service.NotificationAlarmService
 import client.petmooby.com.br.petmooby.extensions.onFailedQueryReturn
 import client.petmooby.com.br.petmooby.extensions.showLoadingDialog
 import client.petmooby.com.br.petmooby.fragment.CalendarFragment
 import client.petmooby.com.br.petmooby.fragment.HomeFragment
 import client.petmooby.com.br.petmooby.fragment.MenuFragment
 import client.petmooby.com.br.petmooby.fragment.TipFragment
-import client.petmooby.com.br.petmooby.model.CollectionsName
 import client.petmooby.com.br.petmooby.model.User
 import client.petmooby.com.br.petmooby.model.enums.TypeUserEnum
 import client.petmooby.com.br.petmooby.util.*
 import com.facebook.AccessToken
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import java.util.*
-import android.app.AlarmManager
-import android.content.Context.ALARM_SERVICE
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import client.petmooby.com.br.petmooby.android.receiver.NotificationAlarmReceiver
-import client.petmooby.com.br.petmooby.android.service.NotificationAlarmService
-import com.annimon.stream.operator.IntArray
-import org.jetbrains.anko.doAsync
-import java.lang.Exception
 
-
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-//    private var docRefUser = FirebaseFirestore.getInstance().collection(CollectionsName.USER)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-//        scheduleAlarm()
-//    startServiceNotification()
 
         val userType = Preference.getUserType(this)
-        if(userType!! > -1){
-//            checkIfUserExistsAndSave()
+        if(userType > -1){
             when(TypeUserEnum.values()[userType]){
                 TypeUserEnum.FACEBOOK ->{
                     checkIfUserExistsAndSave()
                 }
                 TypeUserEnum.USER_SYSTEM->{
-                    if(FireStoreReference.docRefUser == null) {
-                        getUserFromDataBase()
-                    }else{
+//                    if(FireStoreReference.docRefUser == null) {
+//                        getUserFromDataBase()
+//                    }else{
                         switchFragment(HomeFragment())
-                    }
+//                    }
                 }
             }
         }
-    //For test
-//    val calendar = Calendar.getInstance()
-//    calendar.set(2019,8,19,0,58,15)
-//    NotificationWorkerUtil().scheduleEvent(calendar.time,this)
-//    NotificationWorkerUtil().scheduleEventPeriodic(Date(),this,"vaccine",225544,NotificationWorkerVaccine::class.java)
         if(!PermissionUtil.checkPersmission(this))PermissionUtil.requestPermission(this)
-
     }
 
     private fun switchFragment(fragment: Fragment) {
@@ -108,6 +86,9 @@ class MainActivity : BaseActivity() {
         false
     }
 
+    /**
+     * This is used just for facebook login
+     */
     private fun saveCurrenteUser(){
         var dialog = showLoadingDialog(getString(R.string.savingUser))
         var accessToken = AccessToken.getCurrentAccessToken()
@@ -116,15 +97,17 @@ class MainActivity : BaseActivity() {
             var user = User()
             user.name           = Preference.get<String>(this,Preference.USER_NAME)
             user.tokenFacebook  = Preference.get(this,Preference.USER_TOKEN)
-            user.userIdFB       = Preference.getUserId(this)//Preference.get(this,Preference.USER_ID)
-            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]//TypeUserEnum.FACEBOOK
+            user.userIdFB       = Preference.getUserId(this)
+            user.type           = TypeUserEnum.values()[Preference.getUserType(this)!!]
             user.email          = Preference.getUserEmail(this)
             user.registerDate   = Date()
             LogUtil.logDebug("FACE user name: ${user.name}")
             LogUtil.logDebug("FACE user email: ${user.email}")
             docRefUser.add(user)
-                    .addOnSuccessListener {
-                        documentReference -> FireStoreReference.docRefUser = documentReference;switchFragment(HomeFragment());dialog.dismiss()
+                    .addOnSuccessListener { documentReference ->
+                        FireStoreReference.docRefUser = documentReference;
+                        switchFragment(HomeFragment());
+                        dialog.dismiss()
                     }
                     .addOnFailureListener {
                         exception ->  dialog.dismiss();toast("Erro ${exception.message}")
@@ -135,6 +118,7 @@ class MainActivity : BaseActivity() {
     fun checkIfUserExistsAndSave(){
         var dialog = showLoadingDialog(getString(R.string.checkingUser))
         var userId = Preference.getUserId(this)//Preference.get<String>(this,Preference.USER_ID)
+        Log.d(TAG_READ_FIREBASE,"Check user exists")
         docRefUser
                 .whereEqualTo(User.USER_ID_FACEBOOK,userId)
                 .get()
@@ -146,7 +130,9 @@ class MainActivity : BaseActivity() {
                 }
     }
 
-
+    /**
+     * This is using only for facebook
+     */
     private fun successQueryReturn(dialog: ProgressDialog, task:Task<QuerySnapshot> ) {
         dialog.dismiss()
         //var users = document.toObjects(User::class.java)
@@ -167,7 +153,6 @@ class MainActivity : BaseActivity() {
         try {
            var userNeedsUpdate = false
            val documents = task.result?.documents
-           //val user = User()
            if (documents?.size == 1) {
                val id = documents[0].id
                val currentUser = documents[0].toObject(User::class.java)
@@ -201,31 +186,31 @@ class MainActivity : BaseActivity() {
        }
     }
 
-    fun getUserFromDataBase(){
-        var dialog = showLoadingDialog(getString(R.string.checkingUser))
+//    fun getUserFromDataBase(){
+//        var dialog = showLoadingDialog(getString(R.string.checkingUser))
 //        var userId = Preference.getUserDatabaseId(this)//Preference.get<String>(this,Preference.USER_ID)
-        var userId = Preference.getUserId(this)
-        docRefUser.document(userId!!)
-                //.whereEqualTo(User.USER_ID_FACEBOOK,userId)
-                .get()
-                .addOnCompleteListener {
-                    task ->
-                    run {
-                        if (task.result?.exists()!!) {
-                            dialog.dismiss()
-                            FireStoreReference.docRefUser = task.result?.reference
-                            switchFragment(HomeFragment())
-                        }else{
-                            dialog.dismiss()
-                            switchFragment(HomeFragment())
-                        }
-                    }
-                }
-
-                .addOnFailureListener {
-                    exception -> onFailedQueryReturn(dialog,exception.message!!)
-                }
-    }
+//        var userId = Preference.getUserId(this)
+//        docRefUser.document(userId!!)
+//                //.whereEqualTo(User.USER_ID_FACEBOOK,userId)
+//                .get()
+//                .addOnCompleteListener {
+//                    task ->
+//                    run {
+//                        if (task.result?.exists()!!) {
+//                            dialog.dismiss()
+//                            FireStoreReference.docRefUser = task.result?.reference
+//                            switchFragment(HomeFragment())
+//                        }else{
+//                            dialog.dismiss()
+//                            switchFragment(HomeFragment())
+//                        }
+//                    }
+//                }
+//
+//                .addOnFailureListener {
+//                    exception -> onFailedQueryReturn(dialog,exception.message!!)
+//                }
+//    }
 
 
     fun startServiceNotification(){

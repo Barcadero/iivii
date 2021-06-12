@@ -1,14 +1,20 @@
+
+plugins{
+    id 'com.google.secrets_gradle_plugin' version '0.5'
+}
+
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
-//apply plugin: 'kotlin-kapt'
 ext.anko_version = '0.10.0'
 ext.libVersion = '28.0.0'
+
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     compileSdkVersion 30
@@ -16,18 +22,25 @@ android {
         applicationId "client.petmooby.com.br.petmooby"
         minSdkVersion 20
         targetSdkVersion 30
-        versionCode 5
-        versionName "3.0"
+        versionCode 6
+        versionName "4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
     }
     buildTypes {
         release {
+            resValue("string", "google_maps_key", localProperties['MAPS_API_KEY'])
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            resValue("string", "google_maps_key", localProperties['MAPS_API_KEY'])
             applicationIdSuffix ".debug"
             debuggable true
         }
@@ -42,36 +55,41 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
-//    androidExtensions {
-//        experimental = true
-//    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
-    def work_version = "2.2.0"
+    def work_version = "2.5.0"
+    kapt "com.google.dagger:hilt-android-compiler:2.31.2-alpha"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.71'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.4.0-rc01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.vectordrawable:vectordrawable:1.2.0-alpha02'
+    implementation 'androidx.annotation:annotation:1.2.0'
 //    implementation 'com.facebook.android:facebook-login:[5,6)'
 //    implementation 'com.facebook.android:facebook-core:[5,6)'
     //implementation 'com.android.support:multidex:1.0.3'
     compile group: 'com.facebook.android', name: 'facebook-android-sdk', version: '5.15.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.google.firebase:firebase-firestore:18.0.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
     //implementation 'com.google.firebase:firebase-iid:16.0.0'
     //-------------------------------------------------------------------------------
     //Cicle Images
@@ -83,7 +101,7 @@ dependencies {
     //For the rate app
     implementation 'com.github.hotchemi:android-rate:1.0.1'
     //Firestorage
-    implementation 'com.google.firebase:firebase-storage:17.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
     //Image picker
     //implementation 'com.github.esafirm.android-image-picker:imagepicker:1.13.1'
     implementation 'com.github.Mariovc:ImagePicker:1.2.2'
@@ -103,5 +121,33 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_version"
     //For image zoom and gestures
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation "com.google.dagger:hilt-android:2.31.2-alpha"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    /* Firebase Authentication  Use it later*/
+//    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    /*Firestore for online database*/
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
+    /* coroutines support for firebase operations */
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+    //Room dependencies
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.7'
+    // GMS - Google Maps
+//    gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.maps.android:maps-ktx:3.0.1'
+    // V3
+//    v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
+    // Below is used to run the easypermissions library to manage location permissions
+    // EasyPermissions is needed to help us request for permission to access location
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    //For Retrofit
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingVersion"
 
 }
