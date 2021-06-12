@@ -292,7 +292,11 @@ class AddNewPetActivity : BaseActivity() {
         if(!isForUpdate) {
             VariablesUtil.gbSelectedAnimal = Animal()
         }
-        enumSelectedBreed = binding.spNewPetBreed.selectedItem as EnumBreedBase
+        enumSelectedBreed = if(binding.spNewPetBreed.selectedItem != null) {
+            binding.spNewPetBreed.selectedItem as EnumBreedBase
+        }else{
+            null
+        }
         with(VariablesUtil.gbSelectedAnimal!!){
             name            = binding.edtNewPetName.text.toString()
             dateOfBirthday  = bithDate
@@ -339,11 +343,12 @@ class AddNewPetActivity : BaseActivity() {
     }
 
     private fun validateFields(animal: Animal): Boolean{
+        //TODO set something to tell to the app that validation failed
         with(animal) {
             return when {
-                breed.isNullOrEmpty() -> {
-                    false
-                }
+//                breed.isNullOrEmpty() -> {
+//                    false
+//                }
                 dateOfBirthday == null -> {
                     false
                 }
